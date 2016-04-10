@@ -98,7 +98,7 @@ public class MasterRenderer {
 		shader.stop();
 		terrainShader.start();
 		terrainShader.loadClipPlane(clipPlane);
-		terrainShader.loadSkyClourVariable(fogColour.x, fogColour.y, fogColour.z);
+		terrainShader.loadSkyColorVariable(fogColour.x, fogColour.y, fogColour.z);
 		terrainShader.loadLights(lights);
 		terrainShader.loadViewMatrix(camera);
 		terrainRenderer.render(terrains);

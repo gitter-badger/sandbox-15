@@ -80,7 +80,7 @@ public class TerrainShader extends ShaderProgram {
 		super.loadVector(location_plane, plane);
 	}
 
-	public void loadSkyClourVariable(float r, float g, float b) {
+	public void loadSkyColorVariable(float r, float g, float b) {
 		super.loadVector(location_skyColour, new Vector3f(r, g, b));
 	}
 
