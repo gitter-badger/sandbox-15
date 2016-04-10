@@ -1,6 +1,9 @@
 package net.roryclaasen.sandbox;
 
+import net.gogo98901.log.Log;
+import net.roryclaasen.Bootstrap;
 import net.roryclaasen.sandbox.util.Arguments;
+import net.roryclaasen.sandbox.util.Options;
 
 public class Sandbox {
 
@@ -15,7 +18,7 @@ public class Sandbox {
 	}
 
 	public void start() {
-
+		Log.info("Starting " + Bootstrap.TITLE);
 	}
 
 	public static Sandbox getSandboxGame() {
