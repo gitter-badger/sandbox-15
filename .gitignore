@@ -1,12 +1,16 @@
-*.class
+# exclude all
+/*
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# include git important files
+!.gitmodules
+!.gitignore
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# include sourcecode
+!src/
+!res/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# include important folders and files
+!LICENSE
+!libs/
+
+
