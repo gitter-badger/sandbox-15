@@ -11,6 +11,7 @@
 
 # include important folders and files
 !LICENSE
+!README.md
 !libs/
 
 
