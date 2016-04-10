@@ -9,6 +9,9 @@
 !src/
 !res/
 
+# include game files
+!levels/
+
 # include important folders and files
 !LICENSE
 !README.md

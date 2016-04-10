@@ -1,0 +1,99 @@
+package net.roryclaasen.sandbox.RenderEngine;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.ByteBuffer;
+
+import net.gogo98901.log.Level;
+import net.gogo98901.log.Log;
+import net.gogo98901.util.Loader;
+import net.roryclaasen.Bootstrap;
+import net.roryclaasen.sandbox.util.config.Config;
+
+import org.lwjgl.Sys;
+import org.lwjgl.opengl.ContextAttribs;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.PixelFormat;
+import org.newdawn.slick.opengl.PNGDecoder;
+
+public class DisplayManager {
+
+	private static final int WIDTH = Config.width.getIntager(), HEIGHT = (int) Config.height.getIntager();
+	private static final int FPS_CAP = Config.fpsCap.getIntager();
+
+	private long lastFrameTime = 0;
+	private static float delta = 0;
+
+	public void createDisplay() {
+		ContextAttribs attribs = new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
+
+		try {
+			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+			Display.create(new PixelFormat(), attribs);
+			Display.setTitle(Bootstrap.TITLE);
+			// Display.setIcon(getIcons());
+			Log.info("Display Created");
+		} catch (Exception e) {
+			Log.stackTrace(Level.SEVERE, e);
+
+			System.exit(0);
+		}
+
+		GL11.glViewport(0, 0, WIDTH, HEIGHT);
+		lastFrameTime = getCurrentTime();
+	}
+
+	private ByteBuffer[] getIcons() throws IOException {
+		return new ByteBuffer[]{loadIcon("icon16.png"), loadIcon("icon32.png"),};
+	}
+
+	private ByteBuffer loadIcon(String file) throws IOException {
+		URL url = Loader.getResource(file);
+		InputStream is = url.openStream();
+		try {
+			PNGDecoder decoder = new PNGDecoder(is);
+			ByteBuffer bb = ByteBuffer.allocateDirect(decoder.getWidth() * decoder.getHeight() * 4);
+			decoder.decode(bb, decoder.getWidth() * 4, PNGDecoder.RGBA);
+			bb.flip();
+			return bb;
+		} finally {
+			is.close();
+		}
+	}
+
+	public void updateDisplay() {
+		Display.sync(FPS_CAP);
+		Display.update();
+		long currentTime = getCurrentTime();
+		delta = (currentTime - lastFrameTime) / 1000f;
+		lastFrameTime = currentTime;
+	}
+
+	public static float getFrameTimeSeconds() {
+		return delta;
+	}
+
+	public void destroyDisplay() {
+		Display.destroy();
+		Log.info("Display Destroyed");
+	}
+
+	private long getCurrentTime() {
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+
+	public static int getWidth() {
+		return WIDTH;
+	}
+
+	public static int getHeight() {
+		return HEIGHT;
+	}
+
+	public static int getFpsCap() {
+		return FPS_CAP;
+	}
+}

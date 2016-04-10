@@ -29,15 +29,17 @@ public class ConfigLoader {
 			new File(Bootstrap.GAME_PATH).mkdirs();
 			addMissingValues();
 			save();
-		}
-		try {
-			Object obj = parser.parse(new FileReader(getFile()));
-			config = (JSONObject) obj;
-			addMissingValues();
 			Log.info("Config loaded");
-		} catch (IOException | ParseException e) {
-			Log.warn("Config failed to load");
-			Log.stackTrace(e);
+		} else {
+			try {
+				Object obj = parser.parse(new FileReader(getFile()));
+				config = (JSONObject) obj;
+				addMissingValues();
+				Log.info("Config loaded");
+			} catch (IOException | ParseException e) {
+				Log.warn("Config failed to load");
+				Log.stackTrace(e);
+			}
 		}
 	}
 
@@ -49,7 +51,7 @@ public class ConfigLoader {
 				set(cfg.name(), cfg.getDefaultValue());
 			}
 		}
-		if(count!=0)Log.info("Config added " + count + " missing value(s)");
+		if (count != 0) Log.info("Config added " + count + " missing value(s)");
 	}
 
 	public void save() {

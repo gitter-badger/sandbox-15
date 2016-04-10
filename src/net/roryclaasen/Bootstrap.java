@@ -13,24 +13,24 @@ import net.roryclaasen.sandbox.util.config.ConfigLoader;
 public class Bootstrap {
 
 	public static final String TITLE = "Sandbox", VERSION = "0.1", GAME_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "My Games" + File.separator + TITLE + File.separator;
-
+	
 	private static Arguments arguments;
-	private static Options options;
 	private static ConfigLoader conf;
+	private static Options options;
 
 	public static void main(String[] args) {
 		Log.setDateFormat("[dd.MM.yy hh:mm:ss]");
 		Log.info(TITLE + "(" + VERSION + ") by Rory Claasen");
 		arguments = new Arguments(args);
 		if (init(arguments)) {
-			start(arguments, options);
+			start();
 		}
 		if (conf != null) conf.save();
 		Log.info("Goodbye");
 	}
 
 	private static boolean init(Arguments arguments) {
-		Log.info("Initializing...");
+		Log.info("Pre-Initializing...");
 		try {
 			Data.setDefultLookAndFeel();
 			if (arguments.doSaveLog()) {
@@ -52,10 +52,9 @@ public class Bootstrap {
 		}
 	}
 
-	private static void start(Arguments arguments, Options options) {
+	private static void start() {
 		Log.info("Starting from root...");
 		Sandbox sandbox = new Sandbox(arguments, options);
 		sandbox.start();
 	}
-
 }
