@@ -1,42 +1,16 @@
 <?xml version="1.0"?>
 <worldData>
 	<player>
-		<x>100</x>
-		<y>-170</y>
+		<x>128</x>
+		<y>128</y>
 		<rotx>0</rotx>
 		<roty>0</roty>
 		<rotz>0</rotz>
 	</player>
-	<chunk id="0">
-		<x>0</x>
-		<y>0</y>
+	<chunk>
 		<hightmmap>heightmap.png</hightmmap>
 		<blendmap>map.png</blendmap>
 		<texturepack>0</texturepack>
-		<file>chunk0</file>
-	</chunk>
-	<chunk id="1">
-		<x>0</x>
-		<y>-1</y>
-		<hightmmap>heightmap.png</hightmmap>
-		<blendmap>map.png</blendmap>
-		<texturepack>0</texturepack>
-		<file>chunk0</file>
-	</chunk>
-	<chunk id="2">
-		<x>-1</x>
-		<y>-1</y>
-		<hightmmap>heightmap.png</hightmmap>
-		<blendmap>map.png</blendmap>
-		<texturepack>0</texturepack>
-		<file>chunk0</file>
-	</chunk>
-	<chunk id="3">
-		<x>-1</x>
-		<y>0</y>
-		<hightmmap>heightmap.png</hightmmap>
-		<blendmap>map.png</blendmap>
-		<texturepack>0</texturepack>
-		<file>chunk0</file>
+		<file>worldData</file>
 	</chunk>
 </worldData>

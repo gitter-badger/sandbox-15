@@ -5,13 +5,11 @@ import net.roryclaasen.sandbox.RenderEngine.water.WaterTile;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.Player;
 import net.roryclaasen.sandbox.entities.light.Light;
-import net.roryclaasen.sandbox.guis.GuiTexture;
 import net.roryclaasen.sandbox.level.EntityData;
 import net.roryclaasen.sandbox.util.MousePicker;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -21,8 +19,6 @@ public class GameStateLevel extends GameState {
 	private Camera camera;
 
 	private WaterFrameBuffers buffers;
-
-	private GuiTexture crosshair;
 
 	public GameStateLevel(GameStateManager stateManager) {
 		super(stateManager);
@@ -48,11 +44,6 @@ public class GameStateLevel extends GameState {
 		entityManager.addSun(lightSun);
 
 		terrainManager.addWater(new WaterTile(80, -65, -2));
-
-		GuiTexture health = new GuiTexture(loader.loadTexture("test/health"), new Vector2f(-0.75f, -0.75f), new Vector2f(0.25f, 0.25f));
-		guiManager.add(health);
-		crosshair = new GuiTexture(loader.loadTexture("crosshair"), new Vector2f(0, 0), new Vector2f(0.021f * 0.75f, 0.035f * 0.75f));
-		guiManager.add(crosshair);
 
 		mousePicker = new MousePicker(camera, renderer.getProjectionMatrix());
 

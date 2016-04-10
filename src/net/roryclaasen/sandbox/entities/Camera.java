@@ -12,7 +12,7 @@ public class Camera {
 	private float distanceFromPlayer = 50, angleArroundPLayer = 0;
 	private float yOffset = 12;
 
-	private float mouseSensitivity = (float) Config.sensitivity.get();
+	private float mouseSensitivity = Config.sensitivity.getFloat();
 
 	private Player player;
 

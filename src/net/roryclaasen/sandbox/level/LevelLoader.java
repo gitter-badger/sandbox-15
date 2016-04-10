@@ -21,6 +21,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class LevelLoader {
+
 	private Sandbox game;
 	private WorldData worldData;
 
@@ -49,7 +50,7 @@ public class LevelLoader {
 		if (root.isDirectory() || hasUnzipped) {
 			worldData = getWorldData(root);
 			for (ChunkData chunk : worldData.getChunks()) {
-				Terrain t = new Terrain(chunk.getX(), chunk.getY(), game.loader, game.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(game.loader.loadTexture("level/" + chunk.getBlendMap())), "level/" + chunk.getHeightMap());
+				Terrain t = new Terrain(0, 0, game.loader, game.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(game.loader.loadTexture("level/" + chunk.getBlendMap())), "level/" + chunk.getHeightMap());
 				game.terrainManager.add(t);
 				if (chunk.getData() != null) {
 					for (ObjectData object : chunk.getData().getObjects()) {
@@ -74,48 +75,39 @@ public class LevelLoader {
 			Document doc = dBuilder.parse(fXmlFile);
 
 			doc.getDocumentElement().normalize();
-			{
-				NodeList chunkList = doc.getElementsByTagName("player");
-				for (int temp = 0; temp < chunkList.getLength(); temp++) {
-					try {
-						Node nNode = chunkList.item(temp);
-						if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-							Element eElement = (Element) nNode;
-							EntityData player = new EntityData();
-							player.setLocation(Integer.parseInt(eElement.getElementsByTagName("x").item(0).getTextContent()), Integer.parseInt(eElement.getElementsByTagName("y").item(0).getTextContent()));
-							player.setRotationX(Integer.parseInt(eElement.getElementsByTagName("rotx").item(0).getTextContent()));
-							player.setRotationY(Integer.parseInt(eElement.getElementsByTagName("roty").item(0).getTextContent()));
-							player.setRotationZ(Integer.parseInt(eElement.getElementsByTagName("rotz").item(0).getTextContent()));
-							data.addPlayer(player);
-						}
-					} catch (Exception e) {
-						Log.warn("Failed to load type 'player'");
-						Log.stackTrace(e);
-					}
+			NodeList playerList = doc.getElementsByTagName("player");
+			try {
+				Node nNode = playerList.item(0);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) nNode;
+					EntityData player = new EntityData();
+					player.setLocation(Integer.parseInt(eElement.getElementsByTagName("x").item(0).getTextContent()), Integer.parseInt(eElement.getElementsByTagName("y").item(0).getTextContent()));
+					player.setRotationX(Integer.parseInt(eElement.getElementsByTagName("rotx").item(0).getTextContent()));
+					player.setRotationY(Integer.parseInt(eElement.getElementsByTagName("roty").item(0).getTextContent()));
+					player.setRotationZ(Integer.parseInt(eElement.getElementsByTagName("rotz").item(0).getTextContent()));
+					data.addPlayer(player);
 				}
+			} catch (Exception e) {
+				Log.warn("Failed to load type 'player'");
+				Log.stackTrace(e);
 			}
-			{
-				NodeList chunkList = doc.getElementsByTagName("chunk");
-				for (int temp = 0; temp < chunkList.getLength(); temp++) {
-					try {
-						Node nNode = chunkList.item(temp);
+			NodeList chunkList = doc.getElementsByTagName("chunk");
+			try {
+				Node nNode = chunkList.item(0);
 
-						if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-							Element eElement = (Element) nNode;
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) nNode;
 
-							ChunkData newChunk = new ChunkData(Integer.parseInt(eElement.getAttribute("id")));
-							newChunk.setLocation(Integer.parseInt(eElement.getElementsByTagName("x").item(0).getTextContent()), Integer.parseInt(eElement.getElementsByTagName("y").item(0).getTextContent()));
-							newChunk.setHeightMap(eElement.getElementsByTagName("hightmmap").item(0).getTextContent());
-							newChunk.setBlendMap(eElement.getElementsByTagName("blendmap").item(0).getTextContent());
-							newChunk.setTexturePack(Integer.parseInt(eElement.getElementsByTagName("texturepack").item(0).getTextContent()));
-							if (eElement.getElementsByTagName("file").item(0) != null) newChunk.setData(loadChunk(root, eElement.getElementsByTagName("file").item(0).getTextContent()));
-							data.addChunk(newChunk);
-						}
-					} catch (Exception e) {
-						Log.warn("Failed to load type 'chunk'");
-						Log.stackTrace(e);
-					}
+					ChunkData newChunk = new ChunkData();
+					newChunk.setHeightMap(eElement.getElementsByTagName("hightmmap").item(0).getTextContent());
+					newChunk.setBlendMap(eElement.getElementsByTagName("blendmap").item(0).getTextContent());
+					newChunk.setTexturePack(Integer.parseInt(eElement.getElementsByTagName("texturepack").item(0).getTextContent()));
+					if (eElement.getElementsByTagName("file").item(0) != null) newChunk.setData(loadChunk(root, eElement.getElementsByTagName("file").item(0).getTextContent()));
+					data.addChunk(newChunk);
 				}
+			} catch (Exception e) {
+				Log.warn("Failed to load type 'chunk'");
+				Log.stackTrace(e);
 			}
 		} catch (Exception e) {
 			Log.stackTrace(e);
