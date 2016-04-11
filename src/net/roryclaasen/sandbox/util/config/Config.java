@@ -9,7 +9,9 @@ public enum Config {
 
 	// World
 	skyRotate("sky-rotate-speed", 0.5F),
-	//
+	// Render
+	anisotropic("anisotropic-filtering", true), antialiasing("antialiasing", false), antialiasingSample("antialiasing-sample", 4)
+	// END OF CONFIG
 	;
 
 	private String name;

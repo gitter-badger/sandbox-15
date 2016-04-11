@@ -109,6 +109,7 @@ public class Sandbox {
 					currentUpdates = updates;
 					updates = 0;
 					frames = 0;
+					Display.setTitle(currentFrames+"");
 				}
 			}
 		}

@@ -16,6 +16,7 @@ import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.PixelFormat;
 import org.newdawn.slick.opengl.PNGDecoder;
 
@@ -32,9 +33,14 @@ public class DisplayManager {
 
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-			Display.create(new PixelFormat(), attribs);
+			PixelFormat pixelFormat = new PixelFormat();
+			if (Config.antialiasing.getBoolean()) {
+				pixelFormat = pixelFormat.withSamples(Config.antialiasingSample.getIntager());
+			}
+			Display.create(pixelFormat, attribs);
 			Display.setTitle(Bootstrap.TITLE);
 			// Display.setIcon(getIcons());
+			if (Config.antialiasing.getBoolean()) GL11.glEnable(GL13.GL_MULTISAMPLE);
 			Log.info("Display Created");
 		} catch (Exception e) {
 			Log.stackTrace(Level.SEVERE, e);

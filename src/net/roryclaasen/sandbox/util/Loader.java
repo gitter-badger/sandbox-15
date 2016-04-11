@@ -11,16 +11,19 @@ import net.gogo98901.log.Level;
 import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
 import net.roryclaasen.sandbox.RenderEngine.texture.TextureData;
+import net.roryclaasen.sandbox.util.config.Config;
 import net.roryclaasen.sandbox.util.obj.ModelData;
 import net.roryclaasen.sandbox.util.obj.OBJFileLoader;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.EXTTextureFilterAnisotropic;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.GLContext;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
@@ -70,6 +73,18 @@ public class Loader {
 			GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
 			GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, -0.4F);
+			if (GLContext.getCapabilities().GL_EXT_texture_filter_anisotropic) {
+				if (Config.anisotropic.getBoolean()) {
+					GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, 0F);
+
+					float amount = Math.min(4F, GL11.glGetFloat(EXTTextureFilterAnisotropic.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT));
+					GL11.glTexParameterf(GL11.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT, amount);
+				} else {
+					Log.info("GL: Anisotropic filtering disabled by config");
+				}
+			} else {
+				Log.warn("GL: Anisotropic filtering not supported");
+			}
 		} catch (IOException e) {
 			Log.warn("Could not read texture '" + file + "'");
 			Log.stackTrace(e);
