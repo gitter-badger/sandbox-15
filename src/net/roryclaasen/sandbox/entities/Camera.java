@@ -46,7 +46,7 @@ public class Camera {
 		float zoomLevel = Mouse.getDWheel() * 0.1f;
 		distanceFromPlayer -= zoomLevel;
 		if (distanceFromPlayer < 10) distanceFromPlayer = 10;
-		if (distanceFromPlayer > 200) distanceFromPlayer = 200;
+		if (distanceFromPlayer > 500) distanceFromPlayer = 500;
 
 	}
 

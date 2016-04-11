@@ -1,7 +1,7 @@
 package net.roryclaasen.sandbox.RenderEngine.water;
 
 public class WaterTile {
-	public static final float TILE_SIZE = 60;
+	public static final float TILE_SIZE = 100;
 
 	private float height;
 	private float x, z;

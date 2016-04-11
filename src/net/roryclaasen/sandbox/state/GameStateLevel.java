@@ -22,9 +22,9 @@ public class GameStateLevel extends GameState {
 
 	public GameStateLevel(GameStateManager stateManager) {
 		super(stateManager);
-		
+
 		buffers = new WaterFrameBuffers();
-		gsm.getSandbox().renderer.setUpWaterRenderer(buffers);
+		renderer.setUpWaterRenderer(buffers);
 	}
 
 	@Override
@@ -43,7 +43,11 @@ public class GameStateLevel extends GameState {
 		Light lightSun = new Light(new Vector3f(player.getX(), player.getY() + 100, player.getZ()), new Vector3f(1f, 1f, 1f));
 		entityManager.addSun(lightSun);
 
-		terrainManager.addWater(new WaterTile(80, -65, -2));
+		for (int x = 1; x < 10; x++) {
+			for (int y = 1; y < 10; y++) {
+				terrainManager.addWater(new WaterTile(x * 100, y * 100, 0));
+			}
+		}
 
 		mousePicker = new MousePicker(camera, renderer.getProjectionMatrix());
 
