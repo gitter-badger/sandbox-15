@@ -18,11 +18,6 @@ package net.roryclaasen.sandbox.state;
 
 import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.Sandbox;
-import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
-import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector2f;
 
 public class GameStateManager {
 
@@ -38,8 +33,6 @@ public class GameStateManager {
 
 	public GameStateManager(Sandbox sandbox) {
 		this.sandbox = sandbox;
-		GUIText fps = new GUIText("0:fps", 1, TextMaster.moire, new Vector2f(10, 10), 1F, true);
-		fps.setColour(1F, 0F, 1F);
 		try {
 			states[0] = new GameStateMenu(this);
 			states[1] = new GameStateLevel(this);
@@ -55,7 +48,7 @@ public class GameStateManager {
 	public void render() {
 		if (currentState != null) currentState.render();
 
-		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+		//GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 		sandbox.rendererGui.render(sandbox.guiManager.getGuis());
 	}
 

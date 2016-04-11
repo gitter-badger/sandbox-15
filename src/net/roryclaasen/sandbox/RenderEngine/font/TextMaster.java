@@ -27,11 +27,15 @@ import net.roryclaasen.sandbox.util.Loader;
 
 public class TextMaster {
 
+	// FONTS
+
+	public static FontType arial, moire;
+
+	// TextMaster
+
 	private static Loader loader;
 	private static Map<FontType, List<GUIText>> texts = new HashMap<FontType, List<GUIText>>();
 	private static FontRenderer renderer;
-
-	public static FontType moire;
 
 	public static void init(Loader loader) {
 		TextMaster.loader = loader;
@@ -41,8 +45,10 @@ public class TextMaster {
 	}
 
 	private static void loadFonts() {
-		Log.info("Fonts Loading");
+		Log.info("Fonts... Loading");
+		arial = new FontType(loader.loadTextureFont("arial"), "arial");
 		moire = new FontType(loader.loadTextureFont("moire"), "moire");
+		Log.info("Fonts... Done");
 	}
 
 	public static void render() {
@@ -51,15 +57,15 @@ public class TextMaster {
 
 	public static void loadText(GUIText text) {
 		FontType font = text.getFont();
-		TextMeshData data = font.loadText(text);
-		int vao = loader.loadToVAO(data.getVertexPositions(), data.getTextureCoords());
-		text.setMeshInfo(vao, data.getVertexCount());
-		List<GUIText> textBatch = texts.get(font);
-		if (textBatch == null) {
-			textBatch = new ArrayList<GUIText>();
-			texts.put(font, textBatch);
-		}
-		textBatch.add(text);
+        TextMeshData data = font.loadText(text);
+        int vao = loader.loadToVAO(data.getVertexPositions(), data.getTextureCoords());
+        text.setMeshInfo(vao, data.getVertexCount());
+        List<GUIText> textBatch = texts.get(font);
+        if(textBatch == null){
+            textBatch = new ArrayList<GUIText>();
+            texts.put(font, textBatch);
+        }
+        textBatch.add(text);
 	}
 
 	public static void removeText(GUIText text) {

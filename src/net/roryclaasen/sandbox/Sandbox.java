@@ -20,6 +20,7 @@ import net.gogo98901.log.Log;
 import net.roryclaasen.Bootstrap;
 import net.roryclaasen.sandbox.RenderEngine.GuiRenderer;
 import net.roryclaasen.sandbox.RenderEngine.MasterRenderer;
+import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
 import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.models.Models;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
@@ -36,6 +37,7 @@ import net.roryclaasen.sandbox.util.WorldUtil;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector2f;
 
 public class Sandbox {
 
@@ -65,13 +67,13 @@ public class Sandbox {
 		Sandbox.arguments = arguments;
 		Sandbox.options = options;
 
-		loader = new Loader();
 		display = new DisplayManager();
 	}
 
 	private void init() {
+		loader = new Loader();
 		TextMaster.init(loader);
-		
+
 		renderer = new MasterRenderer(loader);
 		rendererGui = new GuiRenderer(loader);
 		guiManager = new GuiManager();
@@ -83,7 +85,6 @@ public class Sandbox {
 		gameStateManager = new GameStateManager(this);
 
 		gameStateManager.setState(GameStateManager.State.GAME);
-		gameStateManager.render();
 
 		Models.load(loader);
 	}
@@ -92,6 +93,9 @@ public class Sandbox {
 		Log.info("Starting " + Bootstrap.TITLE);
 		display.createDisplay();
 		init();
+
+		GUIText fps = new GUIText(currentFrames + " :fps", 1, TextMaster.moire, new Vector2f(0, 0), 1F, false);
+		fps.setColor(1F, 0F, 1F);
 		{
 			long lastTime = System.nanoTime();
 			long timer = System.currentTimeMillis();
@@ -129,7 +133,7 @@ public class Sandbox {
 					currentUpdates = updates;
 					updates = 0;
 					frames = 0;
-					Display.setTitle(currentFrames+"");
+					fps.setTextString(currentFrames + " :fps");
 				}
 			}
 		}

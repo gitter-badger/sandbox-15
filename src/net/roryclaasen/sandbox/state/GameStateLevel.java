@@ -82,10 +82,10 @@ public class GameStateLevel extends GameState {
 		camera.invertPitch();
 		buffers.bindRefractionFrameBuffer();
 		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, terrainManager.getWaters().get(0).getHeight()));
+		
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
-
 		buffers.unbindCurrentFrameBuffer();
-		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, 0, 0, 0));
+		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, 100000));
 		renderer.renderWater(terrainManager, camera);
 
 		if (player.isInMenu()) {
