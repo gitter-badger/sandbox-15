@@ -1,11 +1,7 @@
 <?xml version="1.0"?>
 <worldData>
 	<player>
-		<x>128</x>
-		<y>128</y>
-		<rotx>0</rotx>
-		<roty>0</roty>
-		<rotz>0</rotz>
+		
 	</player>
 	<chunk>
 		<hightmmap>heightmap.png</hightmmap>

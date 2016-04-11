@@ -32,7 +32,7 @@ public class GameStateLevel extends GameState {
 		gsm.getSandbox().levelLoader.loadLevel("test");
 		EntityData pData = gsm.getSandbox().levelLoader.getPlayerData();
 		// Player
-		player = new Player(new Vector3f(pData.getX(), 0, pData.getY()), pData.getRotationX(), pData.getRotationY(), pData.getRotationZ());
+		player = new Player(new Vector3f(384, 0, 384), pData.getRotationX(), pData.getRotationY(), pData.getRotationZ());
 		camera = new Camera(player);
 		player.setCamera(camera);
 		camera.setPitch(20f);
@@ -43,9 +43,9 @@ public class GameStateLevel extends GameState {
 		Light lightSun = new Light(new Vector3f(player.getX(), player.getY() + 100, player.getZ()), new Vector3f(1f, 1f, 1f));
 		entityManager.addSun(lightSun);
 
-		for (int x = 1; x < 10; x++) {
-			for (int y = 1; y < 10; y++) {
-				terrainManager.addWater(new WaterTile(x * 100, y * 100, 0));
+		for (int x = 1; x < 8; x++) {
+			for (int y = 1; y < 8; y++) {
+				terrainManager.addWater(new WaterTile(x * 100, y * 100, -1));
 			}
 		}
 

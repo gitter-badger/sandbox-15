@@ -79,12 +79,10 @@ public class LevelLoader {
 			try {
 				Node nNode = playerList.item(0);
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					@SuppressWarnings("unused")
 					Element eElement = (Element) nNode;
 					EntityData player = new EntityData();
-					player.setLocation(Integer.parseInt(eElement.getElementsByTagName("x").item(0).getTextContent()), Integer.parseInt(eElement.getElementsByTagName("y").item(0).getTextContent()));
-					player.setRotationX(Integer.parseInt(eElement.getElementsByTagName("rotx").item(0).getTextContent()));
-					player.setRotationY(Integer.parseInt(eElement.getElementsByTagName("roty").item(0).getTextContent()));
-					player.setRotationZ(Integer.parseInt(eElement.getElementsByTagName("rotz").item(0).getTextContent()));
+					// TODO score etc.
 					data.addPlayer(player);
 				}
 			} catch (Exception e) {

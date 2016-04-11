@@ -2,7 +2,7 @@ package net.roryclaasen.sandbox.entities;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import net.roryclaasen.sandbox.RenderEngine.DisplayManager;
+import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.RenderEngine.models.TexturedModel;
 
 public class Entity {

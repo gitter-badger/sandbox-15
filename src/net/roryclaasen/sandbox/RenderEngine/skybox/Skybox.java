@@ -1,6 +1,6 @@
 package net.roryclaasen.sandbox.RenderEngine.skybox;
 
-import net.roryclaasen.sandbox.RenderEngine.DisplayManager;
+import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.entities.EntityManager;
 import net.roryclaasen.sandbox.entities.Player;
 import net.roryclaasen.sandbox.entities.light.Light;
@@ -14,7 +14,7 @@ public class Skybox {
 	private static float blendFactor = 0.0f, blendDay = 0.0f, blendNight = 1.0f;
 	private float speed = 0.0025f;
 
-	private static Vector3f fogColourDay = new Vector3f(0.5444F, 0.62F, 0.69F);
+	private static Vector3f fogColourDay = new Vector3f(1F, 1F, 1F);
 	private static Vector3f fogColourNight = new Vector3f(0.01F, 0.01F, 0.01F);
 	private static Vector3f fogColour = new Vector3f(fogColourDay.getX(), fogColourDay.getY(), fogColourDay.getZ());
 

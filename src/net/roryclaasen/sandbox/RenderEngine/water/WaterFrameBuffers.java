@@ -2,7 +2,7 @@ package net.roryclaasen.sandbox.RenderEngine.water;
 
 import java.nio.ByteBuffer;
 
-import net.roryclaasen.sandbox.RenderEngine.DisplayManager;
+import net.roryclaasen.sandbox.DisplayManager;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;

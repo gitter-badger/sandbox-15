@@ -1,7 +1,7 @@
 package net.roryclaasen.sandbox.util;
 
+import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.Sandbox;
-import net.roryclaasen.sandbox.RenderEngine.DisplayManager;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
 import net.roryclaasen.sandbox.entities.Camera;
 

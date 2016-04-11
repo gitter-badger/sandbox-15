@@ -1,6 +1,6 @@
 package net.roryclaasen.sandbox.RenderEngine.shaders;
 
-import net.roryclaasen.sandbox.RenderEngine.DisplayManager;
+import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.util.Maths;
 import net.roryclaasen.sandbox.util.config.Config;

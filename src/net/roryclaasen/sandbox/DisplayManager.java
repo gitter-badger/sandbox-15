@@ -1,4 +1,4 @@
-package net.roryclaasen.sandbox.RenderEngine;
+package net.roryclaasen.sandbox;
 
 import java.io.IOException;
 import java.io.InputStream;

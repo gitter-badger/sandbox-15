@@ -1,6 +1,6 @@
 package net.roryclaasen.sandbox.state;
 
-import net.roryclaasen.sandbox.RenderEngine.DisplayManager;
+import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.RenderEngine.GuiRenderer;
 import net.roryclaasen.sandbox.RenderEngine.MasterRenderer;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
