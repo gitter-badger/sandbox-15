@@ -20,6 +20,7 @@ import net.gogo98901.log.Log;
 import net.roryclaasen.Bootstrap;
 import net.roryclaasen.sandbox.RenderEngine.GuiRenderer;
 import net.roryclaasen.sandbox.RenderEngine.MasterRenderer;
+import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.models.Models;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
 import net.roryclaasen.sandbox.entities.EntityManager;
@@ -69,6 +70,8 @@ public class Sandbox {
 	}
 
 	private void init() {
+		TextMaster.init(loader);
+		
 		renderer = new MasterRenderer(loader);
 		rendererGui = new GuiRenderer(loader);
 		guiManager = new GuiManager();
@@ -115,6 +118,7 @@ public class Sandbox {
 				}
 				{// render
 					gameStateManager.render();
+					TextMaster.render();
 					display.updateDisplay();
 				}
 				frames++;
@@ -134,6 +138,7 @@ public class Sandbox {
 
 	public void close() {
 		try {
+			TextMaster.cleanUp();
 			gameStateManager.cleanUp();
 			renderer.cleanUp();
 			rendererGui.cleanUp();

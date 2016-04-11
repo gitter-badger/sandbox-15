@@ -16,7 +16,6 @@
  */
 package net.roryclaasen.sandbox.util;
 
-import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.Sandbox;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
@@ -45,7 +44,6 @@ public class WorldUtil {
 		if (Mouse.isButtonDown(0) && game.entityManager.getPlayer().isInMenu()) game.entityManager.getPlayer().setInMenu(false);
 
 		if (Sandbox.getArguments().isDebugMode()) {
-			Log.info("Lol");
 			if (Keyboard.isKeyDown(Keyboard.KEY_F1)) setWireFrame(false);
 			if (Keyboard.isKeyDown(Keyboard.KEY_F2)) setWireFrame(true);
 			if (Keyboard.isKeyDown(Keyboard.KEY_F9)) Skybox.setDay();

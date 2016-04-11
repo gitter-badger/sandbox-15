@@ -18,8 +18,11 @@ package net.roryclaasen.sandbox.state;
 
 import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.Sandbox;
+import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
+import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector2f;
 
 public class GameStateManager {
 
@@ -28,13 +31,15 @@ public class GameStateManager {
 	public static enum State {
 		MENU, GAME
 	}
+
 	private State current;
 	private GameState currentState;
 	private GameState[] states = new GameState[State.values().length];
 
 	public GameStateManager(Sandbox sandbox) {
 		this.sandbox = sandbox;
-
+		GUIText fps = new GUIText("0:fps", 1, TextMaster.moire, new Vector2f(10, 10), 1F, true);
+		fps.setColour(1F, 0F, 1F);
 		try {
 			states[0] = new GameStateMenu(this);
 			states[1] = new GameStateLevel(this);
@@ -72,7 +77,6 @@ public class GameStateManager {
 			state.cleanUp();
 		}
 	}
-
 
 	public Sandbox getSandbox() {
 		return sandbox;

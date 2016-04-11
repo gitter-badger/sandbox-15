@@ -16,30 +16,38 @@
  */
 package net.roryclaasen.sandbox.RenderEngine.shaders;
 
-import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
-public class GuiShader extends ShaderProgram {
+public class FontShader extends ShaderProgram {
 
 	private static final String VERT_FILE = "gui.vert", FRAG_FILE = "gui.frag";
-	
-	private int location_transformationMatrix;
 
-	public GuiShader() {
+	private int location_translation;
+	private int location_color;
+
+	public FontShader() {
 		super(VERT_FILE, FRAG_FILE);
 	}
 
 	@Override
 	protected void getAllUniformLocations() {
-		location_transformationMatrix = super.getUniformLocation("transformationMatrix");
-	}
-
-	public void loadTransformation(Matrix4f matrix) {
-		super.loadMatrix(location_transformationMatrix, matrix);
+		location_translation = super.getUniformLocation("translation");
+		location_color = super.getUniformLocation("color");
 	}
 
 	@Override
 	protected void bindAttributes() {
 		super.bindAttribute(0, "position");
+		super.bindAttribute(1, "textureCoords");
+	}
+
+	public void loadColor(Vector3f color) {
+		super.loadVector(location_color, color);
+	}
+
+	public void loadTranslation(Vector2f translation) {
+		super.loadVector(location_translation, translation);
 	}
 
 }

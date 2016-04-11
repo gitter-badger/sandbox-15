@@ -52,6 +52,14 @@ public class Loader {
 	private List<Integer> vbos = new ArrayList<Integer>();
 	private List<Integer> textures = new ArrayList<Integer>();
 
+	public int loadToVAO(float[] positions, float[] textureCoords) {
+		int vaoID = createVAO();
+		storeDataInAttributeList(0, 2, positions);
+		storeDataInAttributeList(1, 2, textureCoords);
+		unbindVAO();
+		return vaoID;
+	}
+
 	public RawModel loadToVAO(float[] positions, float[] textureCoords, float[] normals, int[] indices) {
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices);
@@ -82,13 +90,21 @@ public class Loader {
 	}
 
 	public int loadTexture(String file) {
+		return loadTexture("textures", file, -0.4f);
+	}
+
+	public int loadTextureFont(String file) {
+		return loadTexture("fonts", file, 0f);
+	}
+
+	public int loadTexture(String directory, String file, float bias) {
 		Texture texture = null;
 		if (!file.toLowerCase().endsWith(".png")) file += ".png";
 		try {
-			texture = TextureLoader.getTexture("PNG", net.gogo98901.util.Loader.getResourceAsStream("assets/textures/" + file));
+			texture = TextureLoader.getTexture("PNG", net.gogo98901.util.Loader.getResourceAsStream("assets/" + directory + "/" + file));
 			GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
-			GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, -0.4F);
+			 GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, bias);
 			if (GLContext.getCapabilities().GL_EXT_texture_filter_anisotropic) {
 				if (Config.anisotropic.getBoolean()) {
 					GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, 0F);
