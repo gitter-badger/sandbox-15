@@ -15,9 +15,8 @@ limitations under the License.
  */
 package net.roryclaasen;
 
+import net.gogo98901.log.Log;
 import net.roryclaasen.githubcheck.VersionCheck;
-import net.roryclaasen.githubcheck.data.Release;
-import net.roryclaasen.githubcheck.data.Tag;
 
 public class Version {
 	
@@ -28,7 +27,7 @@ public class Version {
 	
 	public Version() {
 		check = new VersionCheck("GOGO98901", "sandbox", Bootstrap.VERSION);
-		Log.info("Version check set up with version [" + version.getCurrentVersion() + "]");
+		Log.info("Version check set up with version [" + check.getCurrentVersion() + "]");
 	}
 	
 	public void startCheck() {
