@@ -16,9 +16,6 @@
  */
 package net.roryclaasen.sandbox.terrain;
 
-import java.awt.image.BufferedImage;
-
-import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexturePack;
@@ -31,9 +28,6 @@ import org.lwjgl.util.vector.Vector3f;
 public class Terrain {
 	private static final float SIZE = 400;
 
-	private static final float MAX_HEIGHT = 40;
-	private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256;
-
 	private float x, z;
 	private RawModel model;
 	private TerrainTexturePack texturePack;
@@ -41,12 +35,12 @@ public class Terrain {
 
 	private float[][] heights;
 
-	public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap, String heightMap) {
+	public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap) {
 		this.texturePack = texturePack;
 		this.blendMap = blendMap;
 		this.x = gridX * SIZE;
 		this.z = gridZ * SIZE;
-		this.model = generateTerrain(loader, heightMap);
+		this.model = generateTerrain(loader);
 	}
 
 	public static float getSize() {
@@ -92,15 +86,9 @@ public class Terrain {
 		return answer;
 	}
 
-	private RawModel generateTerrain(Loader loader, String heightmap) {
-		BufferedImage image = null;
-		try {
-			if (!heightmap.toLowerCase().endsWith(".png")) heightmap += ".png";
-			image = net.gogo98901.util.Loader.loadBufferedImagefromJar("assets/textures/" + heightmap);
-		} catch (Exception e) {
-			Log.warn("Could not load heightmap '" + heightmap + "'");
-		}
-		int vertexCount = image.getHeight();
+	private RawModel generateTerrain(Loader loader) {
+		HeightGenerator generator = new HeightGenerator();
+		int vertexCount = 64 + 16 - 8;
 		heights = new float[vertexCount][vertexCount];
 
 		int count = vertexCount * vertexCount;
@@ -112,11 +100,11 @@ public class Terrain {
 		for (int i = 0; i < vertexCount; i++) {
 			for (int j = 0; j < vertexCount; j++) {
 				vertices[vertexPointer * 3] = (float) j / ((float) vertexCount - 1) * SIZE;
-				float height = getHeight(j, i, image);
+				float height = getHeight(j, i, generator);
 				heights[j][i] = height;
 				vertices[vertexPointer * 3 + 1] = height;
 				vertices[vertexPointer * 3 + 2] = (float) i / ((float) vertexCount - 1) * SIZE;
-				Vector3f normal = calcuateNormal(j, i, image);
+				Vector3f normal = calcuateNormal(j, i, generator);
 				normals[vertexPointer * 3] = normal.x;
 				normals[vertexPointer * 3 + 1] = normal.y;
 				normals[vertexPointer * 3 + 2] = normal.z;
@@ -143,24 +131,18 @@ public class Terrain {
 		return loader.loadToVAO(vertices, textureCoords, normals, indices);
 	}
 
-	private Vector3f calcuateNormal(int x, int z, BufferedImage image) {
-		if (x < 0 || x >= image.getHeight() || z < 0 || z >= image.getHeight()) return new Vector3f(0.0f, 1.0f, 0.0f);
-		float hightL = getHeight(x - 1, z, image);
-		float hightR = getHeight(x + 1, z, image);
-		float hightU = getHeight(x, z + 1, image);
-		float hightD = getHeight(x, z - 1, image);
+	private Vector3f calcuateNormal(int x, int z, HeightGenerator generator) {
+		float hightL = getHeight(x - 1, z, generator);
+		float hightR = getHeight(x + 1, z, generator);
+		float hightU = getHeight(x, z + 1, generator);
+		float hightD = getHeight(x, z - 1, generator);
 		Vector3f normal = new Vector3f(hightL - hightR, 2F, hightD - hightU);
 		normal.normalise();
 		return normal;
 
 	}
 
-	private float getHeight(int x, int z, BufferedImage image) {
-		if (x < 0 || x >= image.getHeight() || z < 0 || z >= image.getHeight()) return 0;
-		float height = image.getRGB(x, z);
-		height += MAX_PIXEL_COLOUR / 2f;
-		height /= MAX_PIXEL_COLOUR / 2f;
-		height *= MAX_HEIGHT;
-		return height;
+	private float getHeight(int x, int z, HeightGenerator generator) {
+		return generator.generateHeight(x, z);
 	}
 }

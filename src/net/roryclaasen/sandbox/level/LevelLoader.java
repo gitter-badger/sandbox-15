@@ -66,7 +66,7 @@ public class LevelLoader {
 		if (root.isDirectory() || hasUnzipped) {
 			worldData = getWorldData(root);
 			for (ChunkData chunk : worldData.getChunks()) {
-				Terrain t = new Terrain(0, 0, game.loader, game.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(game.loader.loadTexture("level/" + chunk.getBlendMap())), "level/" + chunk.getHeightMap());
+				Terrain t = new Terrain(0, 0, game.loader, game.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(game.loader.loadTexture("level/" + chunk.getBlendMap())));
 				game.terrainManager.add(t);
 				if (chunk.getData() != null) {
 					for (ObjectData object : chunk.getData().getObjects()) {
@@ -113,7 +113,6 @@ public class LevelLoader {
 					Element eElement = (Element) nNode;
 
 					ChunkData newChunk = new ChunkData();
-					newChunk.setHeightMap(eElement.getElementsByTagName("hightmmap").item(0).getTextContent());
 					newChunk.setBlendMap(eElement.getElementsByTagName("blendmap").item(0).getTextContent());
 					newChunk.setTexturePack(Integer.parseInt(eElement.getElementsByTagName("texturepack").item(0).getTextContent()));
 					if (eElement.getElementsByTagName("file").item(0) != null) newChunk.setData(loadChunk(root, eElement.getElementsByTagName("file").item(0).getTextContent()));

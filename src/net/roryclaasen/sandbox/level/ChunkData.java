@@ -20,7 +20,6 @@ package net.roryclaasen.sandbox.level;
 public class ChunkData {
 
 	private String blendMap;
-	private String heightMap;
 	private int texturePack;
 	private ChunkObjectData data;
 
@@ -32,14 +31,6 @@ public class ChunkData {
 
 	public void setBlendMap(String blendMap) {
 		this.blendMap = blendMap;
-	}
-
-	public String getHeightMap() {
-		return heightMap;
-	}
-
-	public void setHeightMap(String heightMap) {
-		this.heightMap = heightMap;
 	}
 
 	public int getTexturePack() {
