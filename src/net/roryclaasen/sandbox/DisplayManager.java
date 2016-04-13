@@ -68,6 +68,7 @@ public class DisplayManager {
 		lastFrameTime = getCurrentTime();
 	}
 
+	@SuppressWarnings("unused")
 	private ByteBuffer[] getIcons() throws IOException {
 		return new ByteBuffer[]{loadIcon("icon16.png"), loadIcon("icon32.png"),};
 	}

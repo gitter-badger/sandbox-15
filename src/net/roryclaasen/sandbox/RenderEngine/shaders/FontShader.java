@@ -24,7 +24,7 @@ public class FontShader extends ShaderProgram {
 	private static final String VERT_FILE = "gui.vert", FRAG_FILE = "gui.frag";
 
 	private int location_translation;
-	private int location_color;
+	private int location_colour;
 
 	public FontShader() {
 		super(VERT_FILE, FRAG_FILE);
@@ -32,22 +32,22 @@ public class FontShader extends ShaderProgram {
 
 	@Override
 	protected void getAllUniformLocations() {
-		location_translation = super.getUniformLocation("translation");
-		location_color = super.getUniformLocation("color");
+        location_translation = super.getUniformLocation("translation");
+        location_colour = super.getUniformLocation("colour");
 	}
 
 	@Override
 	protected void bindAttributes() {
-		super.bindAttribute(0, "position");
-		super.bindAttribute(1, "textureCoords");
+        super.bindAttribute(0, "position");
+        super.bindAttribute(1, "textureCoords");
 	}
 
-	public void loadColor(Vector3f color) {
-		super.loadVector(location_color, color);
+	public void loadColour(Vector3f colour) {
+        super.loadVector(location_colour, colour);
 	}
 
 	public void loadTranslation(Vector2f translation) {
-		super.loadVector(location_translation, translation);
+        super.loadVector(location_translation, translation);
 	}
 
 }

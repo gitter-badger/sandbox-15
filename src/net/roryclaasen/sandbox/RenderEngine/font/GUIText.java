@@ -16,7 +16,7 @@ public class GUIText {
 
 	private int textMeshVao;
 	private int vertexCount;
-	private Vector3f color = new Vector3f(0f, 0f, 0f);
+	private Vector3f colour = new Vector3f(0f, 0f, 0f);
 
 	private Vector2f position;
 	private float lineMaxSize;
@@ -86,14 +86,14 @@ public class GUIText {
 	 *            - blue value, between 0 and 1.
 	 */
 	public void setColor(float r, float g, float b) {
-		color.set(r, g, b);
+		colour.set(r, g, b);
 	}
 
 	/**
 	 * @return the colour of the text.
 	 */
-	public Vector3f getColor() {
-		return color;
+	public Vector3f getColour() {
+		return colour;
 	}
 
 	/**

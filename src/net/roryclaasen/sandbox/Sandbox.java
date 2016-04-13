@@ -94,7 +94,7 @@ public class Sandbox {
 		display.createDisplay();
 		init();
 
-		GUIText fps = new GUIText(currentFrames + " :fps", 1, TextMaster.arial, new Vector2f(0, 0), 1F, true);
+		GUIText fps = new GUIText(currentFrames + " :fps", 3, TextMaster.sans, new Vector2f(0f, 0.4f), 1F, true);
 		fps.setColor(0F, 1F, 0F);
 		{
 			long lastTime = System.nanoTime();
