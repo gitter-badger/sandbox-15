@@ -29,7 +29,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Terrain {
-	private static final float SIZE = 800;
+	private static final float SIZE = 400;
 
 	private static final float MAX_HEIGHT = 40;
 	private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256;

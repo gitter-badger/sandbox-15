@@ -24,6 +24,7 @@ public class Arguments {
 
 	private boolean debug;
 	private boolean log;
+	private boolean doConfig;
 
 	public Arguments(String[] args) {
 		this.args = args;
@@ -39,9 +40,10 @@ public class Arguments {
 
 	private void check(String string) {
 		if (string.startsWith("-")) {
-			string = string.replaceFirst("-", "");
+			string = string.replaceFirst("-", "").toLowerCase();
 			if (string.equals("debug")) debug = true;
 			if (string.equals("log")) log = true;
+			if (string.equals("noconfig")) doConfig = false;
 		}
 	}
 
@@ -55,5 +57,9 @@ public class Arguments {
 
 	public boolean doSaveLog() {
 		return log;
+	}
+
+	public boolean doLoadConfig() {
+		return doConfig;
 	}
 }

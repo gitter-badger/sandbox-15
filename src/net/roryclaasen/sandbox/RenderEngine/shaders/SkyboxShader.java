@@ -57,13 +57,13 @@ public class SkyboxShader extends ShaderProgram {
 		location_cubemap1 = super.getUniformLocation("cubeMap1");
 		location_cubemap2 = super.getUniformLocation("cubeMap2");
 	}
-	
-	public void connectTextureUnits(){
+
+	public void connectTextureUnits() {
 		super.loadInt(location_cubemap1, 0);
 		super.loadInt(location_cubemap2, 1);
 	}
-	
-	public void loadBlendFactor(float factor){
+
+	public void loadBlendFactor(float factor) {
 		super.loadFloat(location_blendFactor, factor);
 	}
 
@@ -82,6 +82,7 @@ public class SkyboxShader extends ShaderProgram {
 		matrix.m32 = 0;
 		rotation += ROTATION_SPEED * DisplayManager.getFrameTimeSeconds();
 		Matrix4f.rotate((float) Math.toRadians(rotation), new Vector3f(0, 1, 0), matrix, matrix);
+		Matrix4f.translate(new Vector3f(0, -200, 0), matrix, matrix);
 		super.loadMatrix(location_viewMatrix, matrix);
 	}
 }

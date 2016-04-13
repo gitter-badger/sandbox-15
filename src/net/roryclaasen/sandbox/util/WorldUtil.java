@@ -39,6 +39,7 @@ public class WorldUtil {
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			game.entityManager.getPlayer().setInMenu(true);
+			Mouse.setGrabbed(false);
 			Mouse.setCursorPosition(DisplayManager.getWidth() / 2, DisplayManager.getHeight() / 2);
 		}
 		if (Mouse.isButtonDown(0) && game.entityManager.getPlayer().isInMenu()) game.entityManager.getPlayer().setInMenu(false);

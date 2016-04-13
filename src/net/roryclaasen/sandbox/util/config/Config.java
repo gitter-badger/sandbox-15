@@ -20,13 +20,15 @@ public enum Config {
 	// Display
 	width("width", 1280), height("height", 720), fpsCap("fps-cap", 120),
 
-	// Camera
-	fov("camera-fov", 70), sensitivity("mouse-sensitivity", 0.5f),
+	// Camera & Movement
+	fov("camera-fov", 70), sensitivity("mouse-sensitivity", 0.5f), movingSpeed("player-moving-speed", 120F),
 
 	// World
 	skyRotate("sky-rotate-speed", 0.5F),
+
 	// Render
 	anisotropic("anisotropic-filtering", true), antialiasing("antialiasing", false), antialiasingSample("antialiasing-sample", 4)
+
 	// END OF CONFIG
 	;
 

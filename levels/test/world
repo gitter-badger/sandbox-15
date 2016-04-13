@@ -4,7 +4,7 @@
 		
 	</player>
 	<chunk>
-		<hightmmap>heightmap.png</hightmmap>
+		<hightmmap>heightmap2.png</hightmmap>
 		<blendmap>map.png</blendmap>
 		<texturepack>0</texturepack>
 		<file>worldData</file>

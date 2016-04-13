@@ -22,6 +22,7 @@ import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.Player;
 import net.roryclaasen.sandbox.entities.light.Light;
 import net.roryclaasen.sandbox.level.EntityData;
+import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.util.MousePicker;
 
 import org.lwjgl.opengl.GL11;
@@ -48,7 +49,7 @@ public class GameStateLevel extends GameState {
 		gsm.getSandbox().levelLoader.loadLevel("test");
 		EntityData pData = gsm.getSandbox().levelLoader.getPlayerData();
 		// Player
-		player = new Player(new Vector3f(384, 0, 384), pData.getRotationX(), pData.getRotationY(), pData.getRotationZ());
+		player = new Player(new Vector3f(Terrain.getSize() / 2, 100, Terrain.getSize() / 2), pData.getRotationX(), pData.getRotationY(), pData.getRotationZ());
 		camera = new Camera(player);
 		player.setCamera(camera);
 		camera.setPitch(20f);
@@ -59,8 +60,8 @@ public class GameStateLevel extends GameState {
 		Light lightSun = new Light(new Vector3f(player.getX(), player.getY() + 100, player.getZ()), new Vector3f(1f, 1f, 1f));
 		entityManager.addSun(lightSun);
 
-		for (int x = 1; x < 8; x++) {
-			for (int y = 1; y < 8; y++) {
+		for (int x = 1; x < Terrain.getSize() / WaterTile.TILE_SIZE; x++) {
+			for (int y = 1; y < Terrain.getSize() / WaterTile.TILE_SIZE; y++) {
 				terrainManager.addWater(new WaterTile(x * 100, y * 100, -1));
 			}
 		}
@@ -82,7 +83,7 @@ public class GameStateLevel extends GameState {
 		camera.invertPitch();
 		buffers.bindRefractionFrameBuffer();
 		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, terrainManager.getWaters().get(0).getHeight()));
-		
+
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		buffers.unbindCurrentFrameBuffer();
 		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, 100000));
@@ -97,8 +98,9 @@ public class GameStateLevel extends GameState {
 	public void update() {
 		if (!player.isInMenu()) {
 			skybox.update(entityManager);
+			player.move();
+			camera.move();
 		}
-		camera.move();
 		worldUtil.update(camera);
 		mousePicker.update();
 	}

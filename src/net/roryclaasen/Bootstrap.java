@@ -43,6 +43,7 @@ public class Bootstrap {
 		}
 		if (conf != null) conf.save();
 		Log.info("Goodbye");
+		Log.save();
 	}
 
 	private static boolean init(Arguments arguments) {
@@ -58,7 +59,7 @@ public class Bootstrap {
 				Log.info("Game running in debug mode");
 			}
 			conf = new ConfigLoader();
-			conf.load();
+			if (arguments.doLoadConfig()) conf.load();
 			options = new Options();
 			options.init();
 			return true;

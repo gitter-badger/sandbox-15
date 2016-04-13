@@ -74,7 +74,7 @@ public class MasterRenderer {
 		createProjectionMatrix();
 		entityRenderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRender(terrainShader, projectionMatrix);
-		// skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
+		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
 	}
 
 	public static void enableCulling() {
@@ -120,7 +120,7 @@ public class MasterRenderer {
 		terrainShader.loadViewMatrix(camera);
 		terrainRenderer.render(terrains);
 		terrainShader.stop();
-		// skyboxRenderer.render(camera, fogColour.x, fogColour.y, fogColour.z);
+		skyboxRenderer.render(camera, fogColour.x, fogColour.y, fogColour.z);
 
 		entities.clear();
 		terrains.clear();
