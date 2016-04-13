@@ -19,6 +19,8 @@ package net.roryclaasen.sandbox.state;
 import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.Sandbox;
 
+import org.lwjgl.opengl.GL11;
+
 public class GameStateManager {
 
 	private Sandbox sandbox;
@@ -48,7 +50,7 @@ public class GameStateManager {
 	public void render() {
 		if (currentState != null) currentState.render();
 
-		//GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 		sandbox.rendererGui.render(sandbox.guiManager.getGuis());
 	}
 

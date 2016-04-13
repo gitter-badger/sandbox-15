@@ -71,6 +71,7 @@ public class Sandbox {
 	}
 
 	private void init() {
+		Log.info("Initializing...");
 		loader = new Loader();
 		TextMaster.init(loader);
 
@@ -84,9 +85,10 @@ public class Sandbox {
 		levelLoader = new LevelLoader(this);
 		gameStateManager = new GameStateManager(this);
 
-		gameStateManager.setState(GameStateManager.State.GAME);
-
 		Models.load(loader);
+		Log.info("Initializing... DONE");
+
+		gameStateManager.setState(GameStateManager.State.GAME);
 	}
 
 	public void start() {
@@ -94,7 +96,7 @@ public class Sandbox {
 		display.createDisplay();
 		init();
 
-		GUIText fps = new GUIText(currentFrames + " :fps", 3, TextMaster.sans, new Vector2f(0f, 0.4f), 1F, true);
+		GUIText fps = new GUIText(currentFrames + " :fps", 1, TextMaster.sans, new Vector2f(0f, 0f), 1F, false);
 		fps.setColor(0F, 1F, 0F);
 		{
 			long lastTime = System.nanoTime();

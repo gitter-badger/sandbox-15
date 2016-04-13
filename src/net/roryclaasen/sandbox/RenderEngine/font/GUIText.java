@@ -182,7 +182,9 @@ public class GUIText {
 	}
 
 	public void setTextString(String textString) {
+		TextMaster.removeText(this);
 		this.textString = textString;
+		TextMaster.loadText(this);
 	}
 
 }

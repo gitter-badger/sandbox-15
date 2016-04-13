@@ -21,7 +21,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class FontShader extends ShaderProgram {
 
-	private static final String VERT_FILE = "gui.vert", FRAG_FILE = "gui.frag";
+	private static final String VERT_FILE = "font.vert", FRAG_FILE = "font.frag";
 
 	private int location_translation;
 	private int location_colour;

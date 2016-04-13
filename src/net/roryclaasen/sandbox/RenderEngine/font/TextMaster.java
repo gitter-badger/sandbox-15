@@ -49,7 +49,7 @@ public class TextMaster {
 		arial = new FontType(loader.loadTextureFont("arial"), "arial");
 		sans = new FontType(loader.loadTextureFont("sans"), "sans");
 		moire = new FontType(loader.loadTextureFont("moire"), "moire");
-		moire = new FontType(loader.loadTextureFont("moire.dist"), "moire");
+		moire = new FontType(loader.loadTextureFont("moire.dist"), "moire.dist");
 		Log.info("Fonts... Done");
 	}
 
