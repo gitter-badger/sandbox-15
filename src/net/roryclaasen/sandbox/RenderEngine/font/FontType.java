@@ -1,6 +1,5 @@
 package net.roryclaasen.sandbox.RenderEngine.font;
 
-
 /**
  * Represents a font. It holds the font's texture atlas as well as having the
  * ability to create the quad vertices for any text using this font.
@@ -12,6 +11,7 @@ public class FontType {
 
 	private int textureAtlas;
 	private TextMeshCreator loader;
+	private boolean distanceField;
 
 	/**
 	 * Creates a new font and loads up the data about each character from the
@@ -24,8 +24,13 @@ public class FontType {
 	 *            the texture atlas.
 	 */
 	public FontType(int textureAtlas, String fontFile) {
+		this(textureAtlas, fontFile, false);
+	}
+
+	public FontType(int textureAtlas, String fontFile, boolean isDistanceField) {
 		this.textureAtlas = textureAtlas;
-		this.loader = new TextMeshCreator(fontFile);
+		this.distanceField = isDistanceField;
+		this.loader = new TextMeshCreator(this, fontFile);
 	}
 
 	/**
@@ -48,4 +53,7 @@ public class FontType {
 		return loader.createTextMesh(text);
 	}
 
+	public boolean isDistanceField() {
+		return distanceField;
+	}
 }

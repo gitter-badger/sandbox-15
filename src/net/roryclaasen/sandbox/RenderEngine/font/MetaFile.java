@@ -20,10 +20,13 @@ public class MetaFile {
 	private static final int PAD_BOTTOM = 2;
 	private static final int PAD_RIGHT = 3;
 
-	private static final int DESIRED_PADDING = 3;
+	private static final int DESIRED_PADDING_NORMAL = 3;
+	private static final int DESIRED_PADDING_DISTANCE = 8;
 
 	private static final String SPLITTER = " ";
 	private static final String NUMBER_SEPARATOR = ",";
+
+	private FontType font;
 
 	private double aspectRatio;
 
@@ -45,7 +48,8 @@ public class MetaFile {
 	 * @param file
 	 *            - the font file.
 	 */
-	protected MetaFile(String file) {
+	protected MetaFile(FontType font, String file) {
+		this.font = font;
 		this.aspectRatio = (double) Display.getWidth() / (double) Display.getHeight();
 		openFile(file);
 		loadPaddingData();
@@ -197,17 +201,22 @@ public class MetaFile {
 			this.spaceWidth = (getValueOfVariable("xadvance") - paddingWidth) * horizontalPerPixelSize;
 			return null;
 		}
-		double xTex = ((double) getValueOfVariable("x") + (padding[PAD_LEFT] - DESIRED_PADDING)) / imageSize;
-		double yTex = ((double) getValueOfVariable("y") + (padding[PAD_TOP] - DESIRED_PADDING)) / imageSize;
-		int width = getValueOfVariable("width") - (paddingWidth - (2 * DESIRED_PADDING));
-		int height = getValueOfVariable("height") - ((paddingHeight) - (2 * DESIRED_PADDING));
+		double xTex = ((double) getValueOfVariable("x") + (padding[PAD_LEFT] - getDesiredPadding())) / imageSize;
+		double yTex = ((double) getValueOfVariable("y") + (padding[PAD_TOP] - getDesiredPadding())) / imageSize;
+		int width = getValueOfVariable("width") - (paddingWidth - (2 * getDesiredPadding()));
+		int height = getValueOfVariable("height") - ((paddingHeight) - (2 * getDesiredPadding()));
 		double quadWidth = width * horizontalPerPixelSize;
 		double quadHeight = height * verticalPerPixelSize;
 		double xTexSize = (double) width / imageSize;
 		double yTexSize = (double) height / imageSize;
-		double xOff = (getValueOfVariable("xoffset") + padding[PAD_LEFT] - DESIRED_PADDING) * horizontalPerPixelSize;
-		double yOff = (getValueOfVariable("yoffset") + (padding[PAD_TOP] - DESIRED_PADDING)) * verticalPerPixelSize;
+		double xOff = (getValueOfVariable("xoffset") + padding[PAD_LEFT] - getDesiredPadding()) * horizontalPerPixelSize;
+		double yOff = (getValueOfVariable("yoffset") + (padding[PAD_TOP] - getDesiredPadding())) * verticalPerPixelSize;
 		double xAdvance = (getValueOfVariable("xadvance") - paddingWidth) * horizontalPerPixelSize;
 		return new Character(id, xTex, yTex, xTexSize, yTexSize, xOff, yOff, quadWidth, quadHeight, xAdvance);
+	}
+
+	private int getDesiredPadding() {
+		if (font.isDistanceField()) return DESIRED_PADDING_DISTANCE;
+		return DESIRED_PADDING_NORMAL;
 	}
 }

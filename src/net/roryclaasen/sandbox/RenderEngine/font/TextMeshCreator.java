@@ -10,8 +10,8 @@ public class TextMeshCreator {
 
 	private MetaFile metaData;
 
-	protected TextMeshCreator(String metaFile) {
-		metaData = new MetaFile(metaFile);
+	protected TextMeshCreator(FontType type,String metaFile) {
+		metaData = new MetaFile(type,metaFile);
 	}
 
 	protected TextMeshData createTextMesh(GUIText text) {

@@ -26,6 +26,8 @@ public class GUIText {
 
 	private boolean centerText = false;
 
+	private BorderEffect effect = new BorderEffect();
+
 	/**
 	 * Creates a new text, loads the text's quads into a VAO, and adds the text
 	 * to the screen.
@@ -59,6 +61,11 @@ public class GUIText {
 		this.lineMaxSize = maxLineLength;
 		this.centerText = centered;
 		TextMaster.loadText(this);
+	}
+
+	public GUIText border(BorderEffect effect) {
+		this.effect = effect;
+		return this;
 	}
 
 	/**
@@ -181,10 +188,19 @@ public class GUIText {
 		return textString;
 	}
 
-	public void setTextString(String textString) {
+	public void update(String text, float fontSize, FontType font, Vector2f position, float maxLineLength, boolean centered, BorderEffect effect) {
 		TextMaster.removeText(this);
-		this.textString = textString;
+		if (text != null) this.textString = text;
+		if (fontSize != -1f) this.fontSize = fontSize;
+		if (font != null) this.font = font;
+		if (position != null) this.position = position;
+		if (maxLineLength != -1f) this.lineMaxSize = maxLineLength;
+		this.centerText = centered;
+		if (effect != null) this.effect = effect;
 		TextMaster.loadText(this);
 	}
-
+	
+	public BorderEffect getBorder(){
+		return effect;
+	}
 }

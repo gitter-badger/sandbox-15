@@ -20,6 +20,7 @@ import net.gogo98901.log.Log;
 import net.roryclaasen.Bootstrap;
 import net.roryclaasen.sandbox.RenderEngine.GuiRenderer;
 import net.roryclaasen.sandbox.RenderEngine.MasterRenderer;
+import net.roryclaasen.sandbox.RenderEngine.font.BorderEffect;
 import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
 import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.models.Models;
@@ -38,6 +39,7 @@ import net.roryclaasen.sandbox.util.WorldUtil;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class Sandbox {
 
@@ -98,6 +100,8 @@ public class Sandbox {
 
 		GUIText fps = new GUIText(currentFrames + " :fps", 1, TextMaster.sans, new Vector2f(0f, 0f), 1F, false);
 		fps.setColor(0F, 1F, 0F);
+		fps.border(new BorderEffect(new Vector3f(0.2f, 0.2f, 0.2f)).setBorderWidth(5f));
+
 		{
 			long lastTime = System.nanoTime();
 			long timer = System.currentTimeMillis();
@@ -135,7 +139,7 @@ public class Sandbox {
 					currentUpdates = updates;
 					updates = 0;
 					frames = 0;
-					fps.setTextString(currentFrames + " :fps");
+					fps.update(currentFrames + " :fps", -1f, null, null, -1f, false, null);
 				}
 			}
 		}
