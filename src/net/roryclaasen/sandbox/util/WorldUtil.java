@@ -24,6 +24,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 public class WorldUtil {
+
 	public static final float GRAVITY = -50f;
 	private boolean wireFrame = false;
 	private Sandbox game;
@@ -32,10 +33,26 @@ public class WorldUtil {
 		this.game = game;
 	}
 
-	public void update(Camera camera) {
-		if (wireFrame) GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-		else GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+	public void render() {
+		renderWireFrame();
+	}
 
+	public void renderWireFrame() {
+		renderWireFrame(wireFrame);
+	}
+
+	public void renderWireFrame(boolean frame) {
+		if (frame) {
+			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+			GL11.glDisable(GL11.GL_TEXTURE_2D);
+		} else {
+			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+			GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glShadeModel(GL11.GL_SMOOTH);
+		}
+	}
+
+	public void update(Camera camera) {
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			game.entityManager.getPlayer().setInMenu(true);
 			Mouse.setGrabbed(false);

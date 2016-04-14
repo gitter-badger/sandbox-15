@@ -53,8 +53,8 @@ public class DisplayManager {
 			}
 			Display.create(pixelFormat, attribs);
 			Display.setTitle(Bootstrap.TITLE);
-			// Display.setIcon(getIcons());
 			if (Config.antialiasing.getBoolean()) GL11.glEnable(GL13.GL_MULTISAMPLE);
+			// Display.setIcon(getIcons());
 			Log.info("Display Created");
 		} catch (Exception e) {
 			Log.stackTrace(Level.SEVERE, e);

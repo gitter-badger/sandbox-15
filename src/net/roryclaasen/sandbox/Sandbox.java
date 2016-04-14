@@ -127,7 +127,9 @@ public class Sandbox {
 					delta--;
 				}
 				{// render
+					worldUtil.render();
 					gameStateManager.render();
+					worldUtil.renderWireFrame(false);
 					TextMaster.render();
 					display.updateDisplay();
 				}

@@ -58,7 +58,7 @@ public class SkyboxRenderer {
 		GL30.glBindVertexArray(cube.getVaoId());
 		GL20.glEnableVertexAttribArray(0);
 		bindTextures();
-		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, cube.getVertexCount());
+		//GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, cube.getVertexCount());
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		shader.stop();
