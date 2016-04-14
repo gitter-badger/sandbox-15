@@ -98,8 +98,8 @@ public class MasterRenderer {
 		waterRenderer = new WaterRenderer(loader, waterShader, projectionMatrix, buffers);
 	}
 
-	public void renderWater(TerrainManager terrainManager, Camera camera) {
-		waterRenderer.render(terrainManager.getWaters(), camera);
+	public void renderWater(TerrainManager terrainManager, Camera camera, Light sun) {
+		waterRenderer.render(terrainManager.getWaters(), camera, sun);
 	}
 
 	public void render(List<Light> lights, Camera camera, Vector4f clipPlane) {

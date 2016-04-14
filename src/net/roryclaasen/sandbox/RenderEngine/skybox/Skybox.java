@@ -64,13 +64,14 @@ public class Skybox {
 		time += DisplayManager.getFrameTimeSeconds() * 1000;
 		if (entityManager.getSun() != null) {
 			Light sun = entityManager.getSun();
+			@SuppressWarnings("unused")
 			Player player = entityManager.getPlayer();
 			if (isDay()) {
-				sun.setPosition(new Vector3f(player.getX(), player.getY() + 100 * 2, player.getZ()));
+				//sun.setPosition(new Vector3f(player.getX(), player.getY() + 100 * 2, player.getZ()));
 				sun.setColor(new Vector3f(1, 1, 1));
 			}
 			if (isNight()) {
-				sun.setPosition(new Vector3f(player.getX(), player.getY() + 250 * 2, player.getZ()));
+				//sun.setPosition(new Vector3f(player.getX(), player.getY() + 250 * 2, player.getZ()));
 				sun.setColor(new Vector3f(0, 0, 0));
 			}
 		}

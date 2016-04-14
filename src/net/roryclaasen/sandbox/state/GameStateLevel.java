@@ -60,7 +60,7 @@ public class GameStateLevel extends GameState {
 		entityManager.addPlayer(player);
 
 		// Light
-		Light lightSun = new Light(new Vector3f(player.getX(), player.getY() + 100, player.getZ()), new Vector3f(1f, 1f, 1f));
+		Light lightSun = new Light(new Vector3f(player.getX(), 400, player.getZ()), new Vector3f(1f, 1f, 1f));
 		entityManager.addSun(lightSun);
 
 		for (int x = 1; x < Terrain.getSize() / WaterTile.TILE_SIZE; x++) {
@@ -83,17 +83,16 @@ public class GameStateLevel extends GameState {
 		float distance = 2 * (camera.getPosition().y - terrainManager.getWaters().get(0).getHeight());
 		camera.getPosition().y -= distance;
 		camera.invertPitch();
-		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, 1, 0, -terrainManager.getWaters().get(0).getHeight()));
+		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, 1, 0, -terrainManager.getWaters().get(0).getHeight() + 1f));
 		camera.getPosition().y += distance;
 		camera.invertPitch();
 		buffers.bindRefractionFrameBuffer();
-		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, terrainManager.getWaters().get(0).getHeight()));
+		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, terrainManager.getWaters().get(0).getHeight()+ 1f));
 
-		
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		buffers.unbindCurrentFrameBuffer();
 		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, 100000));
-		renderer.renderWater(terrainManager, camera);
+		renderer.renderWater(terrainManager, camera, entityManager.getSun());
 
 		ParticleMaster.renderParticles(camera);
 		if (player.isInMenu()) {
@@ -108,7 +107,7 @@ public class GameStateLevel extends GameState {
 			player.move();
 			camera.move();
 		}
-		system.generateParticles(player.getPosition());
+		// system.generateParticles(player.getPosition());
 		worldUtil.update(camera);
 		mousePicker.update();
 		ParticleMaster.update();

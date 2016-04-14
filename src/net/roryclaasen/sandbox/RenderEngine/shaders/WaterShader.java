@@ -15,6 +15,7 @@
 package net.roryclaasen.sandbox.RenderEngine.shaders;
 
 import net.roryclaasen.sandbox.entities.Camera;
+import net.roryclaasen.sandbox.entities.light.Light;
 import net.roryclaasen.sandbox.util.Maths;
 
 import org.lwjgl.util.vector.Matrix4f;
@@ -29,8 +30,12 @@ public class WaterShader extends ShaderProgram {
 	private int location_refelectionTexture;
 	private int location_refractionTexture;
 	private int location_dudvMap;
+	private int location_normalMap;
 	private int location_moveFactor;
 	private int location_cameraPosition;
+	private int location_lightColor;
+	private int location_lightPosition;
+	private int location_depthMap;
 
 	public WaterShader() {
 		super(VERT_FILE, FRAG_FILE);
@@ -49,14 +54,25 @@ public class WaterShader extends ShaderProgram {
 		location_refelectionTexture = getUniformLocation("refelectionTexture");
 		location_refractionTexture = getUniformLocation("refractionTexture");
 		location_dudvMap = getUniformLocation("dudvMap");
+		location_normalMap = getUniformLocation("normalMap");
 		location_moveFactor = getUniformLocation("moveFactor");
 		location_cameraPosition = getUniformLocation("cameraPosition");
+		location_lightColor = getUniformLocation("lightColor");
+		location_lightPosition = getUniformLocation("lightPosition");
+		location_depthMap = getUniformLocation("depthMap");
 	}
 
 	public void connectTextureUnits() {
 		super.loadInt(location_refelectionTexture, 0);
 		super.loadInt(location_refractionTexture, 1);
 		super.loadInt(location_dudvMap, 2);
+		super.loadInt(location_normalMap, 3);
+		super.loadInt(location_depthMap, 4);
+	}
+
+	public void loadLight(Light sun) {
+		super.loadVector(location_lightColor, sun.getColor());
+		super.loadVector(location_lightPosition, sun.getPosition());
 	}
 
 	public void loadMoveFactor(float factor) {
