@@ -30,7 +30,10 @@ public class Particle {
 
 	private float elapsedTime = 0;
 
-	public Particle(Vector3f position, Vector3f velocity, float gravityEffect, float lifeLength, float rotation, float scale) {
+	private ParticleTexture texture;
+
+	public Particle(ParticleTexture texture, Vector3f position, Vector3f velocity, float gravityEffect, float lifeLength, float rotation, float scale) {
+		this.texture = texture;
 		this.position = position;
 		this.velocity = velocity;
 		this.gravityEffect = gravityEffect;
@@ -61,4 +64,7 @@ public class Particle {
 		return scale;
 	}
 
+	public ParticleTexture getTexture() {
+		return texture;
+	}
 }

@@ -14,8 +14,12 @@ limitations under the License.
 */
 #version 140
 
-out vec4 out_colour;
+in vec2 textureCoords;
+
+out vec4 out_Color;
+
+uniform sampler2D particleTexture;
 
 void main(void) {
-	out_colour = vec4(1.0);
+	out_Color = texture(particleTexture, textureCoords);
 }

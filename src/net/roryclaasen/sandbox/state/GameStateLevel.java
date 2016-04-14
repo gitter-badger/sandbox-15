@@ -15,6 +15,8 @@
 package net.roryclaasen.sandbox.state;
 
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
+import net.roryclaasen.sandbox.RenderEngine.particle.ParticleSystem;
+import net.roryclaasen.sandbox.RenderEngine.particle.ParticleTexture;
 import net.roryclaasen.sandbox.RenderEngine.water.WaterFrameBuffers;
 import net.roryclaasen.sandbox.RenderEngine.water.WaterTile;
 import net.roryclaasen.sandbox.entities.Camera;
@@ -43,6 +45,8 @@ public class GameStateLevel extends GameState {
 		renderer.setUpWaterRenderer(buffers);
 	}
 
+	ParticleSystem system;
+
 	@Override
 	public void init() {
 		gsm.getSandbox().levelLoader.loadLevel("test");
@@ -68,6 +72,8 @@ public class GameStateLevel extends GameState {
 		mousePicker = new MousePicker(camera, renderer.getProjectionMatrix());
 
 		skybox.start();
+		ParticleTexture pTexture = new ParticleTexture(loader.loadTexture("particles/star"), 1);
+		system = new ParticleSystem(pTexture, 40, 10, 0.1f, 1, 1.6f);
 	}
 
 	@Override
@@ -83,6 +89,7 @@ public class GameStateLevel extends GameState {
 		buffers.bindRefractionFrameBuffer();
 		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, terrainManager.getWaters().get(0).getHeight()));
 
+		
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		buffers.unbindCurrentFrameBuffer();
 		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, 100000));
@@ -101,6 +108,7 @@ public class GameStateLevel extends GameState {
 			player.move();
 			camera.move();
 		}
+		system.generateParticles(player.getPosition());
 		worldUtil.update(camera);
 		mousePicker.update();
 		ParticleMaster.update();

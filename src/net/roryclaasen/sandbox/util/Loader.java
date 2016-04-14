@@ -103,6 +103,9 @@ public class Loader {
 			GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
 			GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, bias);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 			if (directory != "fonts") {
 				if (GLContext.getCapabilities().GL_EXT_texture_filter_anisotropic) {
 					if (Config.anisotropic.getBoolean()) {
@@ -121,9 +124,8 @@ public class Loader {
 			Log.warn("Could not read texture '" + file + "'");
 			Log.stackTrace(e);
 		}
-		int textureID = texture.getTextureID();
-		textures.add(textureID);
-		return textureID;
+		textures.add(texture.getTextureID());
+		return texture.getTextureID();
 	}
 
 	public int loadCubeMap(String path, String[] textureFiles) {
