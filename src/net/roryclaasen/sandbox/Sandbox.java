@@ -24,6 +24,7 @@ import net.roryclaasen.sandbox.RenderEngine.font.BorderEffect;
 import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
 import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.models.Models;
+import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
 import net.roryclaasen.sandbox.entities.EntityManager;
 import net.roryclaasen.sandbox.guis.GuiManager;
@@ -78,6 +79,7 @@ public class Sandbox {
 		TextMaster.init(loader);
 
 		renderer = new MasterRenderer(loader);
+		ParticleMaster.init(loader, renderer.getProjectionMatrix());
 		rendererGui = new GuiRenderer(loader);
 		guiManager = new GuiManager();
 		entityManager = new EntityManager();
@@ -148,17 +150,18 @@ public class Sandbox {
 
 	public void close() {
 		try {
+			ParticleMaster.cleanUp();
 			TextMaster.cleanUp();
 			gameStateManager.cleanUp();
 			renderer.cleanUp();
 			rendererGui.cleanUp();
 			loader.cleanUp();
-			display.destroyDisplay();
 			Log.info("CleanUp... OK");
 		} catch (Exception e) {
 			Log.info("CleanUp... Failed");
 			Log.stackTrace(e);
 		}
+		display.destroyDisplay();
 
 		Log.save();
 	}

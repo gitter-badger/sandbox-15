@@ -16,6 +16,7 @@
  */
 package net.roryclaasen.sandbox.state;
 
+import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
 import net.roryclaasen.sandbox.RenderEngine.water.WaterFrameBuffers;
 import net.roryclaasen.sandbox.RenderEngine.water.WaterTile;
 import net.roryclaasen.sandbox.entities.Camera;
@@ -89,6 +90,7 @@ public class GameStateLevel extends GameState {
 		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, 100000));
 		renderer.renderWater(terrainManager, camera);
 
+		ParticleMaster.renderParticles(camera);
 		if (player.isInMenu()) {
 			// TODO draw a menu of some sort
 		}
@@ -103,6 +105,7 @@ public class GameStateLevel extends GameState {
 		}
 		worldUtil.update(camera);
 		mousePicker.update();
+		ParticleMaster.update();
 	}
 
 	@Override

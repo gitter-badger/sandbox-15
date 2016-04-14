@@ -26,6 +26,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 public class WorldUtil {
+	public static final float GRAVITY = -50f;
 	private boolean wireFrame = false;
 	private Sandbox game;
 
