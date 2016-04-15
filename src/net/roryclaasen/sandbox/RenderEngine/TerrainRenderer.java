@@ -30,10 +30,10 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-public class TerrainRender {
+public class TerrainRenderer {
 	private TerrainShader shader;
 
-	public TerrainRender(TerrainShader shader, Matrix4f projectionMatrix) {
+	public TerrainRenderer(TerrainShader shader, Matrix4f projectionMatrix) {
 		this.shader = shader;
 		shader.start();
 		shader.loadProjectionMatrix(projectionMatrix);

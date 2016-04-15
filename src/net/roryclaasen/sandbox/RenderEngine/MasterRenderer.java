@@ -56,7 +56,7 @@ public class MasterRenderer {
 	private EntityRenderer entityRenderer;
 
 	private TerrainShader terrainShader = new TerrainShader();
-	private TerrainRender terrainRenderer;
+	private TerrainRenderer terrainRenderer;
 
 	private SkyboxRenderer skyboxRenderer;
 
@@ -71,7 +71,7 @@ public class MasterRenderer {
 		enableCulling();
 		createProjectionMatrix();
 		entityRenderer = new EntityRenderer(shader, projectionMatrix);
-		terrainRenderer = new TerrainRender(terrainShader, projectionMatrix);
+		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
 	}
 

@@ -55,7 +55,7 @@ public class DisplayManager {
 			Display.create(pixelFormat, attribs);
 			Display.setTitle(Bootstrap.TITLE);
 			if (Config.antialiasing.getBoolean()) GL11.glEnable(GL13.GL_MULTISAMPLE);
-			// Display.setIcon(getIcons());
+			Display.setIcon(getIcons());
 			Log.info("Display Created");
 		} catch (Exception e) {
 			Log.stackTrace(Level.SEVERE, e);
@@ -67,7 +67,6 @@ public class DisplayManager {
 		lastFrameTime = getCurrentTime();
 	}
 
-	@SuppressWarnings("unused")
 	private ByteBuffer[] getIcons() throws IOException {
 		return new ByteBuffer[] { loadIcon("icon16.png"), loadIcon("icon32.png"), };
 	}
