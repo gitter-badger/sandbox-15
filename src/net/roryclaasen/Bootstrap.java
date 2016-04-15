@@ -18,6 +18,8 @@ import java.io.File;
 
 import net.gogo98901.log.Level;
 import net.gogo98901.log.Log;
+import net.gogo98901.log.LogEvent;
+import net.gogo98901.log.LogListener;
 import net.gogo98901.util.Data;
 import net.roryclaasen.sandbox.Sandbox;
 import net.roryclaasen.sandbox.crash.CrashHandler;
@@ -37,6 +39,15 @@ public class Bootstrap {
 		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler());
 		Log.setDateFormat("[dd.MM.yy hh:mm:ss]");
 		Log.info(TITLE + "(" + VERSION + ") by Rory Claasen");
+		Log.addListener(new LogListener() {
+			
+			@Override
+			public void logOutput(LogEvent event) {
+				if(event.getLevel() == Level.SEVERE || event.getLevel() == Level.WARNING){
+					CrashHandler.add(event.getLogText());
+				}
+			}
+		});
 		arguments = new Arguments(args);
 		if (init(arguments)) {
 			start();
