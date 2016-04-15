@@ -23,6 +23,8 @@ import net.gogo98901.log.Level;
 import net.gogo98901.log.Log;
 import net.gogo98901.util.Loader;
 import net.roryclaasen.Bootstrap;
+import net.roryclaasen.sandbox.crash.CrashMessage;
+import net.roryclaasen.sandbox.crash.CrashWindow;
 import net.roryclaasen.sandbox.util.config.Config;
 
 import org.lwjgl.Sys;
@@ -43,8 +45,8 @@ public class DisplayManager {
 	private static float delta = 0;
 
 	public void createDisplay() {
+		Log.info("Creating Display");
 		ContextAttribs attribs = new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
-
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			PixelFormat pixelFormat = new PixelFormat();
@@ -58,8 +60,9 @@ public class DisplayManager {
 			Log.info("Display Created");
 		} catch (Exception e) {
 			Log.stackTrace(Level.SEVERE, e);
-
-			System.exit(0);
+			CrashWindow.show(new CrashMessage(e));
+			// System.exit(-1);
+			return;
 		}
 
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
@@ -68,7 +71,7 @@ public class DisplayManager {
 
 	@SuppressWarnings("unused")
 	private ByteBuffer[] getIcons() throws IOException {
-		return new ByteBuffer[]{loadIcon("icon16.png"), loadIcon("icon32.png"),};
+		return new ByteBuffer[] { loadIcon("icon16.png"), loadIcon("icon32.png"), };
 	}
 
 	private ByteBuffer loadIcon(String file) throws IOException {

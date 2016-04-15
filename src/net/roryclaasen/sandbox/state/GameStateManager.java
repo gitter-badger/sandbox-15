@@ -31,12 +31,8 @@ public class GameStateManager {
 
 	public GameStateManager(Sandbox sandbox) {
 		this.sandbox = sandbox;
-		try {
-			states[0] = new GameStateMenu(this);
-			states[1] = new GameStateLevel(this);
-		} catch (Exception e) {
-
-		}
+		states[0] = new GameStateMenu(this);
+		states[1] = new GameStateLevel(this);
 	}
 
 	public void update() {
@@ -46,7 +42,7 @@ public class GameStateManager {
 	public void render() {
 		if (currentState != null) currentState.render();
 
-		//GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+		// GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 		sandbox.rendererGui.render(sandbox.guiManager.getGuis());
 	}
 
