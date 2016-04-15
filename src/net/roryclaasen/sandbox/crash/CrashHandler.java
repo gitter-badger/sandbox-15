@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CrashHandler implements UncaughtExceptionHandler {
+
 	private static Map<Thread, List<Throwable>> throwables = new HashMap<Thread, List<Throwable>>();
 
 	public static void add(Throwable e) {

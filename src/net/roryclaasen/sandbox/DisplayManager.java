@@ -60,8 +60,7 @@ public class DisplayManager {
 		} catch (Exception e) {
 			Log.stackTrace(Level.SEVERE, e);
 			CrashHandler.show(e);
-			// System.exit(-1);
-			return;
+			System.exit(-1);
 		}
 
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);

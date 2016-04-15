@@ -40,11 +40,11 @@ public class Bootstrap {
 		Log.setDateFormat("[dd.MM.yy hh:mm:ss]");
 		Log.info(TITLE + "(" + VERSION + ") by Rory Claasen");
 		Log.addListener(new LogListener() {
-			
+
 			@Override
 			public void logOutput(LogEvent event) {
-				if(event.getLevel() == Level.SEVERE || event.getLevel() == Level.WARNING){
-					CrashHandler.add(event.getLogText());
+				if (event.getLevel() == Level.SEVERE || event.getLevel() == Level.WARNING) {
+					CrashHandler.add((Throwable) event.getData());
 				}
 			}
 		});
