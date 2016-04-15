@@ -23,8 +23,7 @@ import net.gogo98901.log.Level;
 import net.gogo98901.log.Log;
 import net.gogo98901.util.Loader;
 import net.roryclaasen.Bootstrap;
-import net.roryclaasen.sandbox.crash.CrashMessage;
-import net.roryclaasen.sandbox.crash.CrashWindow;
+import net.roryclaasen.sandbox.crash.CrashHandler;
 import net.roryclaasen.sandbox.util.config.Config;
 
 import org.lwjgl.Sys;
@@ -60,7 +59,7 @@ public class DisplayManager {
 			Log.info("Display Created");
 		} catch (Exception e) {
 			Log.stackTrace(Level.SEVERE, e);
-			CrashWindow.show(new CrashMessage(e));
+			CrashHandler.show(e);
 			// System.exit(-1);
 			return;
 		}
