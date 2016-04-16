@@ -41,6 +41,8 @@ uniform float shadowMapSize;
 const int pcfCount = 2;
 const float totalTexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
 
+const float levels = 3.0;
+
 void main(void) {
 	float texelSize = 1.0 / shadowMapSize;
 	float total = 0.0;
@@ -84,13 +86,19 @@ void main(void) {
 
 		float nDotl = dot(unitNormal, unitLightVector);
 		float brightness = max(nDotl, 0.0);
+		float level = floor(brightness * levels);
+		brightness = level / levels;
 
 		vec3 lightDirection = -unitLightVector;
 		vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
 
 		float specularFactor = dot(reflectedLightDirection, unitToCameraVector);
 		specularFactor = max(specularFactor, 0.0);
+
 		float dampedFactor = pow(specularFactor, shineDamper);
+		level = floor(dampedFactor * levels);
+		dampedFactor = level / levels;
+		
 		totalDefuse = totalDefuse + (brightness * lightColour[i]) / attFactor;
 		totalSpecular = totalSpecular + (dampedFactor * refelectivity * lightColour[i]) / attFactor;
 	}
