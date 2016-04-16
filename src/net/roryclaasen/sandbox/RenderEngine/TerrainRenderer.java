@@ -17,6 +17,7 @@ package net.roryclaasen.sandbox.RenderEngine;
 import java.util.List;
 
 import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
+import net.roryclaasen.sandbox.RenderEngine.shaddow.ShadowBox;
 import net.roryclaasen.sandbox.RenderEngine.shaders.TerrainShader;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexturePack;
@@ -31,6 +32,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class TerrainRenderer {
+
 	private TerrainShader shader;
 
 	public TerrainRenderer(TerrainShader shader, Matrix4f projectionMatrix) {
@@ -38,10 +40,13 @@ public class TerrainRenderer {
 		shader.start();
 		shader.loadProjectionMatrix(projectionMatrix);
 		shader.connectTextureUnits();
+		shader.loadShadowDistance(ShadowBox.SHADOW_DISTANCE);
+		shader.loadShadowMapSize(ShadowMapMasterRenderer.SHADOW_MAP_SIZE);
 		shader.stop();
 	}
 
-	public void render(List<Terrain> terrains) {
+	public void render(List<Terrain> terrains, Matrix4f shadowSpace) {
+		shader.loadShadowSpaceMatrix(shadowSpace);
 		for (Terrain terrain : terrains) {
 			prepareTerrain(terrain);
 			loadModelMatrix(terrain);
@@ -58,7 +63,7 @@ public class TerrainRenderer {
 		GL20.glEnableVertexAttribArray(2);
 
 		bindTextures(terrain);
-		shader.loadShineVariables(1, 0);
+		shader.loadShineVariables(1, 0.05f);
 	}
 
 	private void bindTextures(Terrain terrain) {

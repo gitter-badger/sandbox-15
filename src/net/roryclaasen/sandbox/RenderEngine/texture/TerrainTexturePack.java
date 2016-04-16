@@ -14,7 +14,9 @@
  */
 package net.roryclaasen.sandbox.RenderEngine.texture;
 
+
 public class TerrainTexturePack {
+
 	private TerrainTexture backgroundTexture;
 	private TerrainTexture rTexture;
 	private TerrainTexture gTexture;

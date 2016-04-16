@@ -24,6 +24,7 @@ import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.models.Models;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
+import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.EntityManager;
 import net.roryclaasen.sandbox.guis.GuiManager;
 import net.roryclaasen.sandbox.level.LevelLoader;
@@ -33,6 +34,7 @@ import net.roryclaasen.sandbox.util.Arguments;
 import net.roryclaasen.sandbox.util.Loader;
 import net.roryclaasen.sandbox.util.MousePicker;
 import net.roryclaasen.sandbox.util.Options;
+import net.roryclaasen.sandbox.util.TextureUtil;
 import net.roryclaasen.sandbox.util.WorldUtil;
 
 import org.lwjgl.opengl.Display;
@@ -63,6 +65,8 @@ public class Sandbox {
 	public MousePicker mousePicker;
 	public WorldUtil worldUtil;
 
+	public Camera camera;
+
 	public Sandbox(Arguments arguments, Options options) {
 		Sandbox.sandbox = this;
 		Sandbox.arguments = arguments;
@@ -75,8 +79,10 @@ public class Sandbox {
 		Log.info("Initializing...");
 		loader = new Loader();
 		TextMaster.init(loader);
+		TextureUtil.init(loader);
+		camera = new Camera();
 
-		renderer = new MasterRenderer(loader);
+		renderer = new MasterRenderer(loader, camera);
 		ParticleMaster.init(loader, renderer.getProjectionMatrix());
 		rendererGui = new GuiRenderer(loader);
 		guiManager = new GuiManager();

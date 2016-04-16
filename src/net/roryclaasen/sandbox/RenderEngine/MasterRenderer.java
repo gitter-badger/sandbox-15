@@ -36,15 +36,16 @@ import net.roryclaasen.sandbox.util.config.Config;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 public class MasterRenderer {
 
-	private static final float FOV = Config.fov.getFloat();
-	private static final float PLAIN_NEAR = 0.01F;
-	private static final float PLAIN_FAR = 1000F;
+	public static final float FOV = Config.fov.getFloat();
+	public static final float PLAIN_NEAR = 0.01F;
+	public static final float PLAIN_FAR = 1000F;
 
 	private Loader loader;
 
@@ -63,16 +64,19 @@ public class MasterRenderer {
 	private WaterShader waterShader = new WaterShader();
 	private WaterRenderer waterRenderer;
 
+	private ShadowMapMasterRenderer shadowMapRenderer;
+
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
 
-	public MasterRenderer(Loader loader) {
+	public MasterRenderer(Loader loader, Camera camera) {
 		this.loader = loader;
 		enableCulling();
 		createProjectionMatrix();
 		entityRenderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
+		shadowMapRenderer = new ShadowMapMasterRenderer(camera);
 	}
 
 	public static void enableCulling() {
@@ -116,7 +120,7 @@ public class MasterRenderer {
 		terrainShader.loadSkyColorVariable(fogColour.x, fogColour.y, fogColour.z);
 		terrainShader.loadLights(lights);
 		terrainShader.loadViewMatrix(camera);
-		terrainRenderer.render(terrains);
+		terrainRenderer.render(terrains, shadowMapRenderer.getToShadowMapSpaceMatrix());
 		terrainShader.stop();
 		skyboxRenderer.render(camera, fogColour.x, fogColour.y, fogColour.z);
 
@@ -128,20 +132,22 @@ public class MasterRenderer {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glClearColor(fogColour.x, fogColour.y, fogColour.z, 1);
+		GL13.glActiveTexture(GL13.GL_TEXTURE5);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, getShadowmapTexture());
 	}
 
 	public void createProjectionMatrix() {
-		float aspectRation = (float) Display.getWidth() / (float) Display.getHeight();
-		float y_scale = (float) ((1F / Math.tan(Math.toRadians(FOV) / 2F)) * aspectRation);
-		float x_scale = y_scale / aspectRation;
-		float frustum_lenght = PLAIN_FAR - PLAIN_NEAR;
-
 		projectionMatrix = new Matrix4f();
+		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
+		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))));
+		float x_scale = y_scale / aspectRatio;
+		float frustum_length = PLAIN_FAR - PLAIN_NEAR;
+
 		projectionMatrix.m00 = x_scale;
 		projectionMatrix.m11 = y_scale;
-		projectionMatrix.m22 = -((PLAIN_FAR + PLAIN_NEAR) / frustum_lenght);
+		projectionMatrix.m22 = -((PLAIN_FAR + PLAIN_NEAR) / frustum_length);
 		projectionMatrix.m23 = -1;
-		projectionMatrix.m32 = -((2 * PLAIN_NEAR * PLAIN_FAR) / frustum_lenght);
+		projectionMatrix.m32 = -((2 * PLAIN_NEAR * PLAIN_FAR) / frustum_length);
 		projectionMatrix.m33 = 0;
 	}
 
@@ -151,6 +157,18 @@ public class MasterRenderer {
 
 	public void processTerrain(Terrain terrain) {
 		terrains.add(terrain);
+	}
+
+	public void renderShadowMap(List<Entity> entityList, Light sun) {
+		for (Entity entity : entityList) {
+			processEntity(entity);
+		}
+		shadowMapRenderer.render(entities, sun);
+		entities.clear();
+	}
+
+	public int getShadowmapTexture() {
+		return shadowMapRenderer.getShadowMap();
 	}
 
 	public void processEntity(Entity entity) {
@@ -168,6 +186,7 @@ public class MasterRenderer {
 		shader.cleanUp();
 		terrainShader.cleanUp();
 		waterShader.cleanUp();
+		shadowMapRenderer.cleanUp();
 	}
 
 }

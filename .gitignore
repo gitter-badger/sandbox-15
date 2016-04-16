@@ -17,4 +17,5 @@
 !README.md
 !libs/
 
-
+# exclude resources
+*.psd

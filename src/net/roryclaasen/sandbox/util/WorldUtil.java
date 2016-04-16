@@ -44,11 +44,8 @@ public class WorldUtil {
 	public void renderWireFrame(boolean frame) {
 		if (frame) {
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
 		} else {
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glShadeModel(GL11.GL_SMOOTH);
 		}
 	}
 

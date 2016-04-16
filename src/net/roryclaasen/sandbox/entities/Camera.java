@@ -30,10 +30,20 @@ public class Camera {
 
 	private Player player;
 
+	public Camera() {
+		position = new Vector3f(0, 50, 0);
+		pitch = 20f;
+	}
+
 	public Camera(Player player) {
 		this.player = player;
 		position = new Vector3f(player.getPosition().x, player.getPosition().y + 50, player.getPosition().z);
 		pitch = 20f;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+		position = new Vector3f(player.getPosition().x, player.getPosition().y + 50, player.getPosition().z);
 	}
 
 	public void move() {
