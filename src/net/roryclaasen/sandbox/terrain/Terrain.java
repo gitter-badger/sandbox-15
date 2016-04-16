@@ -24,12 +24,14 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Terrain {
+
 	private static final float SIZE = 400;
 
 	private float x, z;
 	private RawModel model;
 	private TerrainTexturePack texturePack;
 	private TerrainTexture blendMap;
+	private int seed = -1;
 
 	private float[][] heights;
 
@@ -69,6 +71,10 @@ public class Terrain {
 		return heights;
 	}
 
+	public int getSeed() {
+		return seed;
+	}
+
 	public float getHeightOfTerrain(float worldX, float worldZ) {
 		float terrainX = worldX - x;
 		float terrainZ = worldZ - z;
@@ -86,6 +92,7 @@ public class Terrain {
 
 	private RawModel generateTerrain(Loader loader) {
 		HeightGenerator generator = new HeightGenerator();
+		seed = generator.getSeed();
 		int vertexCount = 64 + 16 - 8;
 		heights = new float[vertexCount][vertexCount];
 

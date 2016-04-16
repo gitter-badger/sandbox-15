@@ -43,6 +43,8 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Sandbox {
+	
+	public static final BorderEffect DEBUG_EFFECT = new BorderEffect(new Vector3f(0.2f, 0.2f, 0.2f)).setBorderWidth(5f);
 
 	private static Sandbox sandbox;
 	private static Arguments arguments;
@@ -106,7 +108,7 @@ public class Sandbox {
 
 		GUIText fps = new GUIText(currentFrames + " :fps", 1, TextMaster.sans, new Vector2f(0f, 0f), 1F, false);
 		fps.setColor(0F, 1F, 0F);
-		fps.border(new BorderEffect(new Vector3f(0.2f, 0.2f, 0.2f)).setBorderWidth(5f));
+		fps.border(DEBUG_EFFECT);
 
 		{
 			long lastTime = System.nanoTime();

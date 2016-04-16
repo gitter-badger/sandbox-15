@@ -41,7 +41,7 @@ uniform float shadowMapSize;
 const int pcfCount = 2;
 const float totalTexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
 
-const float levels = 3.0;
+const float levels = 6.0;
 
 void main(void) {
 	float texelSize = 1.0 / shadowMapSize;
@@ -98,7 +98,7 @@ void main(void) {
 		float dampedFactor = pow(specularFactor, shineDamper);
 		level = floor(dampedFactor * levels);
 		dampedFactor = level / levels;
-		
+
 		totalDefuse = totalDefuse + (brightness * lightColour[i]) / attFactor;
 		totalSpecular = totalSpecular + (dampedFactor * refelectivity * lightColour[i]) / attFactor;
 	}

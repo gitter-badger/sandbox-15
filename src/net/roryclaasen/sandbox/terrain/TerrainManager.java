@@ -58,6 +58,10 @@ public class TerrainManager {
 	public List<Terrain> getTerrains() {
 		return terrains;
 	}
+	
+	public Terrain getTerrain() {
+		return getTerrains().get(0);
+	}
 
 	public void add(Terrain terrain) {
 		terrains.add(terrain);

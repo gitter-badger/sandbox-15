@@ -16,6 +16,9 @@ package net.roryclaasen.sandbox.state;
 
 import java.util.Random;
 
+import net.roryclaasen.sandbox.Sandbox;
+import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
+import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.models.Models;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleSystem;
@@ -46,6 +49,8 @@ public class GameStateLevel extends GameState {
 	private WaterFrameBuffers buffers;
 
 	private Random random = new Random();
+	
+	private GUIText seed;
 
 	public GameStateLevel(GameStateManager stateManager) {
 		super(stateManager);
@@ -101,6 +106,11 @@ public class GameStateLevel extends GameState {
 		
 		GuiTexture shadowMap = new GuiTexture(renderer.getShadowmapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
 		//guiManager.add(shadowMap);
+		
+		
+		seed = new GUIText("seed: " + terrainManager.getTerrain().getSeed(), 1, TextMaster.sans, new Vector2f(0f, 0.025f), 1F, false);
+		seed.setColor(0F, 1F, 0F);
+		seed.border(Sandbox.DEBUG_EFFECT);
 	}
 
 	@Override
