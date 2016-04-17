@@ -15,19 +15,22 @@
 package net.roryclaasen.sandbox.level;
 
 import java.io.File;
+import java.io.FileReader;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.gogo98901.log.Log;
 import net.gogo98901.util.Data;
-import net.gogo98901.util.zip.UnZipper;
+import net.roryclaasen.Bootstrap;
 import net.roryclaasen.sandbox.Sandbox;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.entities.Entity;
 import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.lwjgl.util.vector.Vector3f;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -35,6 +38,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class LevelLoader {
+
+	private JSONParser parser;
 
 	private Sandbox game;
 	private WorldData worldData;
@@ -47,33 +52,28 @@ public class LevelLoader {
 	}
 
 	private void setUp() {
-		if (Data.createPath(getLocation())) {
-
-		}
+		Data.createPath(getLocation());
+		File[] levels = (new File(getLocation())).listFiles();
+		Log.info("LevelLoader found " + (levels == null ? 0 : levels.length) + " levels saved");
+		
+		parser = new JSONParser();
 	}
 
 	public void loadLevel(String name) {
 		Log.info("LevelLoader... Loading... '" + name + "'");
-		boolean hasUnzipped = false;
 		name = name.toLowerCase();
 		File root = new File(getLocation() + File.separator + name);
-		if (root.isFile()) {
-			UnZipper.unZipIt(root.getAbsolutePath(), getLocation() + File.separator + "temp.dworld");
-			hasUnzipped = true;
-		}
-		if (root.isDirectory() || hasUnzipped) {
-			worldData = getWorldData(root);
-			for (ChunkData chunk : worldData.getChunks()) {
-				Terrain t = new Terrain(0, 0, game.loader, game.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(game.loader.loadTexture("level/" + chunk.getBlendMap())));
-				game.terrainManager.add(t);
-				if (chunk.getData() != null) {
-					for (ObjectData object : chunk.getData().getObjects()) {
-						float x = t.getX() + object.getX();
-						float z = t.getZ() + object.getY();
-						float y = TerrainManager.getCurrentTerrain(x, z).getHeightOfTerrain(x, z);
-						if (object.getTexIndex() == -1) game.entityManager.add(new Entity(object.getTexturedModel(), new Vector3f(x, y, z), 0, 0, 0, 1));
-						else game.entityManager.add(new Entity(object.getTexturedModel(), object.getTexIndex(), new Vector3f(x, y, z), 0, 0, 0, 1));
-					}
+		worldData = getWorldData(root);
+		for (ChunkData chunk : worldData.getChunks()) {
+			Terrain t = new Terrain(0, 0, game.loader, game.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(game.loader.loadTexture("level/" + chunk.getBlendMap())));
+			game.terrainManager.add(t);
+			if (chunk.getData() != null) {
+				for (ObjectData object : chunk.getData().getObjects()) {
+					float x = t.getX() + object.getX();
+					float z = t.getZ() + object.getY();
+					float y = TerrainManager.getCurrentTerrain(x, z).getHeightOfTerrain(x, z);
+					if (object.getTexIndex() == -1) game.entityManager.add(new Entity(object.getTexturedModel(), new Vector3f(x, y, z), 0, 0, 0, 1));
+					else game.entityManager.add(new Entity(object.getTexturedModel(), object.getTexIndex(), new Vector3f(x, y, z), 0, 0, 0, 1));
 				}
 			}
 		}
@@ -83,27 +83,13 @@ public class LevelLoader {
 	private WorldData getWorldData(File root) {
 		WorldData data = new WorldData();
 		try {
-			File fXmlFile = new File(root + File.separator + "world");
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
+			File worldFile = new File(root + File.separator + "world");
 
-			doc.getDocumentElement().normalize();
-			NodeList playerList = doc.getElementsByTagName("player");
-			try {
-				Node nNode = playerList.item(0);
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-					@SuppressWarnings("unused")
-					Element eElement = (Element) nNode;
-					EntityData player = new EntityData();
-					// TODO score etc.
-					data.addPlayer(player);
-				}
-			} catch (Exception e) {
-				Log.warn("Failed to load type 'player'");
-				Log.stackTrace(e);
-			}
-			NodeList chunkList = doc.getElementsByTagName("chunk");
+			JSONObject world = (JSONObject) (Object) parser.parse(new FileReader(worldFile));
+
+			JSONObject playerObject = (JSONObject) world.get("player");
+			EntityData playerData = new EntityData();
+			JSONObject chunksObject = (JSONObject) world.get("chunks");
 			try {
 				Node nNode = chunkList.item(0);
 
@@ -165,6 +151,6 @@ public class LevelLoader {
 	}
 
 	public static String getLocation() {
-		return "levels";
+		return Bootstrap.GAME_PATH + "levels";
 	}
 }

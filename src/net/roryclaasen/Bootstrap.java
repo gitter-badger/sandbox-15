@@ -24,7 +24,6 @@ import net.gogo98901.util.Data;
 import net.roryclaasen.sandbox.Sandbox;
 import net.roryclaasen.sandbox.crash.CrashHandler;
 import net.roryclaasen.sandbox.util.Arguments;
-import net.roryclaasen.sandbox.util.Options;
 import net.roryclaasen.sandbox.util.config.ConfigLoader;
 
 public class Bootstrap {
@@ -33,7 +32,8 @@ public class Bootstrap {
 
 	private static Arguments arguments;
 	private static ConfigLoader conf;
-	private static Options options;
+	
+	private static Version version;
 
 	public static void main(String[] args) {
 		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler());
@@ -49,7 +49,10 @@ public class Bootstrap {
 			}
 		});
 		arguments = new Arguments(args);
+		version = new Version();
 		if (init(arguments)) {
+			Log.info("Pre-Initializing... OKAY");
+			version.startCheck();
 			start();
 		}
 		if (conf != null) conf.save();
@@ -71,8 +74,6 @@ public class Bootstrap {
 			}
 			conf = new ConfigLoader();
 			if (arguments.doLoadConfig()) conf.load();
-			options = new Options();
-			options.init();
 			return true;
 		} catch (Exception e) {
 			Log.severe("Game failed to run");
@@ -84,8 +85,8 @@ public class Bootstrap {
 	}
 
 	private static void start() {
-		Log.info("Starting from root...");
-		Sandbox sandbox = new Sandbox(arguments, options);
+		Log.info("Starting game: " + TITLE );
+		Sandbox sandbox = new Sandbox(arguments);
 		sandbox.start();
 	}
 }

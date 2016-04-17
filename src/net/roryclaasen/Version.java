@@ -18,32 +18,46 @@ import net.gogo98901.log.Log;
 import net.roryclaasen.githubcheck.VersionCheck;
 
 public class Version {
-	
+
 	private static VersionCheck check;
-	
+
 	private static boolean hasChecked = false;
 	private static boolean isLatest, isLatestPreRelease;
-	
+
 	public Version() {
 		check = new VersionCheck("GOGO98901", "sandbox", Bootstrap.VERSION);
-		Log.info("Version check set up with version [" + check.getCurrentVersion() + "]");
+		Log.info("[Version] Version check set up with version [" + check.getCurrentVersion() + "]");
 	}
-	
+
 	public void startCheck() {
-		isLatest = Version.check.isLatestRelease(true, false);
-		isLatestPreRelease = Version.check.isLatestRelease(true, true);
-		hasChecked = true;
+		Log.info("[Version] Starting version check");
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				isLatest = Version.check.isLatestRelease(true, false);
+				isLatestPreRelease = Version.check.isLatestRelease(true, true);
+				hasChecked = true;
+
+				if (isLatest) {
+					if (!isLatestPreRelease) Log.info("[Version] Running latest version, but there is a new pre release");
+					else Log.info("[Version] Running latest version");
+				} else {
+					Log.info("[Version] Not Running latest version");
+				}
+			}
+		}, Bootstrap.TITLE + " Version Check").start();
 	}
-	
+
 	public static boolean isLatest() {
 		if (hasChecked) return isLatest;
-		Log.warn("Version check has not been carried out");
+		Log.warn("[Version] Version check has not been carried out");
 		return false;
 	}
-	
+
 	public static boolean isLatestPreRelease() {
 		if (hasChecked) return isLatestPreRelease;
-		Log.warn("Version check has not been carried out");
+		Log.warn("[Version] Version check has not been carried out");
 		return false;
 	}
 }

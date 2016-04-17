@@ -38,7 +38,7 @@ uniform vec3 skyColour;
 
 uniform float shadowMapSize;
 
-const int pcfCount = 2;
+const int pcfCount = 3;
 const float totalTexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
 
 const float levels = 6.0;

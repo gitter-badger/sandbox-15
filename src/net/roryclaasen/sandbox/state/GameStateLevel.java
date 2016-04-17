@@ -49,7 +49,7 @@ public class GameStateLevel extends GameState {
 	private WaterFrameBuffers buffers;
 
 	private Random random = new Random();
-	
+
 	private GUIText seed;
 
 	public GameStateLevel(GameStateManager stateManager) {
@@ -74,10 +74,7 @@ public class GameStateLevel extends GameState {
 		entityManager.addPlayer(player);
 
 		// Light
-		Light lightSun = new Light(new Vector3f(Terrain.getSize() / 2, 400, Terrain.getSize() / 2), new Vector3f(1f, 1f, 1f));
-		lightSun.getPosition().translate(Terrain.getSize() / 6, 0, Terrain.getSize() / 6);
-		lightSun.getPosition().scale(1000);
-		entityManager.addSun(lightSun);
+		
 
 		for (int i = 0; i < 100; i++) {
 			float x = 0;
@@ -103,20 +100,26 @@ public class GameStateLevel extends GameState {
 		skybox.start();
 		ParticleTexture pTexture = new ParticleTexture(loader.loadTexture("particles/star"), 1);
 		system = new ParticleSystem(pTexture, 40, 10, 0.1f, 1, 1.6f);
-		
+
 		GuiTexture shadowMap = new GuiTexture(renderer.getShadowmapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
-		//guiManager.add(shadowMap);
-		
-		
+		// guiManager.add(shadowMap);
+
 		seed = new GUIText("seed: " + terrainManager.getTerrain().getSeed(), 1, TextMaster.sans, new Vector2f(0f, 0.025f), 1F, false);
 		seed.setColor(0F, 1F, 0F);
 		seed.border(Sandbox.DEBUG_EFFECT);
 	}
 
+	private void addDefults() {
+		Light lightSun = new Light(new Vector3f(Terrain.getSize() / 2, 400, Terrain.getSize() / 2), new Vector3f(1f, 1f, 1f));
+		lightSun.getPosition().translate(Terrain.getSize() / 6, 0, Terrain.getSize() / 6);
+		lightSun.getPosition().scale(1000);
+		entityManager.addSun(lightSun);
+	}
+
 	@Override
 	public void render() {
 		renderer.renderShadowMap(entityManager.getEntities(), entityManager.getSun());
-		
+
 		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 		buffers.bindReflectionFrameBuffer();
 		float distance = 2 * (camera.getPosition().y - terrainManager.getWaters().get(0).getHeight());

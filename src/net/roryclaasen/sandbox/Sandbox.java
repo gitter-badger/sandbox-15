@@ -33,7 +33,6 @@ import net.roryclaasen.sandbox.terrain.TerrainManager;
 import net.roryclaasen.sandbox.util.Arguments;
 import net.roryclaasen.sandbox.util.Loader;
 import net.roryclaasen.sandbox.util.MousePicker;
-import net.roryclaasen.sandbox.util.Options;
 import net.roryclaasen.sandbox.util.TextureUtil;
 import net.roryclaasen.sandbox.util.WorldUtil;
 
@@ -48,7 +47,6 @@ public class Sandbox {
 
 	private static Sandbox sandbox;
 	private static Arguments arguments;
-	private static Options options;
 
 	public int currentFrames, currentUpdates;
 
@@ -69,10 +67,9 @@ public class Sandbox {
 
 	public Camera camera;
 
-	public Sandbox(Arguments arguments, Options options) {
+	public Sandbox(Arguments arguments) {
 		Sandbox.sandbox = this;
 		Sandbox.arguments = arguments;
-		Sandbox.options = options;
 
 		display = new DisplayManager();
 	}
@@ -174,15 +171,11 @@ public class Sandbox {
 		Log.save();
 	}
 
-	public static Sandbox getSandboxGame() {
+	public static Sandbox getSandbox() {
 		return sandbox;
 	}
 
 	public static Arguments getArguments() {
 		return arguments;
-	}
-
-	public static Options getOptions() {
-		return options;
 	}
 }
