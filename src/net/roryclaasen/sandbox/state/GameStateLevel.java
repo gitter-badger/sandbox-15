@@ -86,7 +86,7 @@ public class GameStateLevel extends GameState {
 				y = TerrainManager.getCurrentTerrain(x, z).getHeightOfTerrain(x, z) - 0.2f;
 			}
 			Vector3f position = new Vector3f(x, y, z);
-			entityManager.add(new Entity(Models.tree, position, 0, 0, 0, 1.5f));
+			entityManager.add(new Entity(Models.tree.get(), position, 0, 0, 0, 1.5f));
 		}
 
 		for (int x = 1; x < Terrain.getSize() / WaterTile.TILE_SIZE; x++) {

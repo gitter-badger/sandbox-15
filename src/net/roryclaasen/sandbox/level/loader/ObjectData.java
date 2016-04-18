@@ -14,6 +14,7 @@
  */
 package net.roryclaasen.sandbox.level.loader;
 
+import net.roryclaasen.sandbox.models.ModelLoader;
 import net.roryclaasen.sandbox.models.TexturedModel;
 import net.roryclaasen.sandbox.util.JSONUtil;
 
@@ -40,7 +41,8 @@ public class ObjectData {
 	}
 
 	public TexturedModel getTexturedModel() {
-		return null;
+		if (modelId == null) return null;
+		return ModelLoader.get(modelId);
 	}
 
 	public String getModelId() {

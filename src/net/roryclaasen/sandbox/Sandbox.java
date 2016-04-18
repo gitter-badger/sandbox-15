@@ -29,7 +29,7 @@ import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.EntityManager;
 import net.roryclaasen.sandbox.guis.GuiManager;
 import net.roryclaasen.sandbox.level.LevelLoader;
-import net.roryclaasen.sandbox.models.Models;
+import net.roryclaasen.sandbox.models.ModelLoader;
 import net.roryclaasen.sandbox.state.GameStateManager;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
 import net.roryclaasen.sandbox.util.Arguments;
@@ -98,7 +98,7 @@ public class Sandbox {
 		
 		gameStateManager = new GameStateManager(this);
 
-		Models.load(loader);
+		ModelLoader.load(loader);
 		Log.info("Initializing... DONE");
 
 		gameStateManager.setState(GameStateManager.State.GAME);

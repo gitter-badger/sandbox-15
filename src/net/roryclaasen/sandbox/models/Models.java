@@ -14,19 +14,51 @@
  */
 package net.roryclaasen.sandbox.models;
 
-import net.gogo98901.log.Log;
-import net.roryclaasen.sandbox.RenderEngine.texture.ModelTexture;
-import net.roryclaasen.sandbox.util.Loader;
+public enum Models {
+	tree("tree001", "trees/pine", "models/trees/pine", true);
 
-public class Models {
+	protected String key;
+	protected String model;
+	protected String texture;
+	protected boolean transparent = false;
+	protected boolean fakeLighting = false;
+	protected float shineDamper = 1;
+	protected float refelectivity = 0;
 
-	public static TexturedModel tree;
+	Models(String key, String model, String texture) {
+		this(key, model, texture, false, false, 1, 0);
+	}
 
-	public static void load(Loader loader) {
-		Log.info("Models... Loading");
-		
-		tree = new TexturedModel(loader.loadModel("trees/pine"), new ModelTexture(loader.loadTexture("models/trees/pine")).setTransparency(true));
-		
-		Log.info("Models... OK");
+	Models(String key, String model, String texture, boolean transparent) {
+		this(key, model, texture, transparent, false, 1, 0);
+	}
+
+	Models(String key, String model, String texture, boolean transparent, boolean fakeLighting) {
+		this(key, model, texture, transparent, fakeLighting, 1, 0);
+	}
+
+	Models(String key, String model, String texture, float shineDamper, float refelectivity) {
+		this(key, model, texture, false, false, shineDamper, refelectivity);
+	}
+
+	Models(String key, String model, String texture, boolean transparent, boolean fakeLighting, float shineDamper, float refelectivity) {
+		this.key = key;
+		this.model = model;
+		this.texture = texture;
+		this.transparent = transparent;
+		this.shineDamper = shineDamper;
+		this.refelectivity = refelectivity;
+	}
+
+	public TexturedModel get() {
+		return ModelLoader.get(key);
+	}
+	
+	public String getModel(){
+		return model;
+	}
+
+	public String getKey() {
+		return key;
 	}
 }
