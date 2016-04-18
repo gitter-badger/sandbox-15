@@ -41,7 +41,7 @@ public class ChunkData {
 		this.id = JSONUtil.getInteger(data, "id", 0);
 		this.location = new Vector2f(JSONUtil.getInteger(data, "x", 0), JSONUtil.getInteger(data, "y", 0));
 
-		this.blendMap = JSONUtil.getString(data, "belnd-map", "map.png");
+		this.blendMap = JSONUtil.getString(data, "blend-map", "map.png");
 		this.texturePack = JSONUtil.getInteger(data, "texturepack", 0);
 	}
 
