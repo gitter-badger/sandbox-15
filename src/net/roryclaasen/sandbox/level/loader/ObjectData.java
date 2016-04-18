@@ -28,7 +28,7 @@ public class ObjectData {
 	private Vector3f location;
 
 	public ObjectData(JSONObject data) {
-		this.modelId = JSONUtil.getString(data, "rotx", null);
+		this.modelId = JSONUtil.getString(data, "modelId", null);
 		if (data.containsKey("tex-index")) this.texIndex = JSONUtil.getInteger(data, "tex-index", 0);
 		float x = JSONUtil.getInteger(data, "x", 0);
 		float y = JSONUtil.getInteger(data, "y", 0);
