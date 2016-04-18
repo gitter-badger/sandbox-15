@@ -12,7 +12,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine.water;
+package net.roryclaasen.sandbox.RenderEngine.terrain.water;
 
 import java.nio.ByteBuffer;
 

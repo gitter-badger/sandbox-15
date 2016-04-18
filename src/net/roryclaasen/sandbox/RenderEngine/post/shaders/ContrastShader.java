@@ -14,6 +14,8 @@
  */
 package net.roryclaasen.sandbox.RenderEngine.post.shaders;
 
+import net.roryclaasen.sandbox.RenderEngine.shaders.PostShaderProgram;
+
 
 public class ContrastShader extends PostShaderProgram {
 

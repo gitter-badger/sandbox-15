@@ -12,10 +12,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine.shaders;
+package net.roryclaasen.sandbox.RenderEngine.terrain;
 
 import java.util.List;
 
+import net.roryclaasen.sandbox.RenderEngine.shaders.ShaderProgram;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.light.Light;
 import net.roryclaasen.sandbox.util.Maths;

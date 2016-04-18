@@ -12,15 +12,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine;
+package net.roryclaasen.sandbox.RenderEngine.terrain.water;
 
 import java.util.List;
 
 import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
-import net.roryclaasen.sandbox.RenderEngine.shaders.WaterShader;
-import net.roryclaasen.sandbox.RenderEngine.water.WaterFrameBuffers;
-import net.roryclaasen.sandbox.RenderEngine.water.WaterTile;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.light.Light;
 import net.roryclaasen.sandbox.util.Loader;

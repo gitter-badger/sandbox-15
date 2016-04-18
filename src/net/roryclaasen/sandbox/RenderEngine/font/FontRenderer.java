@@ -12,14 +12,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine;
+package net.roryclaasen.sandbox.RenderEngine.font;
 
 import java.util.List;
 import java.util.Map;
-
-import net.roryclaasen.sandbox.RenderEngine.font.FontType;
-import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
-import net.roryclaasen.sandbox.RenderEngine.shaders.FontShader;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;

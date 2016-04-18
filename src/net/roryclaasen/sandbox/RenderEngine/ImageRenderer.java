@@ -14,8 +14,6 @@
  */
 package net.roryclaasen.sandbox.RenderEngine;
 
-import net.roryclaasen.sandbox.RenderEngine.post.Fbo;
-
 import org.lwjgl.opengl.GL11;
 
 public class ImageRenderer {

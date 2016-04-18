@@ -12,11 +12,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine;
+package net.roryclaasen.sandbox.RenderEngine.skybox;
 
 import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
-import net.roryclaasen.sandbox.RenderEngine.shaders.SkyboxShader;
-import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.util.Loader;
 

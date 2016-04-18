@@ -12,11 +12,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine;
+package net.roryclaasen.sandbox.RenderEngine.entity;
 
 import java.util.List;
 import java.util.Map;
 
+import net.roryclaasen.sandbox.RenderEngine.MasterRenderer;
 import net.roryclaasen.sandbox.RenderEngine.models.TexturedModel;
 import net.roryclaasen.sandbox.RenderEngine.shaders.StaticShader;
 import net.roryclaasen.sandbox.RenderEngine.texture.ModelTexture;

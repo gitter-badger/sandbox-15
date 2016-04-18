@@ -12,15 +12,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine;
+package net.roryclaasen.sandbox.RenderEngine.particle;
 
 import java.util.List;
 import java.util.Map;
 
 import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
-import net.roryclaasen.sandbox.RenderEngine.particle.Particle;
-import net.roryclaasen.sandbox.RenderEngine.particle.ParticleTexture;
-import net.roryclaasen.sandbox.RenderEngine.shaders.ParticleShader;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.util.Loader;
 import net.roryclaasen.sandbox.util.Maths;

@@ -15,9 +15,9 @@
 package net.roryclaasen.sandbox.state;
 
 import net.roryclaasen.sandbox.DisplayManager;
-import net.roryclaasen.sandbox.RenderEngine.GuiRenderer;
+import net.roryclaasen.sandbox.RenderEngine.Fbo;
 import net.roryclaasen.sandbox.RenderEngine.MasterRenderer;
-import net.roryclaasen.sandbox.RenderEngine.post.Fbo;
+import net.roryclaasen.sandbox.RenderEngine.gui.GuiRenderer;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
 import net.roryclaasen.sandbox.entities.EntityManager;
 import net.roryclaasen.sandbox.guis.GuiManager;

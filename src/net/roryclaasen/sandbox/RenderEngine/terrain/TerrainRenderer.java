@@ -12,13 +12,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine;
+package net.roryclaasen.sandbox.RenderEngine.terrain;
 
 import java.util.List;
 
 import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
 import net.roryclaasen.sandbox.RenderEngine.shaddow.ShadowBox;
-import net.roryclaasen.sandbox.RenderEngine.shaders.TerrainShader;
+import net.roryclaasen.sandbox.RenderEngine.shaddow.ShadowMapMasterRenderer;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexturePack;
 import net.roryclaasen.sandbox.terrain.Terrain;

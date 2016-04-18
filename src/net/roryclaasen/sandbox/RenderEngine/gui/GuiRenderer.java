@@ -12,12 +12,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine;
+package net.roryclaasen.sandbox.RenderEngine.gui;
 
 import java.util.List;
 
 import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
-import net.roryclaasen.sandbox.RenderEngine.shaders.GuiShader;
 import net.roryclaasen.sandbox.guis.GuiTexture;
 import net.roryclaasen.sandbox.util.Loader;
 import net.roryclaasen.sandbox.util.Maths;

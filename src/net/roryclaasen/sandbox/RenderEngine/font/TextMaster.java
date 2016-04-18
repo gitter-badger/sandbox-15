@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.gogo98901.log.Log;
-import net.roryclaasen.sandbox.RenderEngine.FontRenderer;
 import net.roryclaasen.sandbox.util.Loader;
 
 public class TextMaster {

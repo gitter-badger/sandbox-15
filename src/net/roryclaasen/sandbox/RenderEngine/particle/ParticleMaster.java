@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.roryclaasen.sandbox.RenderEngine.ParticleRenderer;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.util.Loader;
 

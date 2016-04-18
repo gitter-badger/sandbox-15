@@ -1,6 +1,5 @@
-package net.roryclaasen.sandbox.RenderEngine.post.shaders;
+package net.roryclaasen.sandbox.RenderEngine.shaders;
 
-import net.roryclaasen.sandbox.RenderEngine.shaders.ShaderProgram;
 
 public abstract class PostShaderProgram extends ShaderProgram {
 

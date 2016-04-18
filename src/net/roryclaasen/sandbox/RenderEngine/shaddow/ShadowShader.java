@@ -14,7 +14,9 @@
    limitations under the License.
 
  */
-package net.roryclaasen.sandbox.RenderEngine.shaders;
+package net.roryclaasen.sandbox.RenderEngine.shaddow;
+
+import net.roryclaasen.sandbox.RenderEngine.shaders.ShaderProgram;
 
 import org.lwjgl.util.vector.Matrix4f;
 

@@ -12,9 +12,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine.shaders;
+package net.roryclaasen.sandbox.RenderEngine.font;
 
-import net.roryclaasen.sandbox.RenderEngine.font.BorderEffect;
+import net.roryclaasen.sandbox.RenderEngine.shaders.ShaderProgram;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
