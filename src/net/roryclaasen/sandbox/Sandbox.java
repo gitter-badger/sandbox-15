@@ -98,7 +98,7 @@ public class Sandbox {
 		
 		gameStateManager = new GameStateManager(this);
 
-		ModelLoader.load(loader);
+		ModelLoader.init(loader);
 		Log.info("Initializing... DONE");
 
 		gameStateManager.setState(GameStateManager.State.GAME);

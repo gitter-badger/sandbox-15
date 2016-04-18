@@ -150,5 +150,4 @@ public class Entity {
 	public void setHasHealth(boolean hasHealth) {
 		this.hasHealth = hasHealth;
 	}
-
 }

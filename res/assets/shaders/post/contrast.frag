@@ -20,7 +20,7 @@ out vec4 out_Colour;
 
 uniform sampler2D colourTexture;
 
-const float contrast = 0.3;
+const float contrast = 0.125;
 
 void main(void) {
 	out_Colour = texture(colourTexture, textureCoords);

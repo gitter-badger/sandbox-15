@@ -18,12 +18,12 @@ public enum Models {
 	tree("tree001", "trees/pine", "models/trees/pine", true);
 
 	protected String key;
-	protected String model;
+	protected String modelFile;
 	protected String texture;
-	protected boolean transparent = false;
-	protected boolean fakeLighting = false;
-	protected float shineDamper = 1;
-	protected float refelectivity = 0;
+	protected boolean transparent;
+	protected boolean fakeLighting;
+	protected float shineDamper;
+	protected float refelectivity;
 
 	Models(String key, String model, String texture) {
 		this(key, model, texture, false, false, 1, 0);
@@ -43,7 +43,7 @@ public enum Models {
 
 	Models(String key, String model, String texture, boolean transparent, boolean fakeLighting, float shineDamper, float refelectivity) {
 		this.key = key;
-		this.model = model;
+		this.modelFile = model;
 		this.texture = texture;
 		this.transparent = transparent;
 		this.shineDamper = shineDamper;
@@ -55,7 +55,7 @@ public enum Models {
 	}
 	
 	public String getModel(){
-		return model;
+		return modelFile;
 	}
 
 	public String getKey() {

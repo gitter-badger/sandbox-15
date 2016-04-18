@@ -148,7 +148,7 @@ public class GameStateLevel extends GameState {
 	public void update() {
 		if (!player.isInMenu()) {
 			skybox.update(entityManager);
-			player.move();
+			player.update();
 			camera.move();
 		}
 		// system.generateParticles(player.getPosition());

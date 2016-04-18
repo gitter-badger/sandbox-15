@@ -25,17 +25,15 @@ public class ModelLoader {
 
 	private static List<Object[]> models = new ArrayList<Object[]>();
 
-	public static void load(Loader loader) {
+	public static void init(Loader loader) {
 		Log.info("Models... Loading");
 		for (Models model : Models.values()) {
 			ModelTexture texture = new ModelTexture(loader.loadTexture(model.texture));
-
 			texture.setFakeLighting(model.fakeLighting);
 			texture.setTransparency(model.transparent);
 			texture.setShine(model.shineDamper, model.refelectivity);
-			addModel(model.key, new TexturedModel(loader.loadModel(model.model), texture));
+			addModel(model.key, new TexturedModel(loader.loadModel(model.modelFile), texture));
 		}
-		
 		Log.info("Models... Loaded");
 	}
 
