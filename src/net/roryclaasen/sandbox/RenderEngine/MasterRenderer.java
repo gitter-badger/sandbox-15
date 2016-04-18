@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.roryclaasen.sandbox.RenderEngine.entity.EntityRenderer;
-import net.roryclaasen.sandbox.RenderEngine.models.TexturedModel;
 import net.roryclaasen.sandbox.RenderEngine.shaddow.ShadowMapMasterRenderer;
 import net.roryclaasen.sandbox.RenderEngine.shaders.StaticShader;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
@@ -34,6 +33,7 @@ import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.Entity;
 import net.roryclaasen.sandbox.entities.EntityManager;
 import net.roryclaasen.sandbox.entities.light.Light;
+import net.roryclaasen.sandbox.models.TexturedModel;
 import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
 import net.roryclaasen.sandbox.util.Loader;

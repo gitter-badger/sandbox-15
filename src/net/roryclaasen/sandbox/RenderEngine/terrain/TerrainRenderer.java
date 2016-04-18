@@ -16,11 +16,11 @@ package net.roryclaasen.sandbox.RenderEngine.terrain;
 
 import java.util.List;
 
-import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
 import net.roryclaasen.sandbox.RenderEngine.shaddow.ShadowBox;
 import net.roryclaasen.sandbox.RenderEngine.shaddow.ShadowMapMasterRenderer;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexturePack;
+import net.roryclaasen.sandbox.models.RawModel;
 import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.util.Maths;
 

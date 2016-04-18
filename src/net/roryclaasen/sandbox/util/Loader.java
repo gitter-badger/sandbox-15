@@ -23,8 +23,8 @@ import java.util.List;
 
 import net.gogo98901.log.Level;
 import net.gogo98901.log.Log;
-import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
 import net.roryclaasen.sandbox.RenderEngine.texture.TextureData;
+import net.roryclaasen.sandbox.models.RawModel;
 import net.roryclaasen.sandbox.util.config.Config;
 import net.roryclaasen.sandbox.util.obj.ModelData;
 import net.roryclaasen.sandbox.util.obj.OBJFileLoader;

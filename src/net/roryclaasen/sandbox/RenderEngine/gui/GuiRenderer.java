@@ -16,8 +16,8 @@ package net.roryclaasen.sandbox.RenderEngine.gui;
 
 import java.util.List;
 
-import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
 import net.roryclaasen.sandbox.guis.GuiTexture;
+import net.roryclaasen.sandbox.models.RawModel;
 import net.roryclaasen.sandbox.util.Loader;
 import net.roryclaasen.sandbox.util.Maths;
 

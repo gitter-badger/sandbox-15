@@ -14,8 +14,8 @@
  */
 package net.roryclaasen.sandbox.RenderEngine.skybox;
 
-import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
 import net.roryclaasen.sandbox.entities.Camera;
+import net.roryclaasen.sandbox.models.RawModel;
 import net.roryclaasen.sandbox.util.Loader;
 
 import org.lwjgl.opengl.GL11;

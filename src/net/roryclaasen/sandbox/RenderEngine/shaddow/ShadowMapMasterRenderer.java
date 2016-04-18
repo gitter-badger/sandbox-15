@@ -19,10 +19,10 @@ package net.roryclaasen.sandbox.RenderEngine.shaddow;
 import java.util.List;
 import java.util.Map;
 
-import net.roryclaasen.sandbox.RenderEngine.models.TexturedModel;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.Entity;
 import net.roryclaasen.sandbox.entities.light.Light;
+import net.roryclaasen.sandbox.models.TexturedModel;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;

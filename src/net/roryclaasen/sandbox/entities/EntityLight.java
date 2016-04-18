@@ -14,8 +14,8 @@
  */
 package net.roryclaasen.sandbox.entities;
 
-import net.roryclaasen.sandbox.RenderEngine.models.TexturedModel;
 import net.roryclaasen.sandbox.entities.light.Light;
+import net.roryclaasen.sandbox.models.TexturedModel;
 
 import org.lwjgl.util.vector.Vector3f;
 

@@ -17,7 +17,7 @@ package net.roryclaasen.sandbox.entities;
 import org.lwjgl.util.vector.Vector3f;
 
 import net.roryclaasen.sandbox.DisplayManager;
-import net.roryclaasen.sandbox.RenderEngine.models.TexturedModel;
+import net.roryclaasen.sandbox.models.TexturedModel;
 
 public class Entity {
 	protected float health, maxHealth;

@@ -14,7 +14,7 @@
  */
 package net.roryclaasen.sandbox.RenderEngine.post;
 
-import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
+import net.roryclaasen.sandbox.models.RawModel;
 import net.roryclaasen.sandbox.util.Loader;
 
 import org.lwjgl.opengl.GL11;

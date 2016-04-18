@@ -14,7 +14,7 @@
  */
 package net.roryclaasen.sandbox.level.loader;
 
-import net.roryclaasen.sandbox.RenderEngine.models.TexturedModel;
+import net.roryclaasen.sandbox.models.TexturedModel;
 import net.roryclaasen.sandbox.util.JSONUtil;
 
 import org.json.simple.JSONObject;

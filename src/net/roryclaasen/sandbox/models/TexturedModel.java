@@ -12,21 +12,31 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine.models;
+package net.roryclaasen.sandbox.models;
 
-import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.RenderEngine.texture.ModelTexture;
-import net.roryclaasen.sandbox.util.Loader;
 
-public class Models {
+public class TexturedModel {
+	private RawModel rawModel;
+	private ModelTexture texture;
 
-	public static TexturedModel tree;
+	public TexturedModel(RawModel model, ModelTexture texture) {
+		this.rawModel = model;
+		this.texture = texture;
+	}
 
-	public static void load(Loader loader) {
-		Log.info("Models... Loading");
-		
-		tree = new TexturedModel(loader.loadModel("trees/pine"), new ModelTexture(loader.loadTexture("models/trees/pine")).setTransparency(true));
-		
-		Log.info("Models... OK");
+	public RawModel getRawModel() {
+		return rawModel;
+	}
+
+	public ModelTexture getTexture() {
+		return texture;
+	}
+	
+	public int getVaoId(){
+		return rawModel.getVaoId();
+	}
+	public int getVertexCount(){
+		return rawModel.getVertexCount();
 	}
 }

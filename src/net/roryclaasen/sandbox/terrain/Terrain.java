@@ -14,9 +14,9 @@
  */
 package net.roryclaasen.sandbox.terrain;
 
-import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexturePack;
+import net.roryclaasen.sandbox.models.RawModel;
 import net.roryclaasen.sandbox.util.Loader;
 import net.roryclaasen.sandbox.util.Maths;
 

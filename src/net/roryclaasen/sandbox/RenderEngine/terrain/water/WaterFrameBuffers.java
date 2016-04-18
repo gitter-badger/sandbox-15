@@ -25,6 +25,7 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
 
 public class WaterFrameBuffers {
+
 	protected static final int REFLECTION_WIDTH = 320;
 	private static final int REFLECTION_HEIGHT = 180;
 
@@ -39,17 +40,11 @@ public class WaterFrameBuffers {
 	private int refractionTexture;
 	private int refractionDepthTexture;
 
-	/**
-	 * call when loading the game
-	 */
 	public WaterFrameBuffers() {
 		initialiseReflectionFrameBuffer();
 		initialiseRefractionFrameBuffer();
 	}
 
-	/**
-	 * call when closing the game
-	 */
 	public void cleanUp() {
 		GL30.glDeleteFramebuffers(reflectionFrameBuffer);
 		GL11.glDeleteTextures(reflectionTexture);
@@ -59,45 +54,27 @@ public class WaterFrameBuffers {
 		GL11.glDeleteTextures(refractionDepthTexture);
 	}
 
-	/**
-	 * call before rendering to this FBO
-	 */
 	public void bindReflectionFrameBuffer() {
 		bindFrameBuffer(reflectionFrameBuffer, REFLECTION_WIDTH, REFLECTION_HEIGHT);
 	}
 
-	/**
-	 * call before rendering to this FBO
-	 */
 	public void bindRefractionFrameBuffer() {
 		bindFrameBuffer(refractionFrameBuffer, REFRACTION_WIDTH, REFRACTION_HEIGHT);
 	}
 
-	/**
-	 * call to switch to default frame buffer
-	 */
 	public void unbindCurrentFrameBuffer() {
 		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
 		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 	}
 
-	/**
-	 * get the resulting texture
-	 */
 	public int getReflectionTexture() {
 		return reflectionTexture;
 	}
 
-	/**
-	 * get the resulting texture
-	 */
 	public int getRefractionTexture() {
 		return refractionTexture;
 	}
 
-	/**
-	 * get the resulting depth texture
-	 */
 	public int getRefractionDepthTexture() {
 		return refractionDepthTexture;
 	}

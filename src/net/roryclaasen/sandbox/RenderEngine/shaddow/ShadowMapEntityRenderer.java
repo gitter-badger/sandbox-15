@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.roryclaasen.sandbox.RenderEngine.MasterRenderer;
-import net.roryclaasen.sandbox.RenderEngine.models.RawModel;
-import net.roryclaasen.sandbox.RenderEngine.models.TexturedModel;
 import net.roryclaasen.sandbox.entities.Entity;
+import net.roryclaasen.sandbox.models.RawModel;
+import net.roryclaasen.sandbox.models.TexturedModel;
 import net.roryclaasen.sandbox.util.Maths;
 
 import org.lwjgl.opengl.GL11;
