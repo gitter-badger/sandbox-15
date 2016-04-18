@@ -15,11 +15,7 @@
 package net.roryclaasen.sandbox.level;
 
 import java.io.File;
-import java.io.FileReader;
 import java.util.Iterator;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.gogo98901.log.Log;
 import net.gogo98901.util.Data;
@@ -27,21 +23,17 @@ import net.roryclaasen.Bootstrap;
 import net.roryclaasen.sandbox.Sandbox;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.entities.Entity;
+import net.roryclaasen.sandbox.level.loader.ChunkData;
+import net.roryclaasen.sandbox.level.loader.EntityData;
+import net.roryclaasen.sandbox.level.loader.ObjectData;
+import net.roryclaasen.sandbox.level.loader.WorldData;
 import net.roryclaasen.sandbox.terrain.Terrain;
-import net.roryclaasen.sandbox.terrain.TerrainManager;
+import net.roryclaasen.sandbox.util.JSONUtil;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.lwjgl.util.vector.Vector3f;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class LevelLoader {
-
-	private JSONParser parser;
 
 	private Sandbox game;
 	private WorldData worldData;
@@ -57,8 +49,6 @@ public class LevelLoader {
 		Data.createPath(getLocation());
 		File[] levels = (new File(getLocation())).listFiles();
 		Log.info("LevelLoader found " + (levels == null ? 0 : levels.length) + " levels saved");
-
-		parser = new JSONParser();
 	}
 
 	public void loadLevel(String name) {
@@ -69,14 +59,12 @@ public class LevelLoader {
 		for (ChunkData chunk : worldData.getChunks()) {
 			Terrain t = new Terrain(0, 0, game.loader, game.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(game.loader.loadTexture("level/" + chunk.getBlendMap())));
 			game.terrainManager.add(t);
-			if (chunk.getData() != null) {
-				for (ObjectData object : chunk.getData().getObjects()) {
-					float x = t.getX() + object.getX();
-					float z = t.getZ() + object.getY();
-					float y = TerrainManager.getCurrentTerrain(x, z).getHeightOfTerrain(x, z);
-					if (object.getTexIndex() == -1) game.entityManager.add(new Entity(object.getTexturedModel(), new Vector3f(x, y, z), 0, 0, 0, 1));
-					else game.entityManager.add(new Entity(object.getTexturedModel(), object.getTexIndex(), new Vector3f(x, y, z), 0, 0, 0, 1));
-				}
+			for (ObjectData object : chunk.getObjects()) {
+				float x = t.getX() + object.getLocation().getX();
+				float z = t.getZ() + object.getLocation().getZ();
+				float y = object.getLocation().getY();
+				if (object.getTexIndex() == -1) game.entityManager.add(new Entity(object.getTexturedModel(), new Vector3f(x, y, z), 0, 0, 0, 1));
+				else game.entityManager.add(new Entity(object.getTexturedModel(), object.getTexIndex(), new Vector3f(x, y, z), 0, 0, 0, 1));
 			}
 		}
 		Log.info("LevelLoader... Loading... OK");
@@ -85,13 +73,11 @@ public class LevelLoader {
 	private WorldData getWorldData(File root) {
 		WorldData data = new WorldData();
 		try {
-			File worldFile = new File(root + File.separator + "world");
+			JSONObject world = JSONUtil.read(new File(root + File.separator + "world"));
 
-			JSONObject world = (JSONObject) (Object) parser.parse(new FileReader(worldFile));
-
-			data.addPlayer(new EntityData((JSONObject) world.get("player")));
-			JSONArray chunkArrary = (JSONArray) world.get("chunks");
-			Iterator<JSONObject> iterator = chunkArrary.iterator();
+			data.addPlayer(new EntityData(JSONUtil.getObject(world, "player")));
+			@SuppressWarnings("unchecked")
+			Iterator<JSONObject> iterator = JSONUtil.getArray(world, "chunks").iterator();
 			while (iterator.hasNext()) {
 				data.addChunk(new ChunkData(iterator.next(), root));
 			}

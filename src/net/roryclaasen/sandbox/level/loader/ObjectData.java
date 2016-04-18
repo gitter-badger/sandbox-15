@@ -12,43 +12,41 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.level;
+package net.roryclaasen.sandbox.level.loader;
 
 import net.roryclaasen.sandbox.RenderEngine.models.TexturedModel;
 
+import org.json.simple.JSONObject;
+import org.lwjgl.util.vector.Vector3f;
 
 public class ObjectData {
-	private int x, y;
+
+	private String modelId;
 	private int texIndex = -1;
+	private Vector3f location;
 
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setLocation(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public ObjectData(JSONObject data) {
+		this.modelId = (String) data.get("id");
+		if (data.containsKey("tex-index")) this.texIndex = Integer.parseInt((String) data.get("tex-index"));
+		float x = Integer.parseInt((String) data.get("x"));
+		float y = Integer.parseInt((String) data.get("y"));
+		float z = Integer.parseInt((String) data.get("z"));
+		this.location = new Vector3f(x, y, z);
 	}
 
 	public int getTexIndex() {
 		return texIndex;
 	}
 
-	public void setTexIndex(int texIndex) {
-		this.texIndex = texIndex;
-	}
-
 	public TexturedModel getTexturedModel() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void setModel(String attribute) {
-		// TODO Auto-generated method stub
-		
+	public String getModelId() {
+		return modelId;
+	}
+
+	public Vector3f getLocation() {
+		return location;
 	}
 }

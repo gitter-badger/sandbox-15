@@ -12,23 +12,33 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.level;
+package net.roryclaasen.sandbox.level.loader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChunkObjectData {
-	private List<ObjectData> objects;
+public class WorldData {
 
-	public ChunkObjectData() {
-		objects = new ArrayList<ObjectData>();
+	private List<ChunkData> chunks;
+	private EntityData playerData;
+
+	public WorldData() {
+		chunks = new ArrayList<ChunkData>();
 	}
 
-	public void add(ObjectData data) {
-		objects.add(data);
+	public void addChunk(ChunkData data) {
+		chunks.add(data);
 	}
 
-	public List<ObjectData> getObjects() {
-		return objects;
+	public void addPlayer(EntityData playerData) {
+		this.playerData = playerData;
+	}
+	
+	public EntityData getPlayerData(){
+		return playerData;
+	}
+
+	public List<ChunkData> getChunks() {
+		return chunks;
 	}
 }

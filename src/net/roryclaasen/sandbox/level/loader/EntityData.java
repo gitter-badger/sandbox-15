@@ -12,33 +12,30 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.level;
+package net.roryclaasen.sandbox.level.loader;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.json.simple.JSONObject;
 
-public class WorldData {
+public class EntityData extends ObjectData {
 
-	private List<ChunkData> chunks;
-	private EntityData playerData;
+	private int rotx, roty, rotz;
 
-	public WorldData() {
-		chunks = new ArrayList<ChunkData>();
+	public EntityData(JSONObject data) {
+		super(data);
+		this.rotx = Integer.parseInt((String) data.get("rotx"));
+		this.roty = Integer.parseInt((String) data.get("roty"));
+		this.rotz = Integer.parseInt((String) data.get("rotz"));
 	}
 
-	public void addChunk(ChunkData data) {
-		chunks.add(data);
+	public int getRotationX() {
+		return rotx;
 	}
 
-	public void addPlayer(EntityData playerData) {
-		this.playerData = playerData;
-	}
-	
-	public EntityData getPlayerData(){
-		return playerData;
+	public int getRotationY() {
+		return roty;
 	}
 
-	public List<ChunkData> getChunks() {
-		return chunks;
+	public int getRotationZ() {
+		return rotz;
 	}
 }

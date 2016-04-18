@@ -30,7 +30,7 @@ import net.roryclaasen.sandbox.entities.Entity;
 import net.roryclaasen.sandbox.entities.Player;
 import net.roryclaasen.sandbox.entities.light.Light;
 import net.roryclaasen.sandbox.guis.GuiTexture;
-import net.roryclaasen.sandbox.level.EntityData;
+import net.roryclaasen.sandbox.level.loader.EntityData;
 import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
 import net.roryclaasen.sandbox.util.MousePicker;
