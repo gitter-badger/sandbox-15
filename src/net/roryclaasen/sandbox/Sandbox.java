@@ -23,6 +23,8 @@ import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
 import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.models.Models;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
+import net.roryclaasen.sandbox.RenderEngine.post.Fbo;
+import net.roryclaasen.sandbox.RenderEngine.post.PostProcessing;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.EntityManager;
@@ -42,7 +44,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Sandbox {
-	
+
 	public static final BorderEffect DEBUG_EFFECT = new BorderEffect(new Vector3f(0.2f, 0.2f, 0.2f)).setBorderWidth(5f);
 
 	private static Sandbox sandbox;
@@ -67,6 +69,8 @@ public class Sandbox {
 
 	public Camera camera;
 
+	public Fbo fbo;
+
 	public Sandbox(Arguments arguments) {
 		Sandbox.sandbox = this;
 		Sandbox.arguments = arguments;
@@ -90,6 +94,8 @@ public class Sandbox {
 		skybox = new Skybox();
 		worldUtil = new WorldUtil(this);
 		levelLoader = new LevelLoader(this);
+		fbo = new Fbo(Display.getWidth(), Display.getHeight(), Fbo.DEPTH_RENDER_BUFFER);
+		
 		gameStateManager = new GameStateManager(this);
 
 		Models.load(loader);
@@ -106,7 +112,7 @@ public class Sandbox {
 		GUIText fps = new GUIText(currentFrames + " :fps", 1, TextMaster.sans, new Vector2f(0f, 0f), 1F, false);
 		fps.setColor(0F, 1F, 0F);
 		fps.border(DEBUG_EFFECT);
-
+		PostProcessing.init(loader);
 		{
 			long lastTime = System.nanoTime();
 			long timer = System.currentTimeMillis();
@@ -155,6 +161,8 @@ public class Sandbox {
 
 	public void close() {
 		try {
+			fbo.cleanUp();
+			PostProcessing.cleanUp();
 			ParticleMaster.cleanUp();
 			TextMaster.cleanUp();
 			gameStateManager.cleanUp();

@@ -23,6 +23,7 @@ import net.roryclaasen.sandbox.RenderEngine.models.Models;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleSystem;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleTexture;
+import net.roryclaasen.sandbox.RenderEngine.post.PostProcessing;
 import net.roryclaasen.sandbox.RenderEngine.water.WaterFrameBuffers;
 import net.roryclaasen.sandbox.RenderEngine.water.WaterTile;
 import net.roryclaasen.sandbox.entities.Camera;
@@ -65,7 +66,7 @@ public class GameStateLevel extends GameState {
 		gsm.getSandbox().levelLoader.newLevel();
 		EntityData playerData = gsm.getSandbox().levelLoader.getPlayerData();
 		// Player
-		player = new Player(new Vector3f(Terrain.getSize() / 2, 100, Terrain.getSize() / 2), playerData.getRotationX(), playerData.getRotationY(), playerData.getRotationZ());
+		player = new Player(new Vector3f(Terrain.getSize() / 2, 300, Terrain.getSize() / 2), playerData.getRotationX(), playerData.getRotationY(), playerData.getRotationZ());
 		camera = gsm.getSandbox().camera;
 		camera.setPlayer(player);
 		player.setCamera(gsm.getSandbox().camera);
@@ -129,10 +130,15 @@ public class GameStateLevel extends GameState {
 
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		buffers.unbindCurrentFrameBuffer();
+
+		fbo.bindFrameBuffer();
 		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, 100000));
 		renderer.renderWater(terrainManager, camera, entityManager.getSun());
 
 		ParticleMaster.renderParticles(camera);
+		fbo.unbindFrameBuffer();
+		PostProcessing.doPostProcessing(fbo.getColourTexture());
+		
 		if (player.isInMenu()) {
 			// TODO draw a menu of some sort
 		}
