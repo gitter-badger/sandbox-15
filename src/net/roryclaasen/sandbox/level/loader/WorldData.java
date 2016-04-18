@@ -22,6 +22,8 @@ public class WorldData {
 	private List<ChunkData> chunks;
 	private EntityData playerData;
 
+	private int seed = 0;
+
 	public WorldData() {
 		chunks = new ArrayList<ChunkData>();
 	}
@@ -33,12 +35,20 @@ public class WorldData {
 	public void addPlayer(EntityData playerData) {
 		this.playerData = playerData;
 	}
-	
-	public EntityData getPlayerData(){
+
+	public EntityData getPlayerData() {
 		return playerData;
 	}
 
 	public List<ChunkData> getChunks() {
 		return chunks;
+	}
+
+	public void setSeed(int seed) {
+		this.seed = seed;
+	}
+
+	public int getSeed() {
+		return seed;
 	}
 }

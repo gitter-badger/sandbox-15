@@ -33,7 +33,7 @@ public class Player extends Entity {
 	private Camera camera;
 
 	private Vector3f pos = new Vector3f(0, 0, 0);
-
+	
 	public Player(Vector3f position, float rotX, float rotY, float rotZ) {
 		super(null, position, rotX, rotY, rotZ, 1F);
 		hasHealth = false;

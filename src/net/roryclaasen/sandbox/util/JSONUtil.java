@@ -26,6 +26,7 @@ public class JSONUtil {
 	}
 
 	public static boolean has(JSONObject data, String key) {
+		// if (data == null) throw new NullPointerException("JSON Object does not exist");
 		return data.containsKey(key);
 	}
 
@@ -44,19 +45,19 @@ public class JSONUtil {
 	}
 
 	public static int getInteger(JSONObject data, String key, int defaultValue) {
-		return Integer.parseInt((String) get(data, key, defaultValue));
+		return Integer.parseInt(get(data, key, defaultValue).toString());
 	}
 
 	public static float getFloat(JSONObject data, String key, float defaultValue) {
-		return Float.parseFloat((String) get(data, key, defaultValue));
+		return Float.parseFloat(get(data, key, defaultValue).toString());
 	}
 
 	public static double getDouble(JSONObject data, String key, double defaultValue) {
-		return Double.parseDouble((String) get(data, key, defaultValue));
+		return Double.parseDouble(get(data, key, defaultValue).toString());
 	}
 
 	public static boolean getBoolean(JSONObject data, String key, boolean defaultValue) {
-		return Boolean.parseBoolean((String) get(data, key, defaultValue));
+		return Boolean.parseBoolean(get(data, key, defaultValue).toString());
 	}
 
 	public static JSONArray getArray(JSONObject data, String key) {

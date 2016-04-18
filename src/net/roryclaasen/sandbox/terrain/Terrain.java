@@ -35,12 +35,12 @@ public class Terrain {
 
 	private float[][] heights;
 
-	public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap) {
+	public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap, int seed) {
 		this.texturePack = texturePack;
 		this.blendMap = blendMap;
 		this.x = gridX * SIZE;
 		this.z = gridZ * SIZE;
-		this.model = generateTerrain(loader);
+		this.model = generateTerrain(loader, seed);
 	}
 
 	public static float getSize() {
@@ -90,8 +90,8 @@ public class Terrain {
 		return answer;
 	}
 
-	private RawModel generateTerrain(Loader loader) {
-		HeightGenerator generator = new HeightGenerator();
+	private RawModel generateTerrain(Loader loader, int seed) {
+		HeightGenerator generator = new HeightGenerator(seed);
 		seed = generator.getSeed();
 		int vertexCount = 64 + 16 - 8;
 		heights = new float[vertexCount][vertexCount];

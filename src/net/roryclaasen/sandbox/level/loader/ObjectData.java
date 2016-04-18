@@ -15,6 +15,7 @@
 package net.roryclaasen.sandbox.level.loader;
 
 import net.roryclaasen.sandbox.RenderEngine.models.TexturedModel;
+import net.roryclaasen.sandbox.util.JSONUtil;
 
 import org.json.simple.JSONObject;
 import org.lwjgl.util.vector.Vector3f;
@@ -26,11 +27,11 @@ public class ObjectData {
 	private Vector3f location;
 
 	public ObjectData(JSONObject data) {
-		this.modelId = (String) data.get("id");
-		if (data.containsKey("tex-index")) this.texIndex = Integer.parseInt((String) data.get("tex-index"));
-		float x = Integer.parseInt((String) data.get("x"));
-		float y = Integer.parseInt((String) data.get("y"));
-		float z = Integer.parseInt((String) data.get("z"));
+		this.modelId = JSONUtil.getString(data, "rotx", null);
+		if (data.containsKey("tex-index")) this.texIndex = JSONUtil.getInteger(data, "tex-index", 0);
+		float x = JSONUtil.getInteger(data, "x", 0);
+		float y = JSONUtil.getInteger(data, "y", 0);
+		float z = JSONUtil.getInteger(data, "z", 0);
 		this.location = new Vector3f(x, y, z);
 	}
 

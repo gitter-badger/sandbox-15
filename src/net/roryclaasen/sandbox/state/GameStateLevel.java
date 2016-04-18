@@ -29,7 +29,6 @@ import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.Entity;
 import net.roryclaasen.sandbox.entities.Player;
 import net.roryclaasen.sandbox.entities.light.Light;
-import net.roryclaasen.sandbox.guis.GuiTexture;
 import net.roryclaasen.sandbox.level.loader.EntityData;
 import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
@@ -63,10 +62,10 @@ public class GameStateLevel extends GameState {
 
 	@Override
 	public void init() {
-		gsm.getSandbox().levelLoader.loadLevel("test");
-		EntityData pData = gsm.getSandbox().levelLoader.getPlayerData();
+		gsm.getSandbox().levelLoader.newLevel();
+		EntityData playerData = gsm.getSandbox().levelLoader.getPlayerData();
 		// Player
-		player = new Player(new Vector3f(Terrain.getSize() / 2, 100, Terrain.getSize() / 2), pData.getRotationX(), pData.getRotationY(), pData.getRotationZ());
+		player = new Player(new Vector3f(Terrain.getSize() / 2, 100, Terrain.getSize() / 2), playerData.getRotationX(), playerData.getRotationY(), playerData.getRotationZ());
 		camera = gsm.getSandbox().camera;
 		camera.setPlayer(player);
 		player.setCamera(gsm.getSandbox().camera);
@@ -74,7 +73,7 @@ public class GameStateLevel extends GameState {
 		entityManager.addPlayer(player);
 
 		// Light
-		
+		addDefults();
 
 		for (int i = 0; i < 100; i++) {
 			float x = 0;
@@ -101,10 +100,7 @@ public class GameStateLevel extends GameState {
 		ParticleTexture pTexture = new ParticleTexture(loader.loadTexture("particles/star"), 1);
 		system = new ParticleSystem(pTexture, 40, 10, 0.1f, 1, 1.6f);
 
-		GuiTexture shadowMap = new GuiTexture(renderer.getShadowmapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
-		// guiManager.add(shadowMap);
-
-		seed = new GUIText("seed: " + terrainManager.getTerrain().getSeed(), 1, TextMaster.sans, new Vector2f(0f, 0.025f), 1F, false);
+		seed = new GUIText("seed: " + gsm.getSandbox().levelLoader.getWorldData().getSeed(), 1, TextMaster.sans, new Vector2f(0f, 0.025f), 1F, false);
 		seed.setColor(0F, 1F, 0F);
 		seed.border(Sandbox.DEBUG_EFFECT);
 	}

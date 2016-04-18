@@ -14,6 +14,8 @@
  */
 package net.roryclaasen.sandbox.level.loader;
 
+import net.roryclaasen.sandbox.util.JSONUtil;
+
 import org.json.simple.JSONObject;
 
 public class EntityData extends ObjectData {
@@ -22,9 +24,9 @@ public class EntityData extends ObjectData {
 
 	public EntityData(JSONObject data) {
 		super(data);
-		this.rotx = Integer.parseInt((String) data.get("rotx"));
-		this.roty = Integer.parseInt((String) data.get("roty"));
-		this.rotz = Integer.parseInt((String) data.get("rotz"));
+		this.rotx = JSONUtil.getInteger(data, "rotx", 0);
+		this.roty = JSONUtil.getInteger(data, "roty", 0);
+		this.rotz = JSONUtil.getInteger(data, "rotz", 0);
 	}
 
 	public int getRotationX() {

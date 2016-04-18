@@ -24,14 +24,15 @@ public class HeightGenerator {
 
 	private static final float OFFSET = 10f;
 
-	private Random random = new Random();
+	private static Random random = new Random();
 	private int seed;
 
 	public HeightGenerator() {
-		this.seed = random.nextInt(1000000000);
+		this.seed = getRandomSeed();
 	}
 
 	public HeightGenerator(int seed) {
+		if(seed == 0) seed = getRandomSeed();
 		this.seed = seed;
 	}
 
@@ -81,5 +82,9 @@ public class HeightGenerator {
 
 	public int getSeed() {
 		return seed;
+	}
+
+	public static int getRandomSeed() {
+		return random.nextInt(1000000000);
 	}
 }

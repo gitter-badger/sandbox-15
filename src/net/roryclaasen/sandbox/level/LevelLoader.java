@@ -27,7 +27,9 @@ import net.roryclaasen.sandbox.level.loader.ChunkData;
 import net.roryclaasen.sandbox.level.loader.EntityData;
 import net.roryclaasen.sandbox.level.loader.ObjectData;
 import net.roryclaasen.sandbox.level.loader.WorldData;
+import net.roryclaasen.sandbox.terrain.HeightGenerator;
 import net.roryclaasen.sandbox.terrain.Terrain;
+import net.roryclaasen.sandbox.terrain.TerrainManager;
 import net.roryclaasen.sandbox.util.JSONUtil;
 
 import org.json.simple.JSONObject;
@@ -39,41 +41,78 @@ public class LevelLoader {
 	private WorldData worldData;
 
 	public LevelLoader(Sandbox game) {
-		Log.info("LevelLoader... Setting up");
+		Log.info("[LevelLoader] Initializing...");
 		this.game = game;
 		setUp();
-		Log.info("LevelLoader... OK");
+		Log.info("[LevelLoader] Initializing... OK");
 	}
 
 	private void setUp() {
 		Data.createPath(getLocation());
 		File[] levels = (new File(getLocation())).listFiles();
-		Log.info("LevelLoader found " + (levels == null ? 0 : levels.length) + " levels saved");
+		Log.info("[LevelLoader] Found " + (levels == null ? 0 : levels.length) + " levels saved");
 	}
 
-	public void loadLevel(String name) {
-		Log.info("LevelLoader... Loading... '" + name + "'");
+	public void newLevel() {
+		Log.info("[LevelLoader] Generating new level");
+		WorldData data = new WorldData();
+
+		try {
+			data.setSeed(HeightGenerator.getRandomSeed());
+			JSONObject player = new JSONObject();
+			// TODO Generate Player Defaults
+			data.addPlayer(new EntityData(player));
+			data.addChunk(new ChunkData(new JSONObject()));
+		} catch (Exception e) {
+			Log.stackTrace(e);
+		}
+		this.worldData = data;
+		loadLevel();
+	}
+
+	public void loadLevelFromFile(String name) {
+		Log.info("[LevelLoader] Loading... '" + name + "'");
 		name = name.toLowerCase();
 		File root = new File(getLocation() + File.separator + name);
-		worldData = getWorldData(root);
+		if (root.exists()) {
+			worldData = getWorldData(root);
+			loadLevel();
+		} else {
+			Log.warn("[LevelLoader] Level not found");
+			newLevel();
+		}
+		Log.info("[LevelLoader] Loading... OK");
+	}
+
+	private void loadLevel() {
+		Log.info("[LevelLoader] Loading level");
+		Log.info("[LevelLoader] Seed: " + worldData.getSeed());
 		for (ChunkData chunk : worldData.getChunks()) {
-			Terrain t = new Terrain(0, 0, game.loader, game.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(game.loader.loadTexture("level/" + chunk.getBlendMap())));
-			game.terrainManager.add(t);
-			for (ObjectData object : chunk.getObjects()) {
-				float x = t.getX() + object.getLocation().getX();
-				float z = t.getZ() + object.getLocation().getZ();
-				float y = object.getLocation().getY();
-				if (object.getTexIndex() == -1) game.entityManager.add(new Entity(object.getTexturedModel(), new Vector3f(x, y, z), 0, 0, 0, 1));
-				else game.entityManager.add(new Entity(object.getTexturedModel(), object.getTexIndex(), new Vector3f(x, y, z), 0, 0, 0, 1));
+			try {
+				Terrain t = new Terrain((int) chunk.getLocation().getX(), (int) chunk.getLocation().getY(), game.loader, game.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(game.loader.loadTexture("level/" + chunk.getBlendMap())), worldData.getSeed());
+
+				game.terrainManager.add(t);
+				for (ObjectData object : chunk.getObjects()) {
+					float x = t.getX() + object.getLocation().getX();
+					float z = t.getZ() + object.getLocation().getZ();
+					float y = object.getLocation().getY();
+					if (y == -1) y = TerrainManager.getCurrentTerrain(x, z).getHeightOfTerrain(x, z);
+					if (object.getTexIndex() == -1) game.entityManager.add(new Entity(object.getTexturedModel(), new Vector3f(x, y, z), 0, 0, 0, 1));
+					else game.entityManager.add(new Entity(object.getTexturedModel(), object.getTexIndex(), new Vector3f(x, y, z), 0, 0, 0, 1));
+				}
+			} catch (Exception e) {
+				Log.warn("Failed to load chunk");
+				Log.stackTrace(e);
 			}
 		}
-		Log.info("LevelLoader... Loading... OK");
+		Log.info("[LevelLoader] Level loaded");
 	}
 
 	private WorldData getWorldData(File root) {
 		WorldData data = new WorldData();
 		try {
 			JSONObject world = JSONUtil.read(new File(root + File.separator + "world"));
+			data.setSeed(JSONUtil.getInteger(world, "seed", HeightGenerator.getRandomSeed()));
 
 			data.addPlayer(new EntityData(JSONUtil.getObject(world, "player")));
 			@SuppressWarnings("unchecked")
@@ -85,6 +124,10 @@ public class LevelLoader {
 			Log.stackTrace(e);
 		}
 		return data;
+	}
+	
+	public WorldData getWorldData(){
+		return worldData;
 	}
 
 	public EntityData getPlayerData() {
