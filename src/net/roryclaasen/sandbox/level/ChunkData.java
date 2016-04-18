@@ -14,36 +14,87 @@
  */
 package net.roryclaasen.sandbox.level;
 
+import java.io.File;
+import java.io.FileReader;
+import java.util.Iterator;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import net.gogo98901.log.Log;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.lwjgl.util.vector.Vector2f;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class ChunkData {
+	private JSONParser parser;
 
+	private int id;
+	private Vector2f location;
 	private String blendMap;
 	private int texturePack;
 	private ChunkObjectData data;
 
-	public ChunkData() {}
+	public ChunkData(JSONObject data,File root) {this.
+		parser = new JSONParser();
+	
+		this.id = Integer.parseInt((String) data.get("id"));
+		this.location = new Vector2f( Integer.parseInt((String) data.get("x")),  Integer.parseInt((String) data.get("y")));
+		
+		this.blendMap = (String) data.get("belnd-map");
+		this.texturePack = Integer.parseInt((String) data.get("texturepack"));
+		loadData(root);
+		}
 
-	public String getBlendMap() {
-		return blendMap;
-	}
+	private void loadData(File root) {
+		File worldFile = new File(root + File.separator + "chunk");
 
-	public void setBlendMap(String blendMap) {
-		this.blendMap = blendMap;
-	}
+		JSONObject world = (JSONObject) (Object) parser.parse(new FileReader(worldFile));
+		
+		ChunkObjectData data = new ChunkObjectData();
+		
+		JSONArray chunkArrary = (JSONArray) world.get("chunks");
+		Iterator<JSONObject> iterator = chunkArrary.iterator();
+		while (iterator.hasNext()) {
+			data.addChunk(new ChunkData(iterator.next(), root + File.separator));
+		}
+		
+		try {
+			File fXmlFile = new File(root + File.separator + file);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
 
-	public int getTexturePack() {
-		return texturePack;
-	}
+			doc.getDocumentElement().normalize();
+			NodeList chunkList = doc.getElementsByTagName("object");
+			for (int temp = 0; temp < chunkList.getLength(); temp++) {
+				try {
+					Node nNode = chunkList.item(temp);
 
-	public void setTexturePack(int texturePack) {
-		this.texturePack = texturePack;
-	}
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+						Element eElement = (Element) nNode;
 
-	public ChunkObjectData getData() {
+						ObjectData newObject = new ObjectData();
+						newObject.setModel(eElement.getAttribute("model"));
+						newObject.setLocation(Integer.parseInt(eElement.getElementsByTagName("x").item(0).getTextContent()), Integer.parseInt(eElement.getElementsByTagName("y").item(0).getTextContent()));
+						if (eElement.getElementsByTagName("texindex").item(0) != null) newObject.setTexIndex(Integer.parseInt(eElement.getElementsByTagName("texindex").item(0).getTextContent()));
+						data.add(newObject);
+					}
+				} catch (Exception e) {
+					Log.warn("Failed to load type 'chunk'");
+					Log.stackTrace(e);
+				}
+			}
+		} catch (Exception e) {
+			Log.stackTrace(e);
+		}
 		return data;
 	}
 
-	public void setData(ChunkObjectData data) {
-		this.data = data;
-	}
 }

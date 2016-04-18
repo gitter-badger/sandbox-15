@@ -14,8 +14,17 @@
  */
 package net.roryclaasen.sandbox.level;
 
+import org.json.simple.JSONObject;
+
 public class EntityData extends ObjectData {
 	private int rotx, roty, rotz;
+
+	public EntityData() {
+	}
+
+	public EntityData(JSONObject data) {
+
+	}
 
 	public int getRotationX() {
 		return rotx;
