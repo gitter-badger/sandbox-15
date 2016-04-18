@@ -12,7 +12,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine.font;
+package net.roryclaasen.sandbox.RenderEngine.font.data;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,13 +50,7 @@ public class MetaFile {
 	private BufferedReader reader;
 	private Map<String, String> values = new HashMap<String, String>();
 
-	/**
-	 * Opens a font file in preparation for reading.
-	 * 
-	 * @param file
-	 *            - the font file.
-	 */
-	protected MetaFile(FontType font, String file) {
+	public MetaFile(FontType font, String file) {
 		this.font = font;
 		this.aspectRatio = (double) Display.getWidth() / (double) Display.getHeight();
 		openFile(file);
@@ -67,19 +61,14 @@ public class MetaFile {
 		close();
 	}
 
-	protected double getSpaceWidth() {
+	public double getSpaceWidth() {
 		return spaceWidth;
 	}
 
-	protected Character getCharacter(int ascii) {
+	public Character getCharacter(int ascii) {
 		return metaData.get(ascii);
 	}
 
-	/**
-	 * Read in the next line and store the variable values.
-	 * 
-	 * @return {@code true} if the end of the file hasn't been reached.
-	 */
 	private boolean processNextLine() {
 		values.clear();
 		String line = null;
@@ -99,25 +88,10 @@ public class MetaFile {
 		return true;
 	}
 
-	/**
-	 * Gets the {@code int} value of the variable with a certain name on the
-	 * current line.
-	 * 
-	 * @param variable
-	 *            - the name of the variable.
-	 * @return The value of the variable.
-	 */
 	private int getValueOfVariable(String variable) {
 		return Integer.parseInt(values.get(variable));
 	}
 
-	/**
-	 * Gets the array of ints associated with a variable on the current line.
-	 * 
-	 * @param variable
-	 *            - the name of the variable.
-	 * @return The int array of values associated with the variable.
-	 */
 	private int[] getValuesOfVariable(String variable) {
 		String[] numbers = values.get(variable).split(NUMBER_SEPARATOR);
 		int[] actualValues = new int[numbers.length];
@@ -127,9 +101,6 @@ public class MetaFile {
 		return actualValues;
 	}
 
-	/**
-	 * Closes the font file after finishing reading.
-	 */
 	private void close() {
 		try {
 			reader.close();
@@ -138,12 +109,6 @@ public class MetaFile {
 		}
 	}
 
-	/**
-	 * Opens the font file, ready for reading.
-	 * 
-	 * @param file
-	 *            - the font file.
-	 */
 	private void openFile(String file) {
 		if (!file.endsWith(".fnt")) file += ".fnt";
 		try {
@@ -154,10 +119,6 @@ public class MetaFile {
 		}
 	}
 
-	/**
-	 * Loads the data about how much padding is used around each character in
-	 * the texture atlas.
-	 */
 	private void loadPaddingData() {
 		processNextLine();
 		this.padding = getValuesOfVariable("padding");
@@ -165,25 +126,13 @@ public class MetaFile {
 		this.paddingHeight = padding[PAD_TOP] + padding[PAD_BOTTOM];
 	}
 
-	/**
-	 * Loads information about the line height for this font in pixels, and uses
-	 * this as a way to find the conversion rate between pixels in the texture
-	 * atlas and screen-space.
-	 */
 	private void loadLineSizes() {
 		processNextLine();
 		int lineHeightPixels = getValueOfVariable("lineHeight") - paddingHeight;
 		verticalPerPixelSize = TextMeshCreator.LINE_HEIGHT / (double) lineHeightPixels;
 		horizontalPerPixelSize = verticalPerPixelSize / aspectRatio;
 	}
-
-	/**
-	 * Loads in data about each character and stores the data in the {@link Character} class.
-	 * 
-	 * @param imageWidth
-	 *            - the width of the texture atlas in pixels.
-	 */
-	private void loadCharacterData(int imageWidth) {
+private void loadCharacterData(int imageWidth) {
 		processNextLine();
 		processNextLine();
 		while (processNextLine()) {
@@ -194,15 +143,6 @@ public class MetaFile {
 		}
 	}
 
-	/**
-	 * Loads all the data about one character in the texture atlas and converts
-	 * it all from 'pixels' to 'screen-space' before storing. The effects of
-	 * padding are also removed from the data.
-	 * 
-	 * @param imageSize
-	 *            - the size of the texture atlas in pixels.
-	 * @return The data about the character.
-	 */
 	private Character loadCharacter(int imageSize) {
 		int id = getValueOfVariable("id");
 		if (id == TextMeshCreator.SPACE_ASCII) {

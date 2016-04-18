@@ -38,7 +38,7 @@ public class FontShader extends ShaderProgram {
 	}
 
 	@Override
-	protected void getAllUniformLocations() {
+	public void getAllUniformLocations() {
 		location_translation = super.getUniformLocation("translation");
 		location_colour = super.getUniformLocation("colour");
 
@@ -51,7 +51,7 @@ public class FontShader extends ShaderProgram {
 	}
 
 	@Override
-	protected void bindAttributes() {
+	public void bindAttributes() {
 		super.bindAttribute(0, "position");
 		super.bindAttribute(1, "textureCoords");
 	}

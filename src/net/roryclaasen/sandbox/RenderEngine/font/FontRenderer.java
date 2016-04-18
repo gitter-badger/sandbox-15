@@ -17,6 +17,8 @@ package net.roryclaasen.sandbox.RenderEngine.font;
 import java.util.List;
 import java.util.Map;
 
+import net.roryclaasen.sandbox.RenderEngine.font.data.FontType;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;

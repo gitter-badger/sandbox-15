@@ -12,10 +12,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine.font;
+package net.roryclaasen.sandbox.RenderEngine.font.data;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
+import net.roryclaasen.sandbox.RenderEngine.font.TextMeshData;
 
 public class TextMeshCreator {
 
@@ -141,5 +144,4 @@ public class TextMeshCreator {
 		}
 		return array;
 	}
-
 }
