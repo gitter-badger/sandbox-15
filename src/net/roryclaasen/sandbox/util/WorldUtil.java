@@ -16,7 +16,6 @@ package net.roryclaasen.sandbox.util;
 
 import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.Sandbox;
-import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
 import net.roryclaasen.sandbox.entities.Camera;
 
 import org.lwjgl.input.Keyboard;
@@ -60,8 +59,6 @@ public class WorldUtil {
 		if (Sandbox.getArguments().isDebugMode()) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_F1)) setWireFrame(false);
 			if (Keyboard.isKeyDown(Keyboard.KEY_F2)) setWireFrame(true);
-			if (Keyboard.isKeyDown(Keyboard.KEY_F9)) Skybox.setDay();
-			if (Keyboard.isKeyDown(Keyboard.KEY_F10)) Skybox.setNight(true);
 		}
 	}
 
