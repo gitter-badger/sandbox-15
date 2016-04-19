@@ -34,6 +34,7 @@ public class ConfigLoader {
 	public ConfigLoader() {
 		parser = new JSONParser();
 		config = new JSONObject();
+		Log.info("Config set up");
 	}
 
 	public void load() {

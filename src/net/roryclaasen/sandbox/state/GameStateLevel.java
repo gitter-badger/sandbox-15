@@ -16,9 +16,6 @@ package net.roryclaasen.sandbox.state;
 
 import java.util.Random;
 
-import net.roryclaasen.sandbox.Sandbox;
-import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
-import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleSystem;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleTexture;
@@ -29,6 +26,7 @@ import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.Entity;
 import net.roryclaasen.sandbox.entities.Player;
 import net.roryclaasen.sandbox.entities.light.Light;
+import net.roryclaasen.sandbox.guis.DebugInfo;
 import net.roryclaasen.sandbox.level.loader.EntityData;
 import net.roryclaasen.sandbox.models.Models;
 import net.roryclaasen.sandbox.terrain.Terrain;
@@ -37,7 +35,6 @@ import net.roryclaasen.sandbox.util.MousePicker;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -49,8 +46,6 @@ public class GameStateLevel extends GameState {
 	private WaterFrameBuffers buffers;
 
 	private Random random = new Random();
-
-	private GUIText seed;
 
 	public GameStateLevel(GameStateManager stateManager) {
 		super(stateManager);
@@ -101,9 +96,7 @@ public class GameStateLevel extends GameState {
 		ParticleTexture pTexture = new ParticleTexture(loader.loadTexture("particles/star"), 1);
 		system = new ParticleSystem(pTexture, 40, 10, 0.1f, 1, 1.6f);
 
-		seed = new GUIText("seed: " + gsm.getSandbox().levelLoader.getWorldData().getSeed(), 1, TextMaster.sans, new Vector2f(0f, 0.025f), 1F, false);
-		seed.setColor(0F, 1F, 0F);
-		seed.border(Sandbox.DEBUG_EFFECT);
+		DebugInfo.add("seed", 1, "seed: " + gsm.getSandbox().levelLoader.getWorldData().getSeed());
 	}
 
 	private void addDefults() {
@@ -138,7 +131,7 @@ public class GameStateLevel extends GameState {
 		ParticleMaster.renderParticles(camera);
 		fbo.unbindFrameBuffer();
 		PostProcessing.doPostProcessing(fbo.getColourTexture());
-		
+
 		if (player.isInMenu()) {
 			// TODO draw a menu of some sort
 		}

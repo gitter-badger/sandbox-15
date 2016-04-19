@@ -1,0 +1,73 @@
+package net.roryclaasen.sandbox.guis;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.gogo98901.log.Log;
+import net.roryclaasen.sandbox.RenderEngine.font.BorderEffect;
+import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
+import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
+
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
+
+public class DebugInfo {
+	public static final BorderEffect DEBUG_EFFECT = new BorderEffect(new Vector3f(0.2f, 0.2f, 0.2f)).setBorderWidth(5f);
+	public static final Vector3f COLOUR = new Vector3f(0, 1, 0);
+
+	private static Vector2f SATRT = new Vector2f(0, 0);
+
+	private static List<Object[]> lines = new ArrayList<Object[]>();
+
+	private DebugInfo() {
+	}
+
+	public static void add(String key, String text) {
+		GUIText line = new GUIText(text, 1, TextMaster.sans, new Vector2f(SATRT.getX(), SATRT.getY() + (0.025f * lines.size())), 1F, false);
+		line.setColor(COLOUR);
+		line.border(DEBUG_EFFECT);
+		lines.add(new Object[] { key, line });
+	}
+
+	public static void add(String key, int index, String text) {
+		lines.add(index, new Object[] { key, text });
+		updateAllPositions();
+	}
+
+	public static void update(String key, String text) {
+		int arraryPosition = getPosition(key);
+		if (arraryPosition >= 0) {
+			Object[] line = lines.get(arraryPosition);
+			((GUIText) line[1]).update(text, -1f, null, null, -1f, false, null);
+		}
+	}
+
+	public static void updateAllPositions() {
+		for (int i = 0; i < lines.size(); i++) {
+			Object[] line = lines.get(i);
+			GUIText text = (GUIText) line[1];
+			text.update(null, -1f, null, new Vector2f(SATRT.getX(), SATRT.getY() + (0.025f * i)), -1f, false, null);
+		}
+	}
+
+
+	public static void remove(String key) {
+		int position = getPosition(key);
+		if (position >= 0){
+			Object[] line = lines.get(position);
+			((GUIText) line[1]).remove();
+			lines.remove(position);
+		}
+
+		updateAllPositions();
+	}
+
+	public static int getPosition(String key) {
+		for (int i = 0; i < lines.size(); i++) {
+			Object[] line = lines.get(i);
+			if (line[0].equals(key)) return i;
+		}
+		Log.warn("No line found with key '" + key + "'");
+		return -1;
+	}
+}

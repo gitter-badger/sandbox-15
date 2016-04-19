@@ -18,11 +18,8 @@ import java.io.File;
 
 import net.gogo98901.log.Level;
 import net.gogo98901.log.Log;
-import net.gogo98901.log.LogEvent;
-import net.gogo98901.log.LogListener;
 import net.gogo98901.util.Data;
 import net.roryclaasen.sandbox.Sandbox;
-import net.roryclaasen.sandbox.crash.CrashHandler;
 import net.roryclaasen.sandbox.util.Arguments;
 import net.roryclaasen.sandbox.util.config.ConfigLoader;
 
@@ -36,18 +33,8 @@ public class Bootstrap {
 	private static Version version;
 
 	public static void main(String[] args) {
-		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler());
 		Log.setDateFormat("[dd.MM.yy hh:mm:ss]");
 		Log.info(TITLE + "(" + VERSION + ") by Rory Claasen");
-		Log.addListener(new LogListener() {
-
-			@Override
-			public void logOutput(LogEvent event) {
-				if (event.getLevel() == Level.SEVERE || event.getLevel() == Level.WARNING) {
-					CrashHandler.add((Throwable) event.getData());
-				}
-			}
-		});
 		arguments = new Arguments(args);
 		version = new Version();
 		if (init(arguments)) {
@@ -78,8 +65,6 @@ public class Bootstrap {
 		} catch (Exception e) {
 			Log.severe("Game failed to run");
 			Log.stackTrace(Level.WARNING, e);
-			CrashHandler.add(e);
-			CrashHandler.show();
 			return false;
 		}
 	}

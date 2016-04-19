@@ -15,11 +15,8 @@
 package net.roryclaasen.sandbox;
 
 import net.gogo98901.log.Log;
-import net.roryclaasen.Bootstrap;
 import net.roryclaasen.sandbox.RenderEngine.Fbo;
 import net.roryclaasen.sandbox.RenderEngine.MasterRenderer;
-import net.roryclaasen.sandbox.RenderEngine.font.BorderEffect;
-import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
 import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.gui.GuiRenderer;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
@@ -27,6 +24,7 @@ import net.roryclaasen.sandbox.RenderEngine.post.PostProcessing;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.EntityManager;
+import net.roryclaasen.sandbox.guis.DebugInfo;
 import net.roryclaasen.sandbox.guis.GuiManager;
 import net.roryclaasen.sandbox.level.LevelLoader;
 import net.roryclaasen.sandbox.models.ModelLoader;
@@ -40,12 +38,8 @@ import net.roryclaasen.sandbox.util.WorldUtil;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
 
 public class Sandbox {
-
-	public static final BorderEffect DEBUG_EFFECT = new BorderEffect(new Vector3f(0.2f, 0.2f, 0.2f)).setBorderWidth(5f);
 
 	private static Sandbox sandbox;
 	private static Arguments arguments;
@@ -95,7 +89,7 @@ public class Sandbox {
 		worldUtil = new WorldUtil(this);
 		levelLoader = new LevelLoader(this);
 		fbo = new Fbo(Display.getWidth(), Display.getHeight(), Fbo.DEPTH_RENDER_BUFFER);
-		
+
 		gameStateManager = new GameStateManager(this);
 
 		ModelLoader.init(loader);
@@ -105,58 +99,57 @@ public class Sandbox {
 	}
 
 	public void start() {
-		Log.info("Starting " + Bootstrap.TITLE);
 		display.createDisplay();
 		init();
 
-		GUIText fps = new GUIText(currentFrames + " :fps", 1, TextMaster.sans, new Vector2f(0f, 0f), 1F, false);
-		fps.setColor(0F, 1F, 0F);
-		fps.border(DEBUG_EFFECT);
+		DebugInfo.add("fps", 0, currentFrames + " :fps");
 		PostProcessing.init(loader);
-		{
-			long lastTime = System.nanoTime();
-			long timer = System.currentTimeMillis();
-			final double ns = 1000000000.0 / 60.0;
-			double delta = 0.0;
-			int updates = 0;
-			int frames = 0;
+		run();
+		close();
+	}
 
-			Log.info("Started Rendering");
+	private void run() {
+		long lastTime = System.nanoTime();
+		long timer = System.currentTimeMillis();
+		final double ns = 1000000000.0 / 60.0;
+		double delta = 0.0;
+		int updates = 0;
+		int frames = 0;
 
-			// Mouse.setCursorPosition(DisplayManager.getWidth() / 2, DisplayManager.getHeight() / 2);
-			while (!Display.isCloseRequested()) {
-				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+		Log.info("Started Rendering");
 
-				long now = System.nanoTime();
-				delta += (now - lastTime) / ns;
-				lastTime = now;
-				while (delta >= 1) {
-					{// update
-						gameStateManager.update();
-					}
-					updates++;
-					delta--;
+		// Mouse.setCursorPosition(DisplayManager.getWidth() / 2, DisplayManager.getHeight() / 2);
+		while (!Display.isCloseRequested()) {
+			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ns;
+			lastTime = now;
+			while (delta >= 1) {
+				{// update
+					gameStateManager.update();
 				}
-				{// render
-					worldUtil.render();
-					gameStateManager.render();
-					worldUtil.renderWireFrame(false);
-					TextMaster.render();
-					display.updateDisplay();
-				}
-				frames++;
+				updates++;
+				delta--;
+			}
+			{// render
+				worldUtil.render();
+				gameStateManager.render();
+				worldUtil.renderWireFrame(false);
+				TextMaster.render();
+				display.updateDisplay();
+			}
+			frames++;
 
-				if (System.currentTimeMillis() - timer > 1000) {
-					timer += 1000;
-					currentFrames = frames;
-					currentUpdates = updates;
-					updates = 0;
-					frames = 0;
-					fps.update(currentFrames + " :fps", -1f, null, null, -1f, false, null);
-				}
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
+				currentFrames = frames;
+				currentUpdates = updates;
+				updates = 0;
+				frames = 0;
+				DebugInfo.update("fps", currentFrames + " :fps");
 			}
 		}
-		close();
 	}
 
 	public void close() {

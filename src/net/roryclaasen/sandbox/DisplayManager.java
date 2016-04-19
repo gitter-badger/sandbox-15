@@ -23,7 +23,6 @@ import net.gogo98901.log.Level;
 import net.gogo98901.log.Log;
 import net.gogo98901.util.Loader;
 import net.roryclaasen.Bootstrap;
-import net.roryclaasen.sandbox.crash.CrashHandler;
 import net.roryclaasen.sandbox.util.config.Config;
 
 import org.lwjgl.Sys;
@@ -37,11 +36,19 @@ import org.newdawn.slick.opengl.PNGDecoder;
 
 public class DisplayManager {
 
-	private static final int WIDTH = Config.width.getIntager(), HEIGHT = (int) Config.height.getIntager();
+	private static final int WIDTH = Config.width.getIntager(), HEIGHT = Config.height.getIntager();
 	private static final int FPS_CAP = Config.fpsCap.getIntager();
 
 	private long lastFrameTime = 0;
 	private static float delta = 0;
+
+	public DisplayManager() {
+
+		Log.info("Display width: " + WIDTH);
+		Log.info("Display height: " + HEIGHT);
+		Log.info("FPS Cap: " + FPS_CAP);
+		 Log.info("Display Adapter: " + Display.getAdapter());
+	}
 
 	public void createDisplay() {
 		Log.info("Creating Display");
@@ -49,17 +56,20 @@ public class DisplayManager {
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			PixelFormat pixelFormat = new PixelFormat();
-			if (Config.antialiasing.getBoolean()) {
-				pixelFormat = pixelFormat.withSamples(Config.antialiasingSample.getIntager());
-			}
+
+			Log.info("Antialiasing: " + Config.antialiasing.getBoolean());
+			if (Config.antialiasing.getBoolean()) pixelFormat = pixelFormat.withSamples(Config.antialiasingSample.getIntager());
+
+			Log.info("LWJGL version: " + org.lwjgl.Sys.getVersion());
 			Display.create(pixelFormat, attribs);
+			Log.info("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
+			
 			Display.setTitle(Bootstrap.TITLE);
 			if (Config.antialiasing.getBoolean()) GL11.glEnable(GL13.GL_MULTISAMPLE);
 			Display.setIcon(getIcons());
 			Log.info("Display Created");
 		} catch (Exception e) {
 			Log.stackTrace(Level.SEVERE, e);
-			CrashHandler.show(e);
 			System.exit(-1);
 		}
 

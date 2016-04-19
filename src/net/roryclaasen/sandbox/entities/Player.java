@@ -15,15 +15,12 @@
 package net.roryclaasen.sandbox.entities;
 
 import net.roryclaasen.sandbox.DisplayManager;
-import net.roryclaasen.sandbox.Sandbox;
-import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
-import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
+import net.roryclaasen.sandbox.guis.DebugInfo;
 import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
 import net.roryclaasen.sandbox.util.config.Config;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Player extends Entity {
@@ -38,19 +35,15 @@ public class Player extends Entity {
 
 	private Vector3f pos = new Vector3f(0, 0, 0);
 
-	private GUIText location;
-
 	public Player(Vector3f position, float rotX, float rotY, float rotZ) {
 		super(null, position, rotX, rotY, rotZ, 1F);
 		hasHealth = false;
-		location = new GUIText(this.getPosition().toString(), 1, TextMaster.sans, new Vector2f(0f, 0.025f * 2), 1F, false);
-		location.border(Sandbox.DEBUG_EFFECT);
-		location.setColor(0, 1, 0);
+		DebugInfo.add("pos", this.getPosition().toString());
 	}
 
 	@SuppressWarnings("unused")
 	public void update() {
-		location.update(this.getPosition().toString(), -1f, null, null, -1f, false, null);
+		DebugInfo.update("pos", this.getPosition().toString());
 		Terrain terrain = TerrainManager.getCurrentTerrain(getX(), getZ());
 		checkInputs();
 		increaseRotation(0, currentSpeedTurn * DisplayManager.getFrameTimeSeconds(), 0);

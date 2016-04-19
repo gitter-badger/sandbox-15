@@ -19,7 +19,6 @@ import net.roryclaasen.sandbox.RenderEngine.font.data.FontType;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-
 public class GUIText {
 
 	private String textString;
@@ -53,13 +52,17 @@ public class GUIText {
 		this.effect = effect;
 		return this;
 	}
-	
+
 	public void remove() {
 		TextMaster.removeText(this);
 	}
 
 	public FontType getFont() {
 		return font;
+	}
+
+	public void setColor(Vector3f colour) {
+		this.colour.set(colour);
 	}
 
 	public void setColor(float r, float g, float b) {
@@ -86,7 +89,7 @@ public class GUIText {
 		this.textMeshVao = vao;
 		this.vertexCount = verticesCount;
 	}
-	
+
 	public int getVertexCount() {
 		return this.vertexCount;
 	}
@@ -122,8 +125,8 @@ public class GUIText {
 		if (effect != null) this.effect = effect;
 		TextMaster.loadText(this);
 	}
-	
-	public BorderEffect getBorder(){
+
+	public BorderEffect getBorder() {
 		return effect;
 	}
 }
