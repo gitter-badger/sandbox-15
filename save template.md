@@ -1,7 +1,8 @@
 # Save game files
-Bellow is the skeleton for a level named 'My first World'
+This file exists to help under stand how the level is saved and as a visualizer for saving the game
 
-File structure
+## File structure
+Bellow is the basic skeleton for a level named 'My first World'.
 ```
 My Games
  | - Sandbox
@@ -11,7 +12,7 @@ My Games
  |   |    | - (Any other chunks)
  |   | - (Any other save games)
 ```
-world file contents
+#### world file contents
 ```json
 {
   "seed": (game seed),
@@ -30,7 +31,7 @@ world file contents
   ]
 }
 ```
-chunk0 file contents
+#### chunk0 file contents
 ```json
 {
   "data": [{"object": true,
@@ -44,3 +45,6 @@ chunk0 file contents
   ]
 }
 ```
+
+## Example levels
+There are no current example levels
