@@ -16,7 +16,7 @@ package net.roryclaasen.sandbox.util.config;
 
 public enum Config {
 	// Display
-	width("width", 1280), height("height", 720), fpsCap("fps-cap", 240),
+	width("width", 1280), height("height", 720), fpsCap("fps-cap", 120),
 
 	// Camera & Movement
 	fov("camera-fov", 70), sensitivity("mouse-sensitivity", 0.5f), movingSpeed("player-moving-speed", 120F),

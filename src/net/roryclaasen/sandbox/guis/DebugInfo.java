@@ -29,7 +29,7 @@ import org.lwjgl.util.vector.Vector3f;
 public class DebugInfo {
 
 	public static final BorderEffect DEBUG_EFFECT = new BorderEffect(new Vector3f(0.2f, 0.2f, 0.2f)).setBorderWidth(5f);
-	public final static Vector2f COORDS = new Vector2f(0, 0);
+	public static final Vector2f COORDS = new Vector2f(0, 0);
 
 	private static Vector3f color = new Vector3f(0, 1, 0);
 	private static FontType font = TextMaster.moire;
