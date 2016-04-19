@@ -27,33 +27,32 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class DebugInfo {
+
 	public static final BorderEffect DEBUG_EFFECT = new BorderEffect(new Vector3f(0.2f, 0.2f, 0.2f)).setBorderWidth(5f);
 	public final static Vector2f COORDS = new Vector2f(0, 0);
-	
+
 	private static Vector3f color = new Vector3f(0, 1, 0);
 	private static FontType font = TextMaster.moire;
 	private static float size = 1f;
-	
-	private static float distance = 0.0245f;
 
+	private static float distance = 0.0245f;
 
 	private static List<Object[]> lines = new ArrayList<Object[]>();
 
-	private DebugInfo() {
-	}
+	private DebugInfo() {}
 
 	public static void add(String key, String text) {
 		GUIText line = new GUIText(text, size, font, new Vector2f(COORDS.getX(), COORDS.getY() + (distance * lines.size())), 1F, false);
 		line.setColor(color);
 		line.border(DEBUG_EFFECT);
-		lines.add(new Object[] { key, line });
+		lines.add(new Object[]{key, line});
 	}
 
 	public static void add(String key, int index, String text) {
 		GUIText line = new GUIText(text, size, font, new Vector2f(COORDS.getX(), COORDS.getY() + (distance * index)), 1F, false);
 		line.setColor(color);
 		line.border(DEBUG_EFFECT);
-		lines.add(index, new Object[] { key, line });
+		lines.add(index, new Object[]{key, line});
 		updateAllPositions();
 	}
 
@@ -73,10 +72,9 @@ public class DebugInfo {
 		}
 	}
 
-
 	public static void remove(String key) {
 		int position = getPosition(key);
-		if (position >= 0){
+		if (position >= 0) {
 			Object[] line = lines.get(position);
 			((GUIText) line[1]).remove();
 			lines.remove(position);
