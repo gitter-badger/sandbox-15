@@ -4,12 +4,12 @@ Bellow is the skeleton for a level named 'My first World'
 File structure
 ```
 My Games
-  - Sandbox
-    - My first World
-      - world
-      - chunk0
-      (Any other chunks)
-    (Any other save games)
+ | - Sandbox
+ |   | - My first World
+ |   |    | - world
+ |   |    | - chunk0
+ |   |    | - (Any other chunks)
+ |   | - (Any other save games)
 ```
 world file contents
 ```json
