@@ -33,6 +33,8 @@ public class DebugInfo {
 	private static Vector3f color = new Vector3f(0, 1, 0);
 	private static FontType font = TextMaster.moire;
 	private static float size = 1f;
+	
+	private static float distance = 0.0245f;
 
 
 	private static List<Object[]> lines = new ArrayList<Object[]>();
@@ -41,14 +43,14 @@ public class DebugInfo {
 	}
 
 	public static void add(String key, String text) {
-		GUIText line = new GUIText(text, size, font, new Vector2f(COORDS.getX(), COORDS.getY() + (0.025f * lines.size())), 1F, false);
+		GUIText line = new GUIText(text, size, font, new Vector2f(COORDS.getX(), COORDS.getY() + (distance * lines.size())), 1F, false);
 		line.setColor(color);
 		line.border(DEBUG_EFFECT);
 		lines.add(new Object[] { key, line });
 	}
 
 	public static void add(String key, int index, String text) {
-		GUIText line = new GUIText(text, size, font, new Vector2f(COORDS.getX(), COORDS.getY() + (0.025f * index)), 1F, false);
+		GUIText line = new GUIText(text, size, font, new Vector2f(COORDS.getX(), COORDS.getY() + (distance * index)), 1F, false);
 		line.setColor(color);
 		line.border(DEBUG_EFFECT);
 		lines.add(index, new Object[] { key, line });
@@ -67,7 +69,7 @@ public class DebugInfo {
 		for (int i = 0; i < lines.size(); i++) {
 			Object[] line = lines.get(i);
 			GUIText text = (GUIText) line[1];
-			text.update(null, -1f, null, new Vector2f(COORDS.getX(), COORDS.getY() + (0.025f * i)), -1f, false, null);
+			text.update(null, -1f, null, new Vector2f(COORDS.getX(), COORDS.getY() + (distance * i)), -1f, false, null);
 		}
 	}
 
