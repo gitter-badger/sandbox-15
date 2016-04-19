@@ -12,15 +12,15 @@ My Games
     (Any other save games)
 ```
 world file contents
-```
+```json
 {
-  "seed: (game seed),
+  "seed": (game seed),
   "player": {
     "x": (x location),
     "y": (y location),
     "z": (z location),
   }, 
-  "chunks": [{ "id: 0,
+  "chunks": [{ "id": 0,
     "x": (x location),
     "y": (y location),
     "blend-map": "map.png",
@@ -31,16 +31,16 @@ world file contents
 }
 ```
 chunk0 file contents
-```
+```json
 {
-  "data": [{"object: true,
+  "data": [{"object": true,
     "x": (x position),
     "y": (y position),
     "z": (z position),
     "tex-index": 0 (optional key),
     "modelId": (model id),
   }
-  (any other objects or entities)
+  "(any other objects or entities)"
   ]
 }
 ```
