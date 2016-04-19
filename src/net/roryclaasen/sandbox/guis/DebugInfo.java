@@ -21,15 +21,19 @@ import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.RenderEngine.font.BorderEffect;
 import net.roryclaasen.sandbox.RenderEngine.font.GUIText;
 import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
+import net.roryclaasen.sandbox.RenderEngine.font.data.FontType;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class DebugInfo {
 	public static final BorderEffect DEBUG_EFFECT = new BorderEffect(new Vector3f(0.2f, 0.2f, 0.2f)).setBorderWidth(5f);
-	public static final Vector3f COLOUR = new Vector3f(0, 1, 0);
+	public final static Vector2f COORDS = new Vector2f(0, 0);
+	
+	private static Vector3f color = new Vector3f(0, 1, 0);
+	private static FontType font = TextMaster.moire;
+	private static float size = 1f;
 
-	private static Vector2f SATRT = new Vector2f(0, 0);
 
 	private static List<Object[]> lines = new ArrayList<Object[]>();
 
@@ -37,14 +41,17 @@ public class DebugInfo {
 	}
 
 	public static void add(String key, String text) {
-		GUIText line = new GUIText(text, 1, TextMaster.sans, new Vector2f(SATRT.getX(), SATRT.getY() + (0.025f * lines.size())), 1F, false);
-		line.setColor(COLOUR);
+		GUIText line = new GUIText(text, size, font, new Vector2f(COORDS.getX(), COORDS.getY() + (0.025f * lines.size())), 1F, false);
+		line.setColor(color);
 		line.border(DEBUG_EFFECT);
 		lines.add(new Object[] { key, line });
 	}
 
 	public static void add(String key, int index, String text) {
-		lines.add(index, new Object[] { key, text });
+		GUIText line = new GUIText(text, size, font, new Vector2f(COORDS.getX(), COORDS.getY() + (0.025f * index)), 1F, false);
+		line.setColor(color);
+		line.border(DEBUG_EFFECT);
+		lines.add(index, new Object[] { key, line });
 		updateAllPositions();
 	}
 
@@ -60,7 +67,7 @@ public class DebugInfo {
 		for (int i = 0; i < lines.size(); i++) {
 			Object[] line = lines.get(i);
 			GUIText text = (GUIText) line[1];
-			text.update(null, -1f, null, new Vector2f(SATRT.getX(), SATRT.getY() + (0.025f * i)), -1f, false, null);
+			text.update(null, -1f, null, new Vector2f(COORDS.getX(), COORDS.getY() + (0.025f * i)), -1f, false, null);
 		}
 	}
 
