@@ -28,7 +28,7 @@ import net.roryclaasen.sandbox.util.config.ConfigLoader;
 
 public class Bootstrap {
 
-	public static final String TITLE = "Sandbox", VERSION = "0.1", GAME_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "My Games" + File.separator + TITLE + File.separator;
+	public static final String TITLE = "Sandbox", VERSION = "0.1.0", GAME_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "My Games" + File.separator + TITLE + File.separator;
 
 	private static Arguments arguments;
 	private static ConfigLoader conf;
