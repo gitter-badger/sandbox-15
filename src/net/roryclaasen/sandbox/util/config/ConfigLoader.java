@@ -18,8 +18,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.gogo98901.log.Log;
 import net.roryclaasen.Bootstrap;
@@ -32,8 +30,6 @@ public class ConfigLoader {
 
 	private JSONParser parser;
 	private static JSONObject config;
-
-	protected List<Config<?>> configList = new ArrayList<Config<?>>();
 
 	public ConfigLoader() {
 		parser = new JSONParser();
@@ -64,7 +60,7 @@ public class ConfigLoader {
 
 	private void addMissingValues() {
 		int count = 0;
-		for (Config<?> cfg : Config.list) {
+		for (ConfigType<?> cfg : Config.list) {
 			if (!config.containsKey(cfg.getName())) {
 				count++;
 				set(cfg.getName(), cfg.getDefaultValue());
@@ -88,7 +84,7 @@ public class ConfigLoader {
 	}
 
 	public void reset() {
-		for (Config<?> cfg : Config.list) {
+		for (ConfigType<?> cfg : Config.list) {
 			set(cfg.getName(), cfg.getDefaultValue());
 		}
 	}

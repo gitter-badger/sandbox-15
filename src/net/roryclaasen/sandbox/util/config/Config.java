@@ -17,51 +17,24 @@ package net.roryclaasen.sandbox.util.config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Config<T> {
-
-	public static List<Config<?>> list = new ArrayList<Config<?>>();
+public class Config {
+	protected static List<ConfigType<?>> list = new ArrayList<ConfigType<?>>();
 
 	// Display
-	public static Config<Integer> width = new Config<Integer>("width", 1280);
-	public static Config<Integer> height = new Config<Integer>("height", 720);
-	public static Config<Integer> fpsCap = new Config<Integer>("fps-cap", 120);
+	public static ConfigType<Integer> width = new ConfigType<Integer>("width", 1280);
+	public static ConfigType<Integer> height = new ConfigType<Integer>("height", 720);
+	public static ConfigType<Integer> fpsCap = new ConfigType<Integer>("fps-cap", 120);
 
 	// Camera & Movement
-	public static Config<Integer> fov = new Config<Integer>("camera-fov", 70);
-	public static Config<Float> sensitivity = new Config<Float>("mouse-sensitivity", 0.5f);
-	public static Config<Float> movingSpeed = new Config<Float>("player-moving-speed", 120F);
+	public static ConfigType<Integer> fov = new ConfigType<Integer>("camera-fov", 70);
+	public static ConfigType<Float> sensitivity = new ConfigType<Float>("mouse-sensitivity", 0.5f);
+	public static ConfigType<Float> movingSpeed = new ConfigType<Float>("player-moving-speed", 120F);
 
 	// World
-	public static Config<Float> skyRotate = new Config<Float>("sky-rotate-speed", 0.5F);
+	public static ConfigType<Float> skyRotate = new ConfigType<Float>("sky-rotate-speed", 0.5F);
 
 	// Render
-	public static Config<Boolean> anisotropic = new Config<Boolean>("anisotropic-filtering", true);
-	public static Config<Boolean> antialiasing = new Config<Boolean>("antialiasing", false);
-	public static Config<Integer> antialiasingSample = new Config<Integer>("antialiasing-sample", 4);
-
-	private String name;
-	private T type;
-
-	private Config(String name, T defaultValue) {
-		this.name = name;
-		this.type = defaultValue;
-		list.add(this);
-	}
-
-	public void set(T value) {
-		ConfigLoader.set(this.name, value);
-	}
-
-	@SuppressWarnings("unchecked")
-	public T get() {
-		return (T) ConfigLoader.get(this.name, this.type);
-	}
-
-	public T getDefaultValue() {
-		return type;
-	}
-
-	public String getName() {
-		return name;
-	}
+	public static ConfigType<Boolean> anisotropic = new ConfigType<Boolean>("anisotropic-filtering", true);
+	public static ConfigType<Boolean> antialiasing = new ConfigType<Boolean>("antialiasing", false);
+	public static ConfigType<Integer> antialiasingSample = new ConfigType<Integer>("antialiasing-sample", 4);
 }

@@ -38,12 +38,12 @@ public class Player extends Entity {
 	public Player(Vector3f position, float rotX, float rotY, float rotZ) {
 		super(null, position, rotX, rotY, rotZ, 1F);
 		hasHealth = false;
-		DebugInfo.add("pos", this.getPosition().toString());
+		DebugInfo.add("pos", "xyz:" + this.getPosition().getX() + ", " + this.getPosition().getY() + ", " + this.getPosition().getZ());
 	}
 
 	@SuppressWarnings("unused")
 	public void update() {
-		DebugInfo.update("pos", this.getPosition().toString());
+		DebugInfo.update("pos", "xyz:" + this.getPosition().getX() + ", " + this.getPosition().getY() + ", " + this.getPosition().getZ());
 		Terrain terrain = TerrainManager.getCurrentTerrain(getX(), getZ());
 		checkInputs();
 		increaseRotation(0, currentSpeedTurn * DisplayManager.getFrameTimeSeconds(), 0);
