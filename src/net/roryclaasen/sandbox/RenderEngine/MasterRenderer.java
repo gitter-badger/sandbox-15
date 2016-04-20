@@ -48,7 +48,7 @@ import org.lwjgl.util.vector.Vector4f;
 
 public class MasterRenderer {
 
-	public static final float FOV = Config.fov.getFloat();
+	public static final float FOV = Config.fov.get();
 	public static final float PLAIN_NEAR = 0.01F;
 	public static final float PLAIN_FAR = 1000F;
 

@@ -36,8 +36,8 @@ import org.newdawn.slick.opengl.PNGDecoder;
 
 public class DisplayManager {
 
-	private static final int WIDTH = Config.width.getIntager(), HEIGHT = Config.height.getIntager();
-	private static final int FPS_CAP = Config.fpsCap.getIntager();
+	private static final int WIDTH = Config.width.get(), HEIGHT = Config.height.get();
+	private static final int FPS_CAP = Config.fpsCap.get();
 
 	private long lastFrameTime = 0;
 	private static float delta = 0;
@@ -57,15 +57,15 @@ public class DisplayManager {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			PixelFormat pixelFormat = new PixelFormat();
 
-			Log.info("Antialiasing: " + Config.antialiasing.getBoolean());
-			if (Config.antialiasing.getBoolean()) pixelFormat = pixelFormat.withSamples(Config.antialiasingSample.getIntager());
+			Log.info("Antialiasing: " + Config.antialiasing.get());
+			if (Config.antialiasing.get()) pixelFormat = pixelFormat.withSamples(Config.antialiasingSample.get());
 
 			Log.info("LWJGL version: " + org.lwjgl.Sys.getVersion());
 			Display.create(pixelFormat, attribs);
 			Log.info("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
 			
 			Display.setTitle(Bootstrap.TITLE);
-			if (Config.antialiasing.getBoolean()) GL11.glEnable(GL13.GL_MULTISAMPLE);
+			if (Config.antialiasing.get()) GL11.glEnable(GL13.GL_MULTISAMPLE);
 			Display.setIcon(getIcons());
 			Log.info("Display Created");
 		} catch (Exception e) {

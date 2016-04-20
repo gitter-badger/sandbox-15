@@ -60,24 +60,24 @@ public class Player extends Entity {
 		turning = false;
 		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			moving = true;
-			walkForward(Config.movingSpeed.getFloat());
+			walkForward(Config.movingSpeed.get());
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
 			moving = true;
-			walkBackwards(Config.movingSpeed.getFloat());
+			walkBackwards(Config.movingSpeed.get());
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
 			moving = true;
-			strafeLeft(Config.movingSpeed.getFloat());
+			strafeLeft(Config.movingSpeed.get());
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
 			moving = true;
-			strafeRight(Config.movingSpeed.getFloat());
+			strafeRight(Config.movingSpeed.get());
 		}
 		if (!(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-				pos.y += Config.movingSpeed.getFloat();
+				pos.y += Config.movingSpeed.get();
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-				pos.y -= Config.movingSpeed.getFloat();
+				pos.y -= Config.movingSpeed.get();
 			}
 		}
 	}

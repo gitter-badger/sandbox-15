@@ -14,55 +14,54 @@
  */
 package net.roryclaasen.sandbox.util.config;
 
-public enum Config {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Config<T> {
+
+	public static List<Config<?>> list = new ArrayList<Config<?>>();
+
 	// Display
-	width("width", 1280), height("height", 720), fpsCap("fps-cap", 120),
+	public static Config<Integer> width = new Config<Integer>("width", 1280);
+	public static Config<Integer> height = new Config<Integer>("height", 720);
+	public static Config<Integer> fpsCap = new Config<Integer>("fps-cap", 120);
 
 	// Camera & Movement
-	fov("camera-fov", 70), sensitivity("mouse-sensitivity", 0.5f), movingSpeed("player-moving-speed", 120F),
+	public static Config<Integer> fov = new Config<Integer>("camera-fov", 70);
+	public static Config<Float> sensitivity = new Config<Float>("mouse-sensitivity", 0.5f);
+	public static Config<Float> movingSpeed = new Config<Float>("player-moving-speed", 120F);
 
 	// World
-	skyRotate("sky-rotate-speed", 0.5F),
+	public static Config<Float> skyRotate = new Config<Float>("sky-rotate-speed", 0.5F);
 
 	// Render
-	anisotropic("anisotropic-filtering", true), antialiasing("antialiasing", false), antialiasingSample("antialiasing-sample", 4)
-
-	// END OF CONFIG
-	;
+	public static Config<Boolean> anisotropic = new Config<Boolean>("anisotropic-filtering", true);
+	public static Config<Boolean> antialiasing = new Config<Boolean>("antialiasing", false);
+	public static Config<Integer> antialiasingSample = new Config<Integer>("antialiasing-sample", 4);
 
 	private String name;
-	private Object defaultValue;
+	private T type;
 
-	Config(String name, Object defaultValue) {
+	private Config(String name, T defaultValue) {
 		this.name = name;
-		this.defaultValue = defaultValue;
+		this.type = defaultValue;
+		list.add(this);
 	}
 
-	public void set(Object newValue) {
-		ConfigLoader.set(this.name, newValue);
+	public void set(T value) {
+		ConfigLoader.set(this.name, value);
 	}
 
-	public Object get() {
-		return ConfigLoader.get(this.name, this.defaultValue);
+	@SuppressWarnings("unchecked")
+	public T get() {
+		return (T) ConfigLoader.get(this.name, this.type);
 	}
 
-	public Object getDefaultValue() {
-		return defaultValue;
+	public T getDefaultValue() {
+		return type;
 	}
 
-	public String getString() {
-		return "" + get();
-	}
-
-	public int getIntager() {
-		return Integer.parseInt(getString());
-	}
-
-	public boolean getBoolean() {
-		return Boolean.parseBoolean(getString());
-	}
-
-	public float getFloat() {
-		return Float.parseFloat(getString());
+	public String getName() {
+		return name;
 	}
 }

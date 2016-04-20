@@ -26,7 +26,7 @@ public class Camera {
 	private float currentZoom = 50, currentAngle = 0;
 	private float minZoom = 10, maxZoom = 700;
 
-	private float mouseSensitivity = Config.sensitivity.getFloat();
+	private float mouseSensitivity = Config.sensitivity.get();
 
 	private Player player;
 

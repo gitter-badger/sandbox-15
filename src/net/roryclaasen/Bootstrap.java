@@ -21,6 +21,7 @@ import net.gogo98901.log.Log;
 import net.gogo98901.util.Data;
 import net.roryclaasen.sandbox.Sandbox;
 import net.roryclaasen.sandbox.util.Arguments;
+import net.roryclaasen.sandbox.util.config.Config;
 import net.roryclaasen.sandbox.util.config.ConfigLoader;
 
 public class Bootstrap {
@@ -33,6 +34,7 @@ public class Bootstrap {
 	private static Version version;
 
 	public static void main(String[] args) {
+		Log.info(Config.width.get());
 		Log.setDateFormat("[dd.MM.yy hh:mm:ss]");
 		Log.info(TITLE + "(" + VERSION + ") by Rory Claasen");
 		arguments = new Arguments(args);

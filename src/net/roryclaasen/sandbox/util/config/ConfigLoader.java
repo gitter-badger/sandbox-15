@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.gogo98901.log.Log;
 import net.roryclaasen.Bootstrap;
@@ -30,6 +32,8 @@ public class ConfigLoader {
 
 	private JSONParser parser;
 	private static JSONObject config;
+
+	protected List<Config<?>> configList = new ArrayList<Config<?>>();
 
 	public ConfigLoader() {
 		parser = new JSONParser();
@@ -60,10 +64,10 @@ public class ConfigLoader {
 
 	private void addMissingValues() {
 		int count = 0;
-		for (Config cfg : Config.values()) {
-			if (!config.containsKey(cfg.name())) {
+		for (Config<?> cfg : Config.list) {
+			if (!config.containsKey(cfg.getName())) {
 				count++;
-				set(cfg.name(), cfg.getDefaultValue());
+				set(cfg.getName(), cfg.getDefaultValue());
 			}
 		}
 		if (count != 0) Log.info("Config added " + count + " missing value(s)");
@@ -83,17 +87,23 @@ public class ConfigLoader {
 		}
 	}
 
+	public void reset() {
+		for (Config<?> cfg : Config.list) {
+			set(cfg.getName(), cfg.getDefaultValue());
+		}
+	}
+
 	@SuppressWarnings("unchecked")
-	public static void set(String name, Object newValue) {
+	protected static void set(String name, Object newValue) {
 		config.put(name, newValue);
 	}
 
-	public static Object get(String name, Object defaultValue) {
+	protected static Object get(String name, Object defaultValue) {
 		if (!config.containsKey(name)) set(name, defaultValue);
 		return config.get(name);
 	}
 
-	public String getFile() {
+	public static String getFile() {
 		return Bootstrap.GAME_PATH + "/config.cfg";
 	}
 

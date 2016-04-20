@@ -27,7 +27,7 @@ public class SkyboxShader extends ShaderProgram {
 
 	private static final String VERT_FILE = "skybox.vert", FRAG_FILE = "skybox.frag";
 
-	private static final float ROTATION_SPEED = Config.skyRotate.getFloat();
+	private static final float ROTATION_SPEED = Config.skyRotate.get();
 
 	private int location_projectionMatrix;
 	private int location_viewMatrix;
