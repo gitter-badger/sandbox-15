@@ -12,6 +12,11 @@
 # include game files
 !levels/
 
+# submodules
+!library/
+!version/
+!language/
+
 # include important folders and files
 !LICENSE
 !README.md
