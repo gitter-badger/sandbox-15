@@ -37,4 +37,7 @@ public class Config {
 	public static ConfigType<Boolean> anisotropic = new ConfigType<Boolean>("anisotropic-filtering", true);
 	public static ConfigType<Boolean> antialiasing = new ConfigType<Boolean>("antialiasing", false);
 	public static ConfigType<Integer> antialiasingSample = new ConfigType<Integer>("antialiasing-sample", 4);
+	
+	// Miscellaneous
+	public static ConfigType<String> language = new ConfigType<String>("language", "en_UK");
 }

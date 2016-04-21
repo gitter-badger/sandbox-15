@@ -68,7 +68,9 @@ public class Sandbox {
 	public Sandbox(Arguments arguments) {
 		Sandbox.sandbox = this;
 		Sandbox.arguments = arguments;
-
+		
+		Languages.setFromConfig();
+		
 		display = new DisplayManager();
 	}
 

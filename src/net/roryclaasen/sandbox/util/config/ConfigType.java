@@ -41,4 +41,8 @@ public class ConfigType<Type> {
 	public String getName() {
 		return name;
 	}
+
+	public void reset() {
+		ConfigLoader.set(this.name, type);
+	}
 }

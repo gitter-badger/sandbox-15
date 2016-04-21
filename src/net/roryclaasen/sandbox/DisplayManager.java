@@ -22,7 +22,7 @@ import java.nio.ByteBuffer;
 import net.gogo98901.log.Level;
 import net.gogo98901.log.Log;
 import net.gogo98901.util.Loader;
-import net.roryclaasen.Bootstrap;
+import net.roryclaasen.language.LangUtil;
 import net.roryclaasen.sandbox.util.config.Config;
 
 import org.lwjgl.Sys;
@@ -43,11 +43,10 @@ public class DisplayManager {
 	private static float delta = 0;
 
 	public DisplayManager() {
-
 		Log.info("Display width: " + WIDTH);
 		Log.info("Display height: " + HEIGHT);
 		Log.info("FPS Cap: " + FPS_CAP);
-		 Log.info("Display Adapter: " + Display.getAdapter());
+		Log.info("Display Adapter: " + Display.getAdapter());
 	}
 
 	public void createDisplay() {
@@ -63,8 +62,8 @@ public class DisplayManager {
 			Log.info("LWJGL version: " + org.lwjgl.Sys.getVersion());
 			Display.create(pixelFormat, attribs);
 			Log.info("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
-			
-			Display.setTitle(Bootstrap.TITLE);
+
+			Display.setTitle(LangUtil.get("sandbox.title"));
 			if (Config.antialiasing.get()) GL11.glEnable(GL13.GL_MULTISAMPLE);
 			Display.setIcon(getIcons());
 			Log.info("Display Created");
@@ -78,7 +77,7 @@ public class DisplayManager {
 	}
 
 	private ByteBuffer[] getIcons() throws IOException {
-		return new ByteBuffer[] { loadIcon("icon16.png"), loadIcon("icon32.png"), };
+		return new ByteBuffer[]{loadIcon("icon16.png"), loadIcon("icon32.png"),};
 	}
 
 	private ByteBuffer loadIcon(String file) throws IOException {
