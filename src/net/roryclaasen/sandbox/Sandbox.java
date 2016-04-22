@@ -45,6 +45,7 @@ public class Sandbox {
 	private static Arguments arguments;
 
 	public int currentFrames, currentUpdates;
+	private boolean running = false;
 
 	public Loader loader;
 	public LevelLoader levelLoader;
@@ -68,9 +69,9 @@ public class Sandbox {
 	public Sandbox(Arguments arguments) {
 		Sandbox.sandbox = this;
 		Sandbox.arguments = arguments;
-		
+
 		Languages.setFromConfig();
-		
+
 		display = new DisplayManager();
 	}
 
@@ -101,6 +102,7 @@ public class Sandbox {
 	}
 
 	public void start() {
+		running = true;
 		display.createDisplay();
 		init();
 
@@ -117,60 +119,73 @@ public class Sandbox {
 		double delta = 0.0;
 		int updates = 0;
 		int frames = 0;
+		int passes = 0;
 
 		Log.info("Started Rendering");
 
 		// Mouse.setCursorPosition(DisplayManager.getWidth() / 2, DisplayManager.getHeight() / 2);
-		while (!Display.isCloseRequested()) {
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+		while (running) {
+			if (!Display.isCloseRequested()) {
+				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 
-			long now = System.nanoTime();
-			delta += (now - lastTime) / ns;
-			lastTime = now;
-			while (delta >= 1) {
-				{// update
-					gameStateManager.update();
+				long now = System.nanoTime();
+				delta += (now - lastTime) / ns;
+				lastTime = now;
+				while (delta >= 1) {
+					{// update
+						gameStateManager.update();
+					}
+					updates++;
+					delta--;
 				}
-				updates++;
-				delta--;
-			}
-			{// render
-				worldUtil.render();
-				gameStateManager.render();
-				worldUtil.renderWireFrame(false);
-				TextMaster.render();
-				display.updateDisplay();
-			}
-			frames++;
+				{// render
+					worldUtil.render();
+					gameStateManager.render();
+					worldUtil.renderWireFrame(false);
+					TextMaster.render();
+					display.updateDisplay();
+				}
+				frames++;
 
-			if (System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
-				currentFrames = frames;
-				currentUpdates = updates;
-				updates = 0;
-				frames = 0;
-				DebugInfo.update("fps", currentFrames + " :fps");
+				if (System.currentTimeMillis() - timer > 1000) {
+					timer += 1000;
+					currentFrames = frames;
+					currentUpdates = updates;
+					updates = 0;
+					frames = 0;
+					DebugInfo.update("fps", currentFrames + " :fps");
+					if (arguments.isRunningAsCI()) {
+						passes++;
+						if (passes > 5) {
+							Log.info("Rendered for " + (60 * passes) + " updates");
+							close();
+
+						}
+					}
+				}
 			}
 		}
 	}
 
 	public void close() {
-		try {
-			fbo.cleanUp();
-			PostProcessing.cleanUp();
-			ParticleMaster.cleanUp();
-			TextMaster.cleanUp();
-			gameStateManager.cleanUp();
-			renderer.cleanUp();
-			rendererGui.cleanUp();
-			loader.cleanUp();
-			Log.info("CleanUp... OK");
-		} catch (Exception e) {
-			Log.info("CleanUp... Failed");
-			Log.stackTrace(e);
+		if (running) {
+			running = false;
+			try {
+				fbo.cleanUp();
+				PostProcessing.cleanUp();
+				ParticleMaster.cleanUp();
+				TextMaster.cleanUp();
+				gameStateManager.cleanUp();
+				renderer.cleanUp();
+				rendererGui.cleanUp();
+				loader.cleanUp();
+				Log.info("CleanUp... OK");
+			} catch (Exception e) {
+				Log.warn("CleanUp... Failed");
+				Log.stackTrace(e);
+			}
 		}
 		display.destroyDisplay();
-
 		Log.save();
 	}
 

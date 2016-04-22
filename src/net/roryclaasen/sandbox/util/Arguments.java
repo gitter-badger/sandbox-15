@@ -20,12 +20,16 @@ public class Arguments {
 
 	private String[] args;
 
+	private boolean test;
+
 	private boolean debug;
 	private boolean log;
 	private boolean doConfig;
 
 	public Arguments(String[] args) {
 		this.args = args;
+		Log.info(System.getenv("travis"));
+		test = System.getenv("travis") != null;
 		check();
 	}
 
@@ -59,5 +63,9 @@ public class Arguments {
 
 	public boolean doLoadConfig() {
 		return doConfig;
+	}
+
+	public boolean isRunningAsCI() {
+		return test;
 	}
 }
