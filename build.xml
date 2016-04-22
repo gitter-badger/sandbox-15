@@ -6,8 +6,6 @@
 	<property name="classes.dir" value="${build.dir}/classes"/>
 	<property name="jar.dir"     value="${build.dir}/jar"/>
 	<property name="natives.dir" value="${build.dir}/natives"/>
-	
-	<property name="travis"		 value="/home/travis/build/DesignTrek/dimensio"/>
 
 	<property name="lib.dir"     value="libs"/>
 	<property name="jarLib.dir"  value="${lib.dir}/jars"/>
@@ -67,8 +65,8 @@
 
 	<target name="run" depends="natives, jar">
 		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true" failonerror="true">
-			<jvmarg value="-Djava.library.path=${natives.dir}/lwjgl"/>
-			<sysproperty key="java.library.path" value="${natives.dir}/lwjgl"/>
+			<jvmarg value="-Djava.library.path=${natives.dir}"/>
+			<sysproperty key="java.library.path" value="${natives.dir}"/>
 		</java>
 	</target>
 
