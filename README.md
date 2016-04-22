@@ -1,7 +1,9 @@
-# sandbox
+# Sandbox
 Sandbox is a game that you can just add, add, add
 
 View the credits on the [wiki](https://github.com/GOGO98901/sandbox/wiki/Credits)
+
+[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg?style=flat-square)](https://raw.githubusercontent.com/GOGO98901/sandbox/master/LICENSE) [![Travis](https://img.shields.io/travis/GOGO98901/sandbox.svg?style=flat-square)](https://travis-ci.org/GOGO98901/sandbox)
 
 ```
 Copyright 2016 Rory Claasen
