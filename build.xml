@@ -43,8 +43,7 @@
 	<target name="natives">
 		<mkdir dir="${natives.dir}"/>
 		<copy todir="${natives.dir}">
-			<fileset dir="${lib.dir}/natives">
-				<exclude name="**/*.java"/>
+			<fileset dir="${lib.dir}/natives/lwjgl">
 			</fileset>
 		</copy>
 	</target>
