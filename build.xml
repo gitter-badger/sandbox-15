@@ -1,0 +1,78 @@
+<project name="Sandbox" basedir="." default="main">
+
+	<property name="src.dir"     value="src"/>
+
+	<property name="build.dir"   value="build"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="jar.dir"     value="${build.dir}/jar"/>
+	<property name="natives.dir" value="${build.dir}/natives"/>
+	
+	<property name="travis"		 value="/home/travis/build/DesignTrek/dimensio"/>
+
+	<property name="lib.dir"     value="libs"/>
+	<property name="jarLib.dir"  value="${lib.dir}/jars"/>
+
+	<property name="main-class"  value="net.roryclaasen.Bootstrap"/>
+
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<target name="compile">
+		<copy todir="${classes.dir}">
+			<fileset dir="res">
+				<exclude name="**/*.java"/>
+				<exclude name="**/*.psd"/>
+				<exclude name="**/*.db"/>
+			</fileset>
+		</copy>
+		<mkdir dir="${classes.dir}"/>
+		<javac destdir="${classes.dir}" includeantruntime="false">
+			<src path="${src.dir}"/>
+			<src path="library/src"/>
+			<src path="version/src"/>
+			<src path="language/src"/>
+			<classpath>
+				<pathelement path="${jarLib.dir}/lwjgl.jar"/>
+				<pathelement path="${jarLib.dir}/lwjgl_util.jar"/>
+				<pathelement path="${jarLib.dir}/PNGDecoder.jar"/>
+				<pathelement path="${jarLib.dir}/slick-util.jar"/>
+				<pathelement path="${jarLib.dir}/json-simple-1.1.1.jar"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="natives">
+		<mkdir dir="${natives.dir}"/>
+		<copy todir="${natives.dir}">
+			<fileset dir="${lib.dir}/natives">
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<zipgroupfileset dir="${jarLib.dir}" includes="lwjgl.jar" />
+			<zipgroupfileset dir="${jarLib.dir}" includes="lwjgl_util.jar" />
+			<zipgroupfileset dir="${jarLib.dir}" includes="PNGDecoder.jar" />
+			<zipgroupfileset dir="${jarLib.dir}" includes="slick-util.jar" />
+			<zipgroupfileset dir="${jarLib.dir}" includes="json-simple-1.1.1.jar" />
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" depends="natives, jar">
+		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true" failonerror="true">
+			<jvmarg value="-Djava.library.path=${natives.dir}/lwjgl"/>
+			<sysproperty key="java.library.path" value="${natives.dir}/lwjgl"/>
+		</java>
+	</target>
+
+	<target name="main" depends="clean, run"/>
+	<target name="test" depends="clean, run"/>
+
+</project>
