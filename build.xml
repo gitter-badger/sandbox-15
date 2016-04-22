@@ -41,7 +41,7 @@
 			</fileset>
 		</copy>
 		<mkdir dir="${classes.dir}" />
-		<javac destdir="${classes.dir}" includeantruntime="false" source="1.8" target="1.7" compiler="javac1.7">
+		<javac destdir="${classes.dir}" includeantruntime="false" <!-- source="1.7" target="1.7" compiler="javac1.7" -->>
 			<src path="${src.dir}" />
 			<src path="library/src" />
 			<src path="version/src" />
