@@ -46,7 +46,11 @@ public class DisplayManager {
 		Log.info("Display width: " + WIDTH);
 		Log.info("Display height: " + HEIGHT);
 		Log.info("FPS Cap: " + FPS_CAP);
-		Log.info("Display Adapter: " + Display.getAdapter());
+		try {
+			Log.info("Display Adapter: " + Display.getAdapter());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void createDisplay() {
