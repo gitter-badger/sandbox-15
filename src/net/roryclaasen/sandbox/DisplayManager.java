@@ -46,11 +46,6 @@ public class DisplayManager {
 		Log.info("Display width: " + WIDTH);
 		Log.info("Display height: " + HEIGHT);
 		Log.info("FPS Cap: " + FPS_CAP);
-		try {
-			Log.info("Display Adapter: " + Display.getAdapter());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void createDisplay() {
@@ -60,6 +55,7 @@ public class DisplayManager {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			PixelFormat pixelFormat = new PixelFormat();
 
+			Log.info("Display Adapter: " + Display.getAdapter());
 			Log.info("Antialiasing: " + Config.antialiasing.get());
 			if (Config.antialiasing.get()) pixelFormat = pixelFormat.withSamples(Config.antialiasingSample.get());
 
