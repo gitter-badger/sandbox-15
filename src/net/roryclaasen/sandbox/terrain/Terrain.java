@@ -25,7 +25,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class Terrain {
 
-	private static final float SIZE = 400;
+	private static final float SIZE = 300;
 
 	private float x, z;
 	private RawModel model;
@@ -40,7 +40,7 @@ public class Terrain {
 		this.blendMap = blendMap;
 		this.x = gridX * SIZE;
 		this.z = gridZ * SIZE;
-		this.model = generateTerrain(loader, seed);
+		this.model = generateTerrain(loader, seed, gridX, gridZ);
 	}
 
 	public static float getSize() {
@@ -90,10 +90,10 @@ public class Terrain {
 		return answer;
 	}
 
-	private RawModel generateTerrain(Loader loader, int seed) {
-		HeightGenerator generator = new HeightGenerator(seed);
-		seed = generator.getSeed();
+	private RawModel generateTerrain(Loader loader, int seed, int x, int z) {
 		int vertexCount = 64 + 16 - 8;
+		HeightGenerator generator = new HeightGenerator(seed, x, z, vertexCount);
+		seed = generator.getSeed();
 		heights = new float[vertexCount][vertexCount];
 
 		int count = vertexCount * vertexCount;

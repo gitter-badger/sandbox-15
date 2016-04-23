@@ -19,7 +19,6 @@ import net.roryclaasen.sandbox.Sandbox;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
 import net.roryclaasen.sandbox.RenderEngine.post.PostProcessing;
 import net.roryclaasen.sandbox.RenderEngine.terrain.water.WaterFrameBuffers;
-import net.roryclaasen.sandbox.RenderEngine.terrain.water.WaterTile;
 import net.roryclaasen.sandbox.entities.Entity;
 import net.roryclaasen.sandbox.entities.Player;
 import net.roryclaasen.sandbox.entities.light.Light;
@@ -71,12 +70,6 @@ public class ModeLevel extends ModeBase {
 			}
 			Vector3f position = new Vector3f(x, y, z);
 			_sand.entityManager.add(new Entity(Models.tree.get(), position, 0, 0, 0, 1.5f));
-		}
-
-		for (int x = 1; x < Terrain.getSize() / WaterTile.TILE_SIZE; x++) {
-			for (int y = 1; y < Terrain.getSize() / WaterTile.TILE_SIZE; y++) {
-				_sand.terrainManager.addWater(new WaterTile(x * 100, y * 100, -1));
-			}
 		}
 
 		_sand.skybox.start();

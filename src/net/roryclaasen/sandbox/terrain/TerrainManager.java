@@ -17,7 +17,6 @@ package net.roryclaasen.sandbox.terrain;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.roryclaasen.sandbox.RenderEngine.terrain.water.WaterTile;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexturePack;
 import net.roryclaasen.sandbox.util.Loader;

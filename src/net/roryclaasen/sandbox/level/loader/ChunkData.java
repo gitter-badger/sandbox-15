@@ -37,12 +37,17 @@ public class ChunkData {
 	private List<ObjectData> objects = new ArrayList<ObjectData>();
 	private List<EntityData> entities = new ArrayList<EntityData>();
 
-	public ChunkData(JSONObject data) throws FileNotFoundException, IOException, ParseException {
-		this.id = JSONUtil.getInteger(data, "id", 0);
-		this.location = new Vector2f(JSONUtil.getInteger(data, "x", 0), JSONUtil.getInteger(data, "y", 0));
+	public ChunkData(JSONObject data, int id, int x, int y) throws FileNotFoundException, IOException, ParseException {
+		this.id = JSONUtil.getInteger(data, "id", id);
+		this.location = new Vector2f(JSONUtil.getInteger(data, "x", x), JSONUtil.getInteger(data, "y", y));
 
 		this.blendMap = JSONUtil.getString(data, "blend-map", "map.png");
 		this.texturePack = JSONUtil.getInteger(data, "texturepack", 0);
+	}
+
+	@Deprecated
+	public ChunkData(JSONObject data) throws FileNotFoundException, IOException, ParseException {
+		this(data, 0, 0, 0);
 	}
 
 	public ChunkData(JSONObject data, File root) throws FileNotFoundException, IOException, ParseException {

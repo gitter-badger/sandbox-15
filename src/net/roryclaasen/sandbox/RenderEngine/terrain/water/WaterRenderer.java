@@ -19,6 +19,7 @@ import java.util.List;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.light.Light;
 import net.roryclaasen.sandbox.models.RawModel;
+import net.roryclaasen.sandbox.terrain.WaterTile;
 import net.roryclaasen.sandbox.util.DeltaUtil;
 import net.roryclaasen.sandbox.util.Loader;
 import net.roryclaasen.sandbox.util.Maths;

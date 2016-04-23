@@ -30,6 +30,7 @@ import net.roryclaasen.sandbox.level.loader.WorldData;
 import net.roryclaasen.sandbox.terrain.HeightGenerator;
 import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
+import net.roryclaasen.sandbox.terrain.WaterTile;
 import net.roryclaasen.sandbox.util.JSONUtil;
 
 import org.json.simple.JSONObject;
@@ -37,12 +38,12 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class LevelLoader {
 
-	private Sandbox game;
+	private Sandbox _sand;
 	private WorldData worldData;
 
 	public LevelLoader(Sandbox game) {
 		Log.info("[LevelLoader] Initializing...");
-		this.game = game;
+		this._sand = game;
 		setUp();
 		Log.info("[LevelLoader] Initializing... OK");
 	}
@@ -62,7 +63,10 @@ public class LevelLoader {
 			JSONObject player = new JSONObject();
 			// TODO Generate Player Defaults
 			data.addPlayer(new EntityData(player));
-			data.addChunk(new ChunkData(new JSONObject()));
+			data.addChunk(new ChunkData(new JSONObject(), 0, 0, 0));
+			data.addChunk(new ChunkData(new JSONObject(), 1, 0, 1));
+			data.addChunk(new ChunkData(new JSONObject(), 2, 1, 0));
+			data.addChunk(new ChunkData(new JSONObject(), 3, 1, 1));
 		} catch (Exception e) {
 			Log.stackTrace(e);
 		}
@@ -89,16 +93,21 @@ public class LevelLoader {
 		Log.info("[LevelLoader] Seed: " + worldData.getSeed());
 		for (ChunkData chunk : worldData.getChunks()) {
 			try {
-				Terrain t = new Terrain((int) chunk.getLocation().getX(), (int) chunk.getLocation().getY(), game.loader, game.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(game.loader.loadTexture("level/" + chunk.getBlendMap())), worldData.getSeed());
+				Terrain t = new Terrain((int) chunk.getLocation().getX(), (int) chunk.getLocation().getY(), _sand.loader, _sand.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(_sand.loader.loadTexture("level/" + chunk.getBlendMap())), worldData.getSeed());
 
-				game.terrainManager.add(t);
+				_sand.terrainManager.add(t);
+				for (int x = 1; x < Terrain.getSize() / WaterTile.TILE_SIZE; x++) {
+					for (int z = 1; z < Terrain.getSize() / WaterTile.TILE_SIZE; z++) {
+						_sand.terrainManager.addWater(new WaterTile(t.getX() + (x * WaterTile.TILE_SIZE), t.getZ() + (z * WaterTile.TILE_SIZE), -1));
+					}
+				}
 				for (ObjectData object : chunk.getObjects()) {
 					float x = t.getX() + object.getLocation().getX();
 					float z = t.getZ() + object.getLocation().getZ();
 					float y = object.getLocation().getY();
 					if (y == -1) y = TerrainManager.getCurrentTerrain(x, z).getHeightOfTerrain(x, z);
-					if (object.getTexIndex() == -1) game.entityManager.add(new Entity(object.getTexturedModel(), new Vector3f(x, y, z), 0, 0, 0, 1));
-					else game.entityManager.add(new Entity(object.getTexturedModel(), object.getTexIndex(), new Vector3f(x, y, z), 0, 0, 0, 1));
+					if (object.getTexIndex() == -1) _sand.entityManager.add(new Entity(object.getTexturedModel(), new Vector3f(x, y, z), 0, 0, 0, 1));
+					else _sand.entityManager.add(new Entity(object.getTexturedModel(), object.getTexIndex(), new Vector3f(x, y, z), 0, 0, 0, 1));
 				}
 			} catch (Exception e) {
 				Log.warn("Failed to load chunk");
@@ -125,8 +134,8 @@ public class LevelLoader {
 		}
 		return data;
 	}
-	
-	public WorldData getWorldData(){
+
+	public WorldData getWorldData() {
 		return worldData;
 	}
 

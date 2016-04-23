@@ -22,18 +22,17 @@ public class HeightGenerator {
 	private static final int OCTAVES = 4;
 	private static final float ROUGHNESS = 0.2f;
 
-	private static final float OFFSET = 10f;
+	private static final float yOffset = 10f;
 
 	private static Random random = new Random();
 	private int seed;
+	private int xOffset, zOffset;
 
-	public HeightGenerator() {
-		this.seed = getRandomSeed();
-	}
-
-	public HeightGenerator(int seed) {
-		if(seed == 0) seed = getRandomSeed();
+	public HeightGenerator(int seed, int x, int z, int vertexCount) {
+		if (seed == 0) seed = getRandomSeed();
 		this.seed = seed;
+		xOffset = x * (vertexCount - 1);
+		zOffset = z * (vertexCount - 1);
 	}
 
 	public float generateHeight(int x, int z) {
@@ -42,12 +41,12 @@ public class HeightGenerator {
 		for (int i = 0; i < OCTAVES; i++) {
 			float freq = (float) (Math.pow(2, i) / d);
 			float amp = (float) Math.pow(ROUGHNESS, i) * AMPLITUDE;
-			total += getInterpolateNoise(x * freq, z * freq) * amp;
+			total += getInterpolatedNoise((x + xOffset) * freq, (z + zOffset) * freq) * amp;
 		}
-		return total + OFFSET;
+		return total + yOffset;
 	}
 
-	private float getInterpolateNoise(float x, float z) {
+	private float getInterpolatedNoise(float x, float z) {
 		int intX = (int) x;
 		int intZ = (int) z;
 		float fracX = x - intX;
