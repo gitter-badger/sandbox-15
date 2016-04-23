@@ -30,6 +30,7 @@
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
+		<echo>Cleaned build dir</echo>
 	</target>
 
 	<target name="compile">

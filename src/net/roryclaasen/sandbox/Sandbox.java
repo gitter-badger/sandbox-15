@@ -102,14 +102,19 @@ public class Sandbox {
 	}
 
 	public void start() {
-		running = true;
-		display.createDisplay();
-		init();
+		if (arguments.isRunningAsCI()) {
+			Log.info("Running as CI");
+			Log.info("Skipping start");
+		} else {
+			running = true;
+			display.createDisplay();
+			init();
 
-		DebugInfo.add("fps", 0, currentFrames + " :fps");
-		PostProcessing.init(loader);
-		run();
-		close();
+			DebugInfo.add("fps", 0, currentFrames + " :fps");
+			PostProcessing.init(loader);
+			run();
+			close();
+		}
 	}
 
 	private void run() {
