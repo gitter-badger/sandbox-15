@@ -28,8 +28,7 @@ public class Arguments {
 
 	public Arguments(String[] args) {
 		this.args = args;
-		Log.info(System.getenv("travis"));
-		test = System.getenv("travis") != null;
+		test = System.getenv("usingCI") != null;
 		check();
 	}
 
