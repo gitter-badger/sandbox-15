@@ -16,7 +16,7 @@ package net.roryclaasen.sandbox.RenderEngine.particle;
 
 import java.util.Random;
 
-import net.roryclaasen.sandbox.DisplayManager;
+import net.roryclaasen.sandbox.util.DeltaUtil;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
@@ -84,7 +84,7 @@ public class ParticleSystem {
 	}
 
 	public void generateParticles(Vector3f systemCenter) {
-		float delta = DisplayManager.getFrameTimeSeconds();
+		float delta = DeltaUtil.getDelta();
 		float particlesToCreate = pps * delta;
 		int count = (int) Math.floor(particlesToCreate);
 		float partialParticle = particlesToCreate % 1;

@@ -51,7 +51,7 @@ public class MousePicker {
 		return currentRay;
 	}
 
-	public void update() {
+	public void tick() {
 		viewMatrix = Maths.createViewMatrix(camera);
 		currentRay = calculateMouseRay();
 		if (intersectionInRange(0, RAY_RANGE, currentRay)) currentTerrainPoint = binarySearch(0, 0, RAY_RANGE, currentRay);

@@ -16,10 +16,10 @@ package net.roryclaasen.sandbox.RenderEngine.terrain.water;
 
 import java.util.List;
 
-import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.light.Light;
 import net.roryclaasen.sandbox.models.RawModel;
+import net.roryclaasen.sandbox.util.DeltaUtil;
 import net.roryclaasen.sandbox.util.Loader;
 import net.roryclaasen.sandbox.util.Maths;
 
@@ -71,7 +71,7 @@ public class WaterRenderer {
 		shader.start();
 		shader.loadLight(sun);
 		shader.loadViewMatrix(camera);
-		moveFactor += MOVE_SPEED * DisplayManager.getFrameTimeSeconds();
+		moveFactor += MOVE_SPEED * DeltaUtil.getDelta();
 		moveFactor %= 1;
 		shader.loadMoveFactor(moveFactor);
 		GL30.glBindVertexArray(quad.getVaoId());

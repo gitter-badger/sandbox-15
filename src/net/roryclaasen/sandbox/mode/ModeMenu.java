@@ -12,36 +12,34 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.state;
+package net.roryclaasen.sandbox.mode;
 
-public class GameStateMenu extends GameState {
+import net.roryclaasen.sandbox.GameMaster;
+import net.roryclaasen.sandbox.Sandbox;
 
-	public GameStateMenu(GameStateManager stateManager) {
-		super(stateManager);
+public class ModeMenu extends ModeBase {
+
+	public ModeMenu(Sandbox sandbox, GameMaster gameMaster) {
+		super(sandbox, gameMaster);
 	}
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
+
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-	}
+	public void tick(float delta) {
 
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void cleanUp() {
-		// TODO Auto-generated method stub
+
 	}
 }

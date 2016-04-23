@@ -25,7 +25,6 @@ import net.gogo98901.util.Loader;
 import net.roryclaasen.language.LangUtil;
 import net.roryclaasen.sandbox.util.config.Config;
 
-import org.lwjgl.Sys;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -38,9 +37,6 @@ public class DisplayManager {
 
 	private static final int WIDTH = Config.width.get(), HEIGHT = Config.height.get();
 	private static final int FPS_CAP = Config.fpsCap.get();
-
-	private long lastFrameTime = 0;
-	private static float delta = 0;
 
 	public DisplayManager() {
 		Log.info("Display width: " + WIDTH);
@@ -73,7 +69,6 @@ public class DisplayManager {
 		}
 
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
-		lastFrameTime = getCurrentTime();
 	}
 
 	private ByteBuffer[] getIcons() throws IOException {
@@ -97,22 +92,11 @@ public class DisplayManager {
 	public void updateDisplay() {
 		Display.sync(FPS_CAP);
 		Display.update();
-		long currentTime = getCurrentTime();
-		delta = (currentTime - lastFrameTime) / 1000f;
-		lastFrameTime = currentTime;
-	}
-
-	public static float getFrameTimeSeconds() {
-		return delta;
 	}
 
 	public void destroyDisplay() {
 		Display.destroy();
 		Log.info("Display Destroyed");
-	}
-
-	private long getCurrentTime() {
-		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
 	public static int getWidth() {

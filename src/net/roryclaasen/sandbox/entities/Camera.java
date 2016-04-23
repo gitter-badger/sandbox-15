@@ -47,23 +47,19 @@ public class Camera {
 	}
 
 	public void move() {
-		if (!player.isInMenu()) {
-			calculateZoom();
-			calcuatePitch();
-			calcuateAngleArroundPlayer();
+		calculateZoom();
+		calcuatePitch();
+		calcuateAngleArroundPlayer();
 
-			float dx = Mouse.getDX();
-			float dy = Mouse.getDY();
+		float dx = Mouse.getDX();
+		float dy = Mouse.getDY();
 
-			yaw(dx * mouseSensitivity);
-			pitch(dy * mouseSensitivity);
+		yaw(dx * mouseSensitivity);
+		pitch(dy * mouseSensitivity);
 
-			if (!player.isInMenu()) {
-				player.setRotY(currentAngle);
-			}
-		}
+		player.setRotY(currentAngle);
+
 		calculateCameraPosition(calcualteHorizotalDistance(), calcualteVerticalDistance());
-		Mouse.setGrabbed(!player.isInMenu());
 	}
 
 	private void calculateZoom() {

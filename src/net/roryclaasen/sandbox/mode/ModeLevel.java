@@ -12,17 +12,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.state;
+package net.roryclaasen.sandbox.mode;
 
-import java.util.Random;
-
+import net.roryclaasen.sandbox.GameMaster;
+import net.roryclaasen.sandbox.Sandbox;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
-import net.roryclaasen.sandbox.RenderEngine.particle.ParticleSystem;
-import net.roryclaasen.sandbox.RenderEngine.particle.ParticleTexture;
 import net.roryclaasen.sandbox.RenderEngine.post.PostProcessing;
 import net.roryclaasen.sandbox.RenderEngine.terrain.water.WaterFrameBuffers;
 import net.roryclaasen.sandbox.RenderEngine.terrain.water.WaterTile;
-import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.Entity;
 import net.roryclaasen.sandbox.entities.Player;
 import net.roryclaasen.sandbox.entities.light.Light;
@@ -31,45 +28,37 @@ import net.roryclaasen.sandbox.level.loader.EntityData;
 import net.roryclaasen.sandbox.models.Models;
 import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
-import net.roryclaasen.sandbox.util.MousePicker;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-public class GameStateLevel extends GameState {
+public class ModeLevel extends ModeBase {
 
 	private Player player;
-	private Camera camera;
 
 	private WaterFrameBuffers buffers;
 
-	private Random random = new Random();
-
-	public GameStateLevel(GameStateManager stateManager) {
-		super(stateManager);
+	public ModeLevel(Sandbox sandbox, GameMaster gameMaster) {
+		super(sandbox, gameMaster);
 
 		buffers = new WaterFrameBuffers();
-		renderer.setUpWaterRenderer(buffers);
+		_sand.renderer.setUpWaterRenderer(buffers);
 	}
-
-	ParticleSystem system;
 
 	@Override
 	public void init() {
-		gsm.getSandbox().levelLoader.newLevel();
-		EntityData playerData = gsm.getSandbox().levelLoader.getPlayerData();
-		// Player
+		_sand.levelLoader.newLevel();
+
+		EntityData playerData = _sand.levelLoader.getPlayerData();
 		player = new Player(new Vector3f(Terrain.getSize() / 2, 300, Terrain.getSize() / 2), playerData.getRotationX(), playerData.getRotationY(), playerData.getRotationZ());
-		camera = gsm.getSandbox().camera;
-		camera.setPlayer(player);
-		player.setCamera(gsm.getSandbox().camera);
+		player.setCamera(_sand.camera);
+		_sand.camera.setPlayer(player);
 
-		entityManager.addPlayer(player);
+		_sand.entityManager.addPlayer(player);
 
-		// Light
-		addDefults();
+		addSun();
 
 		for (int i = 0; i < 100; i++) {
 			float x = 0;
@@ -81,85 +70,69 @@ public class GameStateLevel extends GameState {
 				y = TerrainManager.getCurrentTerrain(x, z).getHeightOfTerrain(x, z) - 0.2f;
 			}
 			Vector3f position = new Vector3f(x, y, z);
-			entityManager.add(new Entity(Models.tree.get(), position, 0, 0, 0, 1.5f));
+			_sand.entityManager.add(new Entity(Models.tree.get(), position, 0, 0, 0, 1.5f));
 		}
 
 		for (int x = 1; x < Terrain.getSize() / WaterTile.TILE_SIZE; x++) {
 			for (int y = 1; y < Terrain.getSize() / WaterTile.TILE_SIZE; y++) {
-				terrainManager.addWater(new WaterTile(x * 100, y * 100, -1));
+				_sand.terrainManager.addWater(new WaterTile(x * 100, y * 100, -1));
 			}
 		}
 
-		mousePicker = new MousePicker(camera, renderer.getProjectionMatrix());
-
-		skybox.start();
-		ParticleTexture pTexture = new ParticleTexture(loader.loadTexture("particles/star"), 1);
-		system = new ParticleSystem(pTexture, 40, 10, 0.1f, 1, 1.6f);
-
-		DebugInfo.add("seed", 1, "seed: " + gsm.getSandbox().levelLoader.getWorldData().getSeed());
+		_sand.skybox.start();
+		DebugInfo.add("seed", 1, "seed: " + _sand.levelLoader.getWorldData().getSeed());
 	}
 
-	private void addDefults() {
+	private void addSun() {
 		Light lightSun = new Light(new Vector3f(Terrain.getSize() / 2, 400, Terrain.getSize() / 2), new Vector3f(1f, 1f, 1f));
 		lightSun.getPosition().translate(Terrain.getSize() / 6, 0, Terrain.getSize() / 6);
 		lightSun.getPosition().scale(1000);
-		entityManager.addSun(lightSun);
+		_sand.entityManager.addSun(lightSun);
 	}
 
 	@Override
 	public void render() {
-		renderer.renderShadowMap(entityManager.getEntities(), entityManager.getSun());
+		_sand.renderer.renderShadowMap(_sand.entityManager.getEntities(), _sand.entityManager.getSun());
 
 		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 		buffers.bindReflectionFrameBuffer();
-		float distance = 2 * (camera.getPosition().y - terrainManager.getWaters().get(0).getHeight());
-		camera.getPosition().y -= distance;
-		camera.invertPitch();
-		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, 1, 0, -terrainManager.getWaters().get(0).getHeight() + 1f));
-		camera.getPosition().y += distance;
-		camera.invertPitch();
+		float distance = 2 * (_sand.camera.getPosition().y - _sand.terrainManager.getWaters().get(0).getHeight());
+		_sand.camera.getPosition().y -= distance;
+		_sand.camera.invertPitch();
+		_sand.renderer.renderScene(_sand.entityManager, _sand.terrainManager, _sand.camera, new Vector4f(0, 1, 0, -_sand.terrainManager.getWaters().get(0).getHeight() + 1f));
+		_sand.camera.getPosition().y += distance;
+		_sand.camera.invertPitch();
 		buffers.bindRefractionFrameBuffer();
-		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, terrainManager.getWaters().get(0).getHeight() + 1f));
+		_sand.renderer.renderScene(_sand.entityManager, _sand.terrainManager, _sand.camera, new Vector4f(0, -1, 0, _sand.terrainManager.getWaters().get(0).getHeight() + 1f));
 
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		buffers.unbindCurrentFrameBuffer();
 
-		fbo.bindFrameBuffer();
-		renderer.renderScene(entityManager, terrainManager, camera, new Vector4f(0, -1, 0, 100000));
-		renderer.renderWater(terrainManager, camera, entityManager.getSun());
+		_sand.fbo.bindFrameBuffer();
+		_sand.renderer.renderScene(_sand.entityManager, _sand.terrainManager, _sand.camera, new Vector4f(0, -1, 0, 100000));
+		_sand.renderer.renderWater(_sand.terrainManager, _sand.camera, _sand.entityManager.getSun());
 
-		ParticleMaster.renderParticles(camera);
-		fbo.unbindFrameBuffer();
-		PostProcessing.doPostProcessing(fbo.getColourTexture());
-
-		if (player.isInMenu()) {
-			// TODO draw a menu of some sort
-		}
+		ParticleMaster.renderParticles(_sand.camera);
+		_sand.fbo.unbindFrameBuffer();
+		PostProcessing.doPostProcessing(_sand.fbo.getColourTexture());
 	}
 
 	@Override
-	public void update() {
-		if (!player.isInMenu()) {
-			skybox.update(entityManager);
-			player.update();
-			camera.move();
+	public void tick(float delta) {
+		if (!_master.menu.hasFocus()) {
+			_sand.skybox.tick(_sand.entityManager);
+			player.tick(delta);
+			_sand.camera.move();
+
 		}
-		// system.generateParticles(player.getPosition());
-		worldUtil.update(camera);
-		mousePicker.update();
-		ParticleMaster.update();
-	}
-
-	@Override
-	public void reset() {
-		player = null;
-		camera = null;
-
-		buffers = null;
+		_sand.worldUtil.tick(_sand.camera);
+		_sand.mousePicker.tick();
+		ParticleMaster.tick();
 	}
 
 	@Override
 	public void cleanUp() {
 		buffers.cleanUp();
 	}
+
 }

@@ -26,21 +26,13 @@ public class WorldUtil {
 
 	public static final float GRAVITY = -50f;
 	private boolean wireFrame = false;
-	private Sandbox game;
+	private Sandbox _sand;
 
-	public WorldUtil(Sandbox game) {
-		this.game = game;
+	public WorldUtil(Sandbox sandbox) {
+		this._sand = sandbox;
 	}
 
-	public void render() {
-		renderWireFrame();
-	}
-
-	public void renderWireFrame() {
-		renderWireFrame(wireFrame);
-	}
-
-	public void renderWireFrame(boolean frame) {
+	public void updateWireFrame(boolean frame) {
 		if (frame) {
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		} else {
@@ -48,18 +40,23 @@ public class WorldUtil {
 		}
 	}
 
-	public void update(Camera camera) {
+	public void tick(Camera camera) {
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-			game.entityManager.getPlayer().setInMenu(true);
-			Mouse.setGrabbed(false);
+			_sand.gameMaster.menu.setFocus(true);
 			Mouse.setCursorPosition(DisplayManager.getWidth() / 2, DisplayManager.getHeight() / 2);
+			Mouse.setGrabbed(false);
 		}
-		if (Mouse.isButtonDown(0) && game.entityManager.getPlayer().isInMenu()) game.entityManager.getPlayer().setInMenu(false);
+		if (Mouse.isButtonDown(0) && _sand.gameMaster.menu.hasFocus()) {
+			_sand.gameMaster.menu.setFocus(false);
+			Mouse.setGrabbed(true);
+		}
 
 		if (Sandbox.getArguments().isDebugMode()) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_F1)) setWireFrame(false);
 			if (Keyboard.isKeyDown(Keyboard.KEY_F2)) setWireFrame(true);
 		}
+
+		updateWireFrame(wireFrame);
 	}
 
 	public boolean isWireFrame() {

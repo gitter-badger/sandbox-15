@@ -35,7 +35,7 @@ public class ParticleMaster {
 		renderer = new ParticleRenderer(loader, projectionMatrix);
 	}
 
-	public static void update() {
+	public static void tick() {
 		Iterator<Entry<ParticleTexture, List<Particle>>> mapIterator = particles.entrySet().iterator();
 		while (mapIterator.hasNext()) {
 			List<Particle> list = mapIterator.next().getValue();

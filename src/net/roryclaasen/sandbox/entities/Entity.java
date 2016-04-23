@@ -14,10 +14,10 @@
  */
 package net.roryclaasen.sandbox.entities;
 
-import org.lwjgl.util.vector.Vector3f;
-
-import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.models.TexturedModel;
+import net.roryclaasen.sandbox.util.DeltaUtil;
+
+import org.lwjgl.util.vector.Vector3f;
 
 public class Entity {
 	protected float health, maxHealth;
@@ -54,9 +54,9 @@ public class Entity {
 	}
 
 	public void increasePosition(float dx, float dy, float dz) {
-		this.position.x += dx * DisplayManager.getFrameTimeSeconds();
-		this.position.y += dy * DisplayManager.getFrameTimeSeconds();
-		this.position.z += dz * DisplayManager.getFrameTimeSeconds();
+		this.position.x += dx * DeltaUtil.getDelta();
+		this.position.y += dy * DeltaUtil.getDelta();
+		this.position.z += dz * DeltaUtil.getDelta();
 	}
 
 	public void increaseRotation(float dx, float dy, float dz) {

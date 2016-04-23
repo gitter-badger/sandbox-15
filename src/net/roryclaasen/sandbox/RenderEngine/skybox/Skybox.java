@@ -34,7 +34,7 @@ public class Skybox {
 		return fogColour;
 	}
 
-	public void update(EntityManager entityManager) {}
+	public void tick(EntityManager entityManager) {}
 
 	public void start() {}
 }

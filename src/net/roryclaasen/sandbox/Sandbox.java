@@ -24,13 +24,12 @@ import net.roryclaasen.sandbox.RenderEngine.post.PostProcessing;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
 import net.roryclaasen.sandbox.entities.Camera;
 import net.roryclaasen.sandbox.entities.EntityManager;
-import net.roryclaasen.sandbox.guis.DebugInfo;
 import net.roryclaasen.sandbox.guis.GuiManager;
 import net.roryclaasen.sandbox.level.LevelLoader;
 import net.roryclaasen.sandbox.models.ModelLoader;
-import net.roryclaasen.sandbox.state.GameStateManager;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
 import net.roryclaasen.sandbox.util.Arguments;
+import net.roryclaasen.sandbox.util.DeltaUtil;
 import net.roryclaasen.sandbox.util.Loader;
 import net.roryclaasen.sandbox.util.MousePicker;
 import net.roryclaasen.sandbox.util.TextureUtil;
@@ -43,14 +42,13 @@ public class Sandbox {
 
 	private static Sandbox sandbox;
 	private static Arguments arguments;
-
-	public int currentFrames, currentUpdates;
+	private static DeltaUtil delta;
 	private boolean running = false;
 
 	public Loader loader;
 	public LevelLoader levelLoader;
 	public DisplayManager display;
-	private GameStateManager gameStateManager;
+	public GameMaster gameMaster;
 
 	public MasterRenderer renderer;
 	public GuiRenderer rendererGui;
@@ -72,6 +70,7 @@ public class Sandbox {
 
 		Languages.setFromConfig();
 
+		delta = new DeltaUtil();
 		display = new DisplayManager();
 	}
 
@@ -89,16 +88,15 @@ public class Sandbox {
 		entityManager = new EntityManager();
 		terrainManager = new TerrainManager(loader);
 		skybox = new Skybox();
-		worldUtil = new WorldUtil(this);
-		levelLoader = new LevelLoader(this);
+		worldUtil = new WorldUtil(sandbox);
+		mousePicker = new MousePicker(camera, renderer.getProjectionMatrix());
+		levelLoader = new LevelLoader(sandbox);
 		fbo = new Fbo(Display.getWidth(), Display.getHeight(), Fbo.DEPTH_RENDER_BUFFER);
-
-		gameStateManager = new GameStateManager(this);
-
 		ModelLoader.init(loader);
-		Log.info("Initializing... DONE");
 
-		gameStateManager.setState(GameStateManager.State.GAME);
+		gameMaster = new GameMaster(sandbox);
+		gameMaster.init();
+		Log.info("Initializing... DONE");
 	}
 
 	public void start() {
@@ -109,8 +107,8 @@ public class Sandbox {
 			running = true;
 			display.createDisplay();
 			init();
+			delta.start();
 
-			DebugInfo.add("fps", 0, currentFrames + " :fps");
 			PostProcessing.init(loader);
 			run();
 			close();
@@ -118,56 +116,17 @@ public class Sandbox {
 	}
 
 	private void run() {
-		long lastTime = System.nanoTime();
-		long timer = System.currentTimeMillis();
-		final double ns = 1000000000.0 / 60.0;
-		double delta = 0.0;
-		int updates = 0;
-		int frames = 0;
-		int passes = 0;
-
 		Log.info("Started Rendering");
-
-		// Mouse.setCursorPosition(DisplayManager.getWidth() / 2, DisplayManager.getHeight() / 2);
 		while (running) {
-			if (!Display.isCloseRequested()) {
+			if (Display.isCloseRequested()) {
+				Log.info("Close requested from window");
+				running = false;
+			} else {
+				gameMaster.tick(DeltaUtil.getDelta());
+				delta.update();
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-
-				long now = System.nanoTime();
-				delta += (now - lastTime) / ns;
-				lastTime = now;
-				while (delta >= 1) {
-					{// update
-						gameStateManager.update();
-					}
-					updates++;
-					delta--;
-				}
-				{// render
-					worldUtil.render();
-					gameStateManager.render();
-					worldUtil.renderWireFrame(false);
-					TextMaster.render();
-					display.updateDisplay();
-				}
-				frames++;
-
-				if (System.currentTimeMillis() - timer > 1000) {
-					timer += 1000;
-					currentFrames = frames;
-					currentUpdates = updates;
-					updates = 0;
-					frames = 0;
-					DebugInfo.update("fps", currentFrames + " :fps");
-					if (arguments.isRunningAsCI()) {
-						passes++;
-						if (passes > 5) {
-							Log.info("Rendered for " + (60 * passes) + " updates");
-							close();
-
-						}
-					}
-				}
+				gameMaster.render();
+				display.updateDisplay();
 			}
 		}
 	}
@@ -180,7 +139,7 @@ public class Sandbox {
 				PostProcessing.cleanUp();
 				ParticleMaster.cleanUp();
 				TextMaster.cleanUp();
-				gameStateManager.cleanUp();
+				gameMaster.cleanUp();
 				renderer.cleanUp();
 				rendererGui.cleanUp();
 				loader.cleanUp();
@@ -200,5 +159,9 @@ public class Sandbox {
 
 	public static Arguments getArguments() {
 		return arguments;
+	}
+	
+	public static DeltaUtil delta(){
+		return delta;
 	}
 }

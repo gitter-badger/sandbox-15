@@ -14,7 +14,7 @@
  */
 package net.roryclaasen.sandbox.RenderEngine.particle;
 
-import net.roryclaasen.sandbox.DisplayManager;
+import net.roryclaasen.sandbox.util.DeltaUtil;
 import net.roryclaasen.sandbox.util.WorldUtil;
 
 import org.lwjgl.util.vector.Vector3f;
@@ -44,11 +44,11 @@ public class Particle {
 	}
 
 	protected boolean update() {
-		velocity.y += WorldUtil.GRAVITY * gravityEffect * DisplayManager.getFrameTimeSeconds();// ?
+		velocity.y += WorldUtil.GRAVITY * gravityEffect * DeltaUtil.getDelta();
 		Vector3f change = new Vector3f(velocity);
-		change.scale(DisplayManager.getFrameTimeSeconds());
+		change.scale(DeltaUtil.getDelta());
 		Vector3f.add(change, position, position);
-		elapsedTime += DisplayManager.getFrameTimeSeconds();
+		elapsedTime += DeltaUtil.getDelta();
 		return elapsedTime < lifeLength;
 	}
 

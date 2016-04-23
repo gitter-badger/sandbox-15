@@ -14,7 +14,6 @@
  */
 package net.roryclaasen.sandbox.entities;
 
-import net.roryclaasen.sandbox.DisplayManager;
 import net.roryclaasen.sandbox.guis.DebugInfo;
 import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
@@ -27,8 +26,6 @@ public class Player extends Entity {
 
 	private boolean moving = false, turning = false;
 
-	private boolean isInMenu = false;
-	// TODO add menus
 	private float currentSpeedTurn = 0;
 
 	private Camera camera;
@@ -42,11 +39,11 @@ public class Player extends Entity {
 	}
 
 	@SuppressWarnings("unused")
-	public void update() {
+	public void tick(float delta) {
 		DebugInfo.update("pos", "xyz:" + this.getPosition().getX() + ", " + this.getPosition().getY() + ", " + this.getPosition().getZ());
 		Terrain terrain = TerrainManager.getCurrentTerrain(getX(), getZ());
 		checkInputs();
-		increaseRotation(0, currentSpeedTurn * DisplayManager.getFrameTimeSeconds(), 0);
+		increaseRotation(0, currentSpeedTurn * delta, 0);
 
 		increasePosition(pos.x, pos.y, pos.z);
 
@@ -116,13 +113,5 @@ public class Player extends Entity {
 
 	public Camera getCamera() {
 		return camera;
-	}
-
-	public boolean isInMenu() {
-		return isInMenu;
-	}
-
-	public void setInMenu(boolean inMenu) {
-		isInMenu = inMenu;
 	}
 }
