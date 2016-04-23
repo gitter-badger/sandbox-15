@@ -38,7 +38,7 @@ uniform vec3 skyColour;
 
 uniform float shadowMapSize;
 
-const int pcfCount = 3;
+const int pcfCount = 1;
 const float totalTexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
 
 const float levels = 6.0;
@@ -59,6 +59,8 @@ void main(void) {
 	total /= totalTexels;
 
 	float lightFactor = 1.0 - (total * shadowCoords.w);
+	lightFactor = floor(lightFactor * levels);
+	lightFactor = lightFactor / levels;
 
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitToCameraVector = normalize(toCameraVector);
@@ -104,6 +106,8 @@ void main(void) {
 	}
 
 	totalDefuse = max(totalDefuse * lightFactor, 0.2);
+	totalDefuse = floor(totalDefuse * levels);
+	totalDefuse = totalDefuse / levels;
 
 	out_Colour = vec4(totalDefuse, 1.0) * totalColour + vec4(totalSpecular, 1.0);
 	out_Colour = mix(vec4(skyColour, 1.0), out_Colour, visiblity);

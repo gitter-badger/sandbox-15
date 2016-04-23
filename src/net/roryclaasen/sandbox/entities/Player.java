@@ -14,6 +14,9 @@
  */
 package net.roryclaasen.sandbox.entities;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import net.roryclaasen.sandbox.guis.DebugInfo;
 import net.roryclaasen.sandbox.terrain.Terrain;
 import net.roryclaasen.sandbox.terrain.TerrainManager;
@@ -35,12 +38,12 @@ public class Player extends Entity {
 	public Player(Vector3f position, float rotX, float rotY, float rotZ) {
 		super(null, position, rotX, rotY, rotZ, 1F);
 		hasHealth = false;
-		DebugInfo.add("pos", "xyz:" + this.getPosition().getX() + ", " + this.getPosition().getY() + ", " + this.getPosition().getZ());
+		DebugInfo.add("pos", getDebugXYZ());
 	}
 
 	@SuppressWarnings("unused")
 	public void tick(float delta) {
-		DebugInfo.update("pos", "xyz:" + this.getPosition().getX() + ", " + this.getPosition().getY() + ", " + this.getPosition().getZ());
+		DebugInfo.update("pos", getDebugXYZ());
 		Terrain terrain = TerrainManager.getCurrentTerrain(getX(), getZ());
 		checkInputs();
 		increaseRotation(0, currentSpeedTurn * delta, 0);
@@ -50,6 +53,15 @@ public class Player extends Entity {
 		float terrainHeight = terrain.getHeightOfTerrain(getPosition().x, getPosition().z);
 
 		pos = new Vector3f(0, 0, 0);
+	}
+
+	private String getDebugXYZ() {
+		double x = this.getPosition().getX();
+		double y = this.getPosition().getY();
+		double z = this.getPosition().getZ();
+		DecimalFormat df = new DecimalFormat("#.###");
+		df.setRoundingMode(RoundingMode.CEILING);
+		return "xyz:  " + df.format(x) + "  /  " + df.format(y) + "  /  " + df.format(z);
 	}
 
 	private void checkInputs() {

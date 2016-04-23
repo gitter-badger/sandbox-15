@@ -15,6 +15,7 @@
 package net.roryclaasen.sandbox.RenderEngine.skybox;
 
 import net.roryclaasen.sandbox.entities.EntityManager;
+import net.roryclaasen.sandbox.util.Maths;
 
 import org.lwjgl.util.vector.Vector3f;
 
@@ -23,7 +24,7 @@ public class Skybox {
 
 	private static float blendFactor = 0.0f;
 
-	private static Vector3f fogColourDay = new Vector3f(1F, 1F, 1F);
+	private static Vector3f fogColourDay = Maths.rgbToVec3(255, 255,255);
 	private static Vector3f fogColour = new Vector3f(fogColourDay.getX(), fogColourDay.getY(), fogColourDay.getZ());
 
 	public static float getBlendFactor() {

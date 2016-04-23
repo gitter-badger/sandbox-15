@@ -58,18 +58,21 @@ public class ModeLevel extends ModeBase {
 		_sand.entityManager.addPlayer(player);
 
 		addSun();
-
-		for (int i = 0; i < 100; i++) {
-			float x = 0;
-			float z = 0;
-			float y = -1;
-			while (y <= -1) {
-				x = random.nextInt((int) Terrain.getSize());
-				z = random.nextInt((int) Terrain.getSize());
-				y = TerrainManager.getCurrentTerrain(x, z).getHeightOfTerrain(x, z) - 0.2f;
+		for (int xt = 0; xt < 2; xt++) {
+			for (int zt = 0; zt < 2; zt++) {
+				for (int q = 0; q < 75; q++) {
+					float x = xt;
+					float z = zt;
+					float y = -1;
+					while (y <= -1) {
+						x = (xt * Terrain.getSize()) + (random.nextInt((int) Terrain.getSize()));
+						z = (zt * Terrain.getSize()) + (random.nextInt((int) Terrain.getSize()));
+						y = TerrainManager.getCurrentTerrain(x, z).getHeightOfTerrain(x, z) - 0.2f;
+					}
+					Vector3f position = new Vector3f(x, y, z);
+					_sand.entityManager.add(new Entity(Models.tree.get(), position, 0, 0, 0, 1.5f));
+				}
 			}
-			Vector3f position = new Vector3f(x, y, z);
-			_sand.entityManager.add(new Entity(Models.tree.get(), position, 0, 0, 0, 1.5f));
 		}
 
 		_sand.skybox.start();
