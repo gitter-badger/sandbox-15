@@ -18,11 +18,11 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-
 import net.gogo98901.log.Log;
 import net.gogo98901.util.Loader;
+
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class OBJFileLoader {
 

@@ -17,47 +17,40 @@ package net.roryclaasen.sandbox.terrain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexturePack;
-import net.roryclaasen.sandbox.util.Loader;
-import net.gogo98901.log.Log;
+import net.roryclaasen.sandbox.util.TextureUtil;
 
 public class TerrainManager {
-
-	private Loader loader;
 
 	private static List<Terrain> terrains = new ArrayList<Terrain>();
 	private List<WaterTile> waters = new ArrayList<WaterTile>();
 
 	private TerrainTexturePack pack0;
 
-	public TerrainManager(Loader loader) {
-		this.loader = loader;
-		load();
-	}
-
-	private void load() {
-		TerrainTexture terrainBackground = new TerrainTexture(loader.loadTexture("grass_1"));
-		TerrainTexture terrainR = new TerrainTexture(loader.loadTexture("mud_0"));
-		TerrainTexture terrainG = new TerrainTexture(loader.loadTexture("grass_2"));
-		TerrainTexture terrainB = new TerrainTexture(loader.loadTexture("path_0"));
+	public TerrainManager() {
+		TerrainTexture terrainBackground = new TerrainTexture(TextureUtil.level_ground0);
+		TerrainTexture terrainR = new TerrainTexture(TextureUtil.level_groundr);
+		TerrainTexture terrainG = new TerrainTexture(TextureUtil.level_groundg);
+		TerrainTexture terrainB = new TerrainTexture(TextureUtil.level_groundb);
 
 		pack0 = new TerrainTexturePack(terrainBackground, terrainR, terrainG, terrainB);
 	}
 
 	public TerrainTexturePack getPack(int id) {
 		switch (id) {
-		case 0:
-			return pack0;
-		default:
-			return pack0;
+			case 0 :
+				return pack0;
+			default :
+				return pack0;
 		}
 	}
 
 	public List<Terrain> getTerrains() {
 		return terrains;
 	}
-	
+
 	public Terrain getTerrain() {
 		return getTerrains().get(0);
 	}

@@ -86,7 +86,7 @@ public class Sandbox {
 		rendererGui = new GuiRenderer(loader);
 		guiManager = new GuiManager();
 		entityManager = new EntityManager();
-		terrainManager = new TerrainManager(loader);
+		terrainManager = new TerrainManager();
 		skybox = new Skybox();
 		worldUtil = new WorldUtil(sandbox);
 		mousePicker = new MousePicker(camera, renderer.getProjectionMatrix());

@@ -14,12 +14,12 @@
  */
 package net.roryclaasen.sandbox;
 
-import org.lwjgl.input.Mouse;
-
 import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.mode.ModeLevel;
 import net.roryclaasen.sandbox.mode.ModeMenu;
+
+import org.lwjgl.input.Mouse;
 
 public class GameMaster {
 

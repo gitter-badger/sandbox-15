@@ -21,7 +21,6 @@ import net.gogo98901.log.Log;
 import net.gogo98901.util.Data;
 import net.roryclaasen.Bootstrap;
 import net.roryclaasen.sandbox.Sandbox;
-import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.entities.Entity;
 import net.roryclaasen.sandbox.level.loader.ChunkData;
 import net.roryclaasen.sandbox.level.loader.EntityData;
@@ -93,7 +92,7 @@ public class LevelLoader {
 		Log.info("[LevelLoader] Seed: " + worldData.getSeed());
 		for (ChunkData chunk : worldData.getChunks()) {
 			try {
-				Terrain t = new Terrain((int) chunk.getLocation().getX(), (int) chunk.getLocation().getY(), _sand.loader, _sand.terrainManager.getPack(chunk.getTexturePack()), new TerrainTexture(_sand.loader.loadTexture("level/" + chunk.getBlendMap())), worldData.getSeed());
+				Terrain t = new Terrain((int) chunk.getLocation().getX(), (int) chunk.getLocation().getY(), _sand.loader, _sand.terrainManager.getPack(chunk.getTexturePack()), worldData.getSeed());
 
 				_sand.terrainManager.add(t);
 				for (int x = 1; x < Terrain.getSize() / WaterTile.TILE_SIZE; x++) {

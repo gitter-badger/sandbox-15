@@ -16,11 +16,11 @@
  */
 package net.roryclaasen.sandbox.RenderEngine.post;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
-
 import net.roryclaasen.sandbox.RenderEngine.ImageRenderer;
 import net.roryclaasen.sandbox.RenderEngine.post.shaders.ContrastShader;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 
 public class ContrastChanger {
 
