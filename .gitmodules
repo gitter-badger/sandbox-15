@@ -1,9 +1,0 @@
-[submodule "library"]
-	path = library
-	url = https://github.com/GOGO98901/GOGO_Library.git
-[submodule "version"]
-	path = version
-	url = https://github.com/GOGO98901/version-checker.git
-[submodule "language"]
-	path = language
-	url = https://github.com/GOGO98901/language-file-reader.git
