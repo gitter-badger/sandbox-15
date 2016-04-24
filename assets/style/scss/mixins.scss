@@ -1,0 +1,31 @@
+@mixin transition2v($var1) {
+   -webkit-transition: $var1;
+   -moz-transition: $var1;
+   -o-transition: $var1;
+   transition: $var1 ;
+}
+@mixin transition2v($var1, $var2) {
+   -webkit-transition: $var1 $var2 ease;
+   -moz-transition: $var1 $var2 ease;
+   -o-transition: $var1 $var2 ease;
+   transition: $var1 $var2 ;
+}
+@mixin transition3v($var1, $var2, $var3) {
+   -webkit-transition: $var1 $var2 $var3;
+   -moz-transition: $var1 $var2 $var3;
+   -o-transition: $var1 $var2 $var3;
+   transition: $var1 $var2 $var3;
+}
+@mixin transition4v($var1, $var2, $var3, $var4) {
+   -webkit-transition: $var1 $var2 $var3 $var4;
+   -moz-transition: $var1 $var2 $var3 $var4;
+   -o-transition: $var1 $var2 $var3 $var4;
+   transition: $var1 $var2 $var3 $var4;
+}
+
+@mixin background-cover() {
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+}

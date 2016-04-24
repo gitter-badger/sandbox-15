@@ -1,0 +1,137 @@
+.logo {
+	text-align: left;
+	* {
+		display: inline-block;
+	}
+	span {
+		display: inline-block;
+		margin-right: 20px;
+		width: 300px;
+		height: 300px;
+		background-image: url(../../image/profile.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		border-radius: 10px;
+		border: solid 3px #111;
+		&.small {
+			width: 100px;
+			height: 100px;
+		}
+		&.large {
+			width: 400px;
+			height: 400px;
+		}
+		&.avatar {
+			background-image: url(../../image/avatar.png);
+		}
+	}
+	p {
+		display: inline-block;
+		height: 100px;
+		vertical-align: top;
+		font-family: 'Roboto', sans-serif;
+		font-size: 1.17em;
+		margin-top: 0;
+	}
+}
+
+#skills {
+	width: 100%;
+	height: auto;
+	display: block;
+	.row {
+		vertical-align: top;
+		display: inline-block;
+		width: 100%;
+		height: auto;
+	}
+}
+
+@media screen and (min-width: 40em) {
+	#skills {
+		.row {
+			width: 40%;
+			margin: auto;
+			height: 100%;
+		}
+	}
+}
+
+// Github Profile
+@import url(http://fonts.googleapis.com/css?family=Raleway|Varela+Round|Coda);
+
+.github-profile {
+	width: 25em;
+	height: auto;
+	background: #ddd;
+	border-radius: .3em;
+	display: inline-block;
+	.name {
+		margin: auto;
+		margin-top: -4.40em;
+		margin-left: 5.80em;
+		color: #658585;
+		font-size: 1.53em;
+		font-family: "Coda", sans-serif;
+		font-weight: bold;
+	}
+	.username {
+		margin: auto;
+		display: inline-block;
+		margin-left: 10.43em;
+		color: #e76043;
+		font-size: .87em;
+		font-family: "varela round", sans-serif;
+		a {
+			color: inherit;
+			text-decoration: none;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+	> {
+		.description {
+			margin: auto;
+			margin-top: 1.35em;
+			margin-right: 4.43em;
+			width: 14em;
+			color: #889191;
+			font-size: .87em;
+			font-family: "varela round", sans-serif;
+		}
+		img.avatar {
+			padding: .7em;
+			margin-left: .3em;
+			margin-top: .3em;
+			height: 6.3em;
+			width: 6.3em;
+			border-radius: 1em;
+		}
+	}
+	ul.data {
+		margin: 2em auto;
+		margin-bottom: 0;
+		height: 3.70em;
+		background: #4eb6b6;
+		text-align: center;
+		border-radius: 0 0 .3em .3em;
+	}
+	li {
+		margin: 0 auto;
+		padding: 1.30em;
+		width: 33.33334%;
+		display: table-cell;
+		text-align: center;
+	}
+	span {
+		font-family: "varela round", sans-serif;
+		color: #e3eeee;
+		white-space: nowrap;
+		font-size: 1.27em;
+		font-weight: bold;
+		&:hover {
+			color: #daebea;
+		}
+	}
+}

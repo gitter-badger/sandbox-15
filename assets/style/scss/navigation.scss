@@ -1,0 +1,107 @@
+.nav-collapse {
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+   * {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+   }
+   list-style: none;
+   width: 100%;
+   float: left;
+   ul {
+      list-style: none;
+      width: 100%;
+      float: left;
+   }
+   li {
+      float: left;
+      width: 100%;
+   }
+   a {
+      color: #fff;
+      text-decoration: none;
+      width: 100%;
+      padding: 0.7em 1em;
+      float: left;
+      text-align: center;
+      text-decoration: none;
+      &:hover:not(.active) {
+         background-color: #486684;
+      }
+      @include transition2v(all, 0.5s);
+   }
+   .active {
+      background-color: #1b2631;
+   }
+   ul ul a {
+      background: #ca3716;
+      padding-left: 2em;
+   }
+   .nav-title {
+      background-color: #C62828;
+   }
+}
+
+@media screen and (min-width: 40em) {
+   .nav-collapse {
+      width: auto;
+      ul, li {
+         width: auto;
+      }
+      ul ul a {
+         display: none;
+      }
+      a, span {
+         margin: 0;
+         float: left;
+         text-align: center;
+         width: auto;
+      }
+      .nav-space {
+         width: 20px;
+         display: inline;
+      }
+   }
+}
+
+.nav-toggle {
+   z-index: 1001;
+   position: fixed;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   text-decoration: none;
+   text-indent: -999px;
+   position: relative;
+   overflow: hidden;
+   width: 70px;
+   height: 41.375px;
+   float: right;
+   &:before {
+      color: #fff;
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      font-size: 28px;
+      text-transform: none;
+      position: absolute;
+      content: "\f0c9";
+      text-indent: 0;
+      text-align: center;
+      line-height: 41.375px;
+      speak: none;
+      width: 100%;
+      top: 0;
+      left: 0;
+   }
+   &.active::before {
+      content: "\f00d";
+   }
+}

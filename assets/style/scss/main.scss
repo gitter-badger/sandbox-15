@@ -1,0 +1,156 @@
+html, body {
+   font-family: 'Roboto', sans-serif;
+   min-width: 290px;
+   -webkit-font-smoothing: antialiased;
+   -webkit-text-size-adjust: 100%;
+   -ms-text-size-adjust: 100%;
+   text-size-adjust: 100%;
+   background-color: #2C3E50;
+   /*background-image: url(../../image/axiom-pattern.png);*/
+   background-image: url(../../image/otis-redding.png);
+   background-repeat: repeat;
+   #wrapper {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      position: relative;
+   }
+   &.nobackground {
+      background: none;
+   }
+}
+
+header {
+   position: fixed;
+   z-index: 1000;
+   top: 0;
+   left: 0;
+   width: 100%;
+   background: #364d63;
+   border-bottom: solid 3px #1b2631;
+   font-family: 'Kanit', sans-serif;
+   font-size: 1.05em;
+   span {
+      display: inline;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.7em 1em;
+      text-align: center;
+      text-decoration: none;
+      margin: 0;
+      float: left;
+      text-align: center;
+      width: auto;
+   }
+}
+
+.follow {
+   font-family: 'Kanit', sans-serif;
+   margin: auto;
+   padding: 20px 50px;
+   text-align: center;
+   .block {
+      display: inline-block;
+      background-color: #e1e1e1;
+      color: #666;
+      cursor: pointer;
+      height: 1.2em;
+      font-size: 1.2em;
+      line-height: 1.2em;
+      padding: 10px 20px;
+      margin: 5px;
+      text-decoration: none;
+      box-shadow: 0 0 20px rgb(0, 0, 0);
+      &:hover {
+         color: #333;
+      }
+      @include transition2v(color, 0.5s);
+      i {
+         margin-right: 10px;
+      }
+   }
+}
+
+footer {
+   z-index: 10;
+   height: 180px;
+   width: 100%;
+   display: block;
+   background: #181818;
+   color: #777;
+   text-align: center;
+   padding: 20px 0;
+   p {
+      white-space: pre-line;
+      margin: 0;
+   }
+   i {
+      color: #fff;
+      opacity: 0.5;
+      @include transition2v(opacity, 1s);
+      &:hover {
+         opacity: 1;
+      }
+   }
+   a {
+      color: #B1B1B1;
+      text-decoration: none;
+      @include transition2v(color, 1s);
+      &:hover {
+         color: #FFF;
+      }
+   }
+}
+
+.to-top {
+   display: inline-block;
+   height: 40px;
+   width: 40px;
+   position: fixed;
+   bottom: 80px;
+   right: 10px;
+   z-index: 1000;
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+   border-radius: 2px;
+   overflow: hidden;
+   text-indent: 100%;
+   white-space: nowrap;
+   background: rgba(173, 45, 45, 0.8) url(../../image/to-top-arrow.svg) no-repeat center 50%;
+   opacity: 0;
+   @include transition3v(opacity, .5s, 0s);
+   &.to-is-visible {
+      opacity: 1;
+      @include transition3v(opacity, .5s, 0s);
+   }
+}
+
+.no-touch .to-top:hover {
+   opacity: 1;
+   @include transition3v(opacity, .5s, 0s);
+}
+
+@media only screen and (min-width: 768px) {
+   .to-top {
+      right: 20px;
+      bottom: 20px;
+   }
+}
+
+@media only screen and (min-width: 1024px) {
+   .to-top {
+      height: 60px;
+      width: 60px;
+      right: 30px;
+      bottom: 50px;
+   }
+}
+
+.noSelect {
+   cursor: default;
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}

@@ -1,0 +1,42 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto|Open+Sans|Montserrat|Rubik+Mono+One|Kanit);
+
+@-webkit-viewport {
+   width: device-width;
+}
+@-moz-viewport {
+   width: device-width;
+}
+@-ms-viewport {
+   width: device-width;
+}
+@-o-viewport {
+   width: device-width;
+}
+@viewport {
+   width: device-width;
+}
+
+::-webkit-scrollbar {
+   width: 10px;
+   height: 10px;
+}
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
+   background: #181818;
+}
+::-webkit-scrollbar-thumb {
+   background: #4d4d4d;
+}
+
+::selection {
+   background: #0d0d0d;
+}
+::-moz-selection {
+   background: #0d0d0d;
+}
+
+@import 'mixins';
+@import 'main';
+@import 'navigation';
+@import 'content';
+@import 'about';
+@import 'projects';
