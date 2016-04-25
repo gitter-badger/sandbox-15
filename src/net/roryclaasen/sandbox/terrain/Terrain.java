@@ -16,7 +16,6 @@ package net.roryclaasen.sandbox.terrain;
 
 import java.awt.image.BufferedImage;
 
-import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexture;
 import net.roryclaasen.sandbox.RenderEngine.texture.TerrainTexturePack;
 import net.roryclaasen.sandbox.models.RawModel;

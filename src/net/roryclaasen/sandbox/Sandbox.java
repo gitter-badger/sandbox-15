@@ -17,6 +17,7 @@ package net.roryclaasen.sandbox;
 import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.RenderEngine.Fbo;
 import net.roryclaasen.sandbox.RenderEngine.MasterRenderer;
+import net.roryclaasen.sandbox.RenderEngine.Splash;
 import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.gui.GuiRenderer;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
@@ -44,6 +45,8 @@ public class Sandbox {
 	private static Arguments arguments;
 	private static DeltaUtil delta;
 	private boolean running = false;
+	
+	private Splash splash;
 
 	public Loader loader;
 	public LevelLoader levelLoader;
@@ -76,7 +79,7 @@ public class Sandbox {
 
 	private void init() {
 		Log.info("Initializing...");
-		loader = new Loader();
+		
 		TextMaster.init(loader);
 		TextureUtil.init(loader);
 		camera = new Camera();
@@ -106,6 +109,10 @@ public class Sandbox {
 		} else {
 			running = true;
 			display.createDisplay();
+			loader = new Loader();
+			splash = new Splash(loader, "1024");
+			splash.show();
+			display.updateDisplay();
 			init();
 			delta.start();
 
@@ -117,6 +124,7 @@ public class Sandbox {
 
 	private void run() {
 		Log.info("Started Rendering");
+		splash.hide();
 		while (running) {
 			if (Display.isCloseRequested()) {
 				Log.info("Close requested from window");
