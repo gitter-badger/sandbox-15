@@ -84,17 +84,17 @@ public class TextureUtil {
 
 	private static final int BYTES_PER_PIXEL = 4;
 
-	private static final int DEFULT_WIDTH = 2, DEFULT_HEIGHT = 2;
+	private static final int DEFULT_SIZE= 2;
 
 	public static int loadTextureFromColour(Color color) {
-		return loadTextureFromColour(color, DEFULT_WIDTH, DEFULT_HEIGHT);
+		return loadTextureFromColour(color, DEFULT_SIZE);
 	}
 
-	public static int loadTextureFromColour(Color color, int width, int height) {
-		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+	public static int loadTextureFromColour(Color color, int size) {
+		BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = image.createGraphics();
 		g2d.setColor(color);
-		g2d.fillRect(0, 0, width, height);
+		g2d.fillRect(0, 0, size, size);
 		return loadTexture(image);
 	}
 

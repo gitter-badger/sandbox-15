@@ -12,14 +12,17 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package net.roryclaasen.sandbox.RenderEngine;
+package net.roryclaasen.sandbox.RenderEngine.gui;
+
+import java.awt.Color;
 
 import net.gogo98901.log.Log;
-import net.roryclaasen.sandbox.RenderEngine.gui.GuiShader;
 import net.roryclaasen.sandbox.models.RawModel;
 import net.roryclaasen.sandbox.util.Loader;
 import net.roryclaasen.sandbox.util.Maths;
+import net.roryclaasen.sandbox.util.TextureUtil;
 
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
@@ -32,9 +35,10 @@ public class Splash {
 	private final RawModel quad;
 	private GuiShader shader;
 
-	private int image;
+	private int image, background;
+	private float size = 512f * 0.65f;
 
-	private Vector2f pos, scale;
+	private Vector2f pos, imageScale, backgroundScale;
 
 	public Splash(Loader loader, String file) {
 		Log.info("Splash image setting up");
@@ -43,9 +47,11 @@ public class Splash {
 		shader = new GuiShader();
 
 		image = loader.loadTexture(true, "intro", file, 0);
+		background = TextureUtil.loadTextureFromColour(Color.WHITE);
 
 		pos = new Vector2f(0, 0);
-		scale = new Vector2f(1, 1);
+		imageScale = new Vector2f(size / (float) Display.getWidth(), size / (float) Display.getHeight());
+		backgroundScale = new Vector2f((float) Display.getWidth() / 2f, (float) Display.getHeight() / 2f);
 	}
 
 	/**
@@ -59,10 +65,18 @@ public class Splash {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, image);
-		Matrix4f matrix = Maths.createTransformationMatrix(pos, scale);
-		shader.loadTransformation(matrix);
-		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
+		{
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, background);
+			Matrix4f matrix = Maths.createTransformationMatrix(pos, backgroundScale);
+			shader.loadTransformation(matrix);
+			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
+		}
+		{
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, image);
+			Matrix4f matrix = Maths.createTransformationMatrix(pos, imageScale);
+			shader.loadTransformation(matrix);
+			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
+		}
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL20.glDisableVertexAttribArray(0);

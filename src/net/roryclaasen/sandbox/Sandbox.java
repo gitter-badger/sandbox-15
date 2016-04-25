@@ -17,9 +17,9 @@ package net.roryclaasen.sandbox;
 import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.RenderEngine.Fbo;
 import net.roryclaasen.sandbox.RenderEngine.MasterRenderer;
-import net.roryclaasen.sandbox.RenderEngine.Splash;
 import net.roryclaasen.sandbox.RenderEngine.font.TextMaster;
 import net.roryclaasen.sandbox.RenderEngine.gui.GuiRenderer;
+import net.roryclaasen.sandbox.RenderEngine.gui.Splash;
 import net.roryclaasen.sandbox.RenderEngine.particle.ParticleMaster;
 import net.roryclaasen.sandbox.RenderEngine.post.PostProcessing;
 import net.roryclaasen.sandbox.RenderEngine.skybox.Skybox;
@@ -119,7 +119,8 @@ public class Sandbox {
 		} else {
 			running = true;
 			display.createDisplay();
-			splash = new Splash(loader, "1024");
+			
+			splash = new Splash(loader, "512");
 			splash.show();
 			display.updateDisplay();
 			init();

@@ -62,6 +62,8 @@ public class DisplayManager {
 			Display.setTitle(LangUtil.get("sandbox.title"));
 			if (Config.antialiasing.get()) GL11.glEnable(GL13.GL_MULTISAMPLE);
 			Display.setIcon(getIcons());
+			
+			Display.setInitialBackground(1f, 1f, 1f);
 			Log.info("Display Created");
 		} catch (Exception e) {
 			Log.stackTrace(Level.SEVERE, e);
