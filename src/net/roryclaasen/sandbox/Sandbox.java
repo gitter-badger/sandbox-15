@@ -44,28 +44,32 @@ public class Sandbox {
 	private static Sandbox sandbox;
 	private static Arguments arguments;
 	private static DeltaUtil delta;
-	private boolean running = false;
+
+	public DisplayManager display;
+	public Loader loader;
 	
 	private Splash splash;
-
-	public Loader loader;
-	public LevelLoader levelLoader;
-	public DisplayManager display;
-	public GameMaster gameMaster;
-
-	public MasterRenderer renderer;
-	public GuiRenderer rendererGui;
-	public GuiManager guiManager;
-	public EntityManager entityManager;
-	public TerrainManager terrainManager;
-	public Skybox skybox;
-
-	public MousePicker mousePicker;
-	public WorldUtil worldUtil;
 
 	public Camera camera;
 
 	public Fbo fbo;
+
+	public MasterRenderer renderer;
+	public GuiRenderer rendererGui;
+
+	public GuiManager guiManager;
+	public EntityManager entityManager;
+	public TerrainManager terrainManager;
+
+	public LevelLoader levelLoader;
+	public Skybox skybox;
+
+	public MousePicker mousePicker;
+	public WorldUtil worldUtil;
+	
+	public GameMaster gameMaster;
+	
+	private boolean running = false;
 
 	public Sandbox(Arguments arguments) {
 		Sandbox.sandbox = this;
@@ -75,27 +79,33 @@ public class Sandbox {
 
 		delta = new DeltaUtil();
 		display = new DisplayManager();
+		loader = new Loader();
 	}
 
 	private void init() {
 		Log.info("Initializing...");
-		
-		TextMaster.init(loader);
-		TextureUtil.init(loader);
+
 		camera = new Camera();
 
+		fbo = new Fbo(Display.getWidth(), Display.getHeight(), Fbo.DEPTH_RENDER_BUFFER);
+
 		renderer = new MasterRenderer(loader, camera);
-		ParticleMaster.init(loader, renderer.getProjectionMatrix());
 		rendererGui = new GuiRenderer(loader);
+
+		TextMaster.init(loader);
+		TextureUtil.init(loader);
+		ModelLoader.init(loader);
+		ParticleMaster.init(loader, renderer.getProjectionMatrix());
+		
 		guiManager = new GuiManager();
 		entityManager = new EntityManager();
 		terrainManager = new TerrainManager();
+
+		levelLoader = new LevelLoader(sandbox);
 		skybox = new Skybox();
+
 		worldUtil = new WorldUtil(sandbox);
 		mousePicker = new MousePicker(camera, renderer.getProjectionMatrix());
-		levelLoader = new LevelLoader(sandbox);
-		fbo = new Fbo(Display.getWidth(), Display.getHeight(), Fbo.DEPTH_RENDER_BUFFER);
-		ModelLoader.init(loader);
 
 		gameMaster = new GameMaster(sandbox);
 		gameMaster.init();
@@ -109,7 +119,6 @@ public class Sandbox {
 		} else {
 			running = true;
 			display.createDisplay();
-			loader = new Loader();
 			splash = new Splash(loader, "1024");
 			splash.show();
 			display.updateDisplay();
@@ -124,7 +133,6 @@ public class Sandbox {
 
 	private void run() {
 		Log.info("Started Rendering");
-		splash.hide();
 		while (running) {
 			if (Display.isCloseRequested()) {
 				Log.info("Close requested from window");
@@ -143,14 +151,15 @@ public class Sandbox {
 		if (running) {
 			running = false;
 			try {
+				loader.cleanUp();
 				fbo.cleanUp();
-				PostProcessing.cleanUp();
-				ParticleMaster.cleanUp();
-				TextMaster.cleanUp();
-				gameMaster.cleanUp();
 				renderer.cleanUp();
 				rendererGui.cleanUp();
-				loader.cleanUp();
+				splash.cleanUp();
+				TextMaster.cleanUp();
+				ParticleMaster.cleanUp();
+				PostProcessing.cleanUp();
+				gameMaster.cleanUp();
 				Log.info("CleanUp... OK");
 			} catch (Exception e) {
 				Log.warn("CleanUp... Failed");
@@ -168,8 +177,8 @@ public class Sandbox {
 	public static Arguments getArguments() {
 		return arguments;
 	}
-	
-	public static DeltaUtil delta(){
+
+	public static DeltaUtil delta() {
 		return delta;
 	}
 }

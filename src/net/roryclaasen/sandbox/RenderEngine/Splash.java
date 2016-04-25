@@ -1,5 +1,6 @@
 package net.roryclaasen.sandbox.RenderEngine;
 
+import net.gogo98901.log.Log;
 import net.roryclaasen.sandbox.RenderEngine.gui.GuiShader;
 import net.roryclaasen.sandbox.models.RawModel;
 import net.roryclaasen.sandbox.util.Loader;
@@ -22,6 +23,7 @@ public class Splash {
 	private Vector2f pos, scale;
 
 	public Splash(Loader loader, String file) {
+		Log.info("Splash image setting up");
 		float[] positions = {-1, 1, -1, -1, 1, 1, 1, -1};
 		quad = loader.loadToVAO(positions);
 		shader = new GuiShader();
@@ -32,6 +34,9 @@ public class Splash {
 		scale = new Vector2f(1, 1);
 	}
 
+	/**
+	 * @see net.roryclaasen.sandbox.RenderEngine.gui.GuiRenderer
+	 */
 	public void show() {
 		shader.start();
 		GL30.glBindVertexArray(quad.getVaoId());
@@ -44,15 +49,15 @@ public class Splash {
 		Matrix4f matrix = Maths.createTransformationMatrix(pos, scale);
 		shader.loadTransformation(matrix);
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
-
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		shader.stop();
+		Log.info("Displaying splash image");
 	}
 
-	public void hide() {
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+	public void cleanUp() {
+		shader.cleanUp();
 	}
 }
