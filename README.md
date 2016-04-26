@@ -1,4 +1,6 @@
 # Sandbox
+
+[![Join the chat at https://gitter.im/GOGO98901/sandbox](https://badges.gitter.im/GOGO98901/sandbox.svg)](https://gitter.im/GOGO98901/sandbox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Sandbox is a game that you can just add, add, add
 
 View the credits on the [wiki](https://github.com/GOGO98901/sandbox/wiki/Credits)
