@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import net.gogo98901.util.Loader;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,7 +14,8 @@ import org.json.simple.parser.ParseException;
 
 public class JSONUtil {
 
-	private JSONUtil() {}
+	private JSONUtil() {
+	}
 
 	private static JSONParser parser = new JSONParser();
 
@@ -23,6 +26,11 @@ public class JSONUtil {
 	public static JSONObject read(File file) throws FileNotFoundException, IOException, ParseException {
 		if (!file.exists()) return null;
 		return (JSONObject) (Object) parser.parse(new FileReader(file));
+	}
+
+
+	public static JSONObject readFromJar(String file) throws FileNotFoundException, IOException, ParseException {
+		return (JSONObject) (Object) parser.parse(Loader.getInputPutStreamReader(file));
 	}
 
 	public static boolean has(JSONObject data, String key) {

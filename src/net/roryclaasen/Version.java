@@ -25,7 +25,7 @@ public class Version {
 	private static boolean isLatest, isLatestPreRelease;
 
 	public Version() {
-		check = new VersionCheck("GOGO98901", "sandbox", Bootstrap.VERSION);
+		check = new VersionCheck("GOGO98901", "sandbox",GameInfo.version);
 		Log.info("[Version] Version check set up with version [" + check.getCurrentVersion() + "]");
 	}
 
@@ -46,7 +46,7 @@ public class Version {
 					Log.info("[Version] Not Running latest version");
 				}
 			}
-		}, Bootstrap.TITLE + " Version Check").start();
+		}, GameInfo.title + " Version Check").start();
 	}
 
 	public static boolean isLatest() {

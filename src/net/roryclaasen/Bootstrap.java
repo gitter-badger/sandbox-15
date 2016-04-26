@@ -25,7 +25,7 @@ import net.roryclaasen.sandbox.util.config.ConfigLoader;
 
 public class Bootstrap {
 
-	public static final String TITLE = "Sandbox Game", VERSION = "0.0.2", GAME_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "My Games" + File.separator + TITLE + File.separator;
+	public static final String GAME_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "My Games" + File.separator + GameInfo.title + File.separator;
 
 	private static Arguments arguments;
 	private static ConfigLoader conf;
@@ -34,7 +34,7 @@ public class Bootstrap {
 
 	public static void main(String[] args) {
 		Log.setDateFormat("[dd.MM.yy hh:mm:ss]");
-		Log.info(TITLE + "(" + VERSION + ") by Rory Claasen");
+		Log.info(GameInfo.title + "(" + GameInfo.version + ") by Rory Claasen");
 		arguments = new Arguments(args);
 		version = new Version();
 		if (init(arguments)) {
@@ -70,7 +70,7 @@ public class Bootstrap {
 	}
 
 	private static void start() {
-		Log.info("Starting game: " + TITLE );
+		Log.info("Starting game: " + GameInfo.title );
 		Sandbox sandbox = new Sandbox(arguments);
 		sandbox.start();
 	}

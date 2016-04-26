@@ -10,21 +10,12 @@
 	<property name="jarLib.dir" value="${lib.dir}/jars" />
 
 	<property name="main-class" value="net.roryclaasen.Bootstrap" />
+	
+	<property name="version" value="0.0.2" />
 
 	<target name="info">
-		<echo>${ant.project.name} Build
-		</echo>
-		<echo>--{ Dirs }--</echo>
-		<echo>build.dir: ${build.dir}</echo>
-		<echo>classes.dir: ${classes.dir}</echo>
-		<echo>jar.dir: ${jar.dir}</echo>
-		<echo>lib.dir: ${lib.dir}</echo>
-		<echo>jarLib.dir.dir: ${jarLib.dir}</echo>
-		<echo>natives.dir: ${natives.dir}
-		</echo>
-		<echo>--{ Compile }--</echo>
-		<echo>main class: ${main-class}</echo>
-		<echo>java.library.path: ${natives.dir}</echo>
+		<echo>${ant.project.name} Build for version ${version}</echo>
+		<echo>Main class: ${main-class}</echo>
 
 	</target>
 
@@ -39,6 +30,8 @@
 				<exclude name="**/*.java" />
 				<exclude name="**/*.psd" />
 				<exclude name="**/*.db" />
+				
+				<replace file="game.info" token="%version%" value="${version}"/>
 			</fileset>
 		</copy>
 		<mkdir dir="${classes.dir}" />
